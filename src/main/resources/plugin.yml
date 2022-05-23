@@ -1,0 +1,7 @@
+name: ProjectileMaker
+version: '${project.version}'
+main: me.justacat.projectilemaker.ProjectileMaker
+api-version: 1.18
+commands:
+  test:
+  projectileMaker:
