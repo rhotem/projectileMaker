@@ -1,6 +1,7 @@
 package me.justacat.projectilemaker;
 
 import com.google.gson.Gson;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.*;
@@ -17,13 +18,11 @@ public class FileManager {
         if (!dataFolder.exists()) {
             dataFolder.mkdir();
         }
-        projectilesFolder = CreateFile(dataFolder, "projectiles");
+        projectilesFolder = new File(dataFolder, "projectiles");
         if (!projectilesFolder.exists()) {
             projectilesFolder.mkdir();
         }
         projectileList = CreateFile(dataFolder, "ProjectileList.yml");
-
-
 
 
     }

@@ -1,5 +1,6 @@
 package me.justacat.projectilemaker.misc;
 
+import me.justacat.projectilemaker.gui.ProjectileMenu;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
@@ -15,7 +16,7 @@ public class Chat {
         return ChatColor.translateAlternateColorCodes('&', message);
     }
 
-    public static String sendPlayerChatRequest(Player player) {
+    public static String sendPlayerChatRequest(Player player, String ID) {
 
         player.closeInventory();
         player.sendMessage(" ");
@@ -31,11 +32,14 @@ public class Chat {
         Calendar time = Calendar.getInstance();
         while (!playerAndResult.containsKey(player.getUniqueId())) {
 
-            if (time.compareTo(Calendar.getInstance()) /  60000 >= 30) {
-                playerAndResult.put(player.getUniqueId(), "Error: time out");
-                break;
+            if (playerChatRequests.contains(player.getUniqueId())) {
+                return "new request 123456";
             }
 
+        }
+
+        if (ID.equals("newProjectile")) {
+            ProjectileMenu.openProjectileMenu(player);
         }
         return playerAndResult.get(player.getUniqueId());
 

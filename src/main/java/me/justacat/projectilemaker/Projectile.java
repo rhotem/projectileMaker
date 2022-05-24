@@ -25,6 +25,8 @@ public class Projectile {
     public Projectile(String name) {
 
         this.name = name;
+        FileManager.createJSON(name, FileManager.projectilesFolder, this, true);
+
     }
 
 
