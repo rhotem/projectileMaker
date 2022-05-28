@@ -55,7 +55,7 @@ public class FileManager {
 
         if (overRide) {
 
-            File file = new File(folder, name + ".json");
+            File file = CreateFile(folder, name + ".json");
 
             if (file.exists()) {
 
