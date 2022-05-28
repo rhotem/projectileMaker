@@ -39,7 +39,7 @@ public class InventoryEvents implements Listener {
            }
 
         } else if (e.getView().getTitle().contains("Edit Projectile: ")) {
-
+            e.setCancelled(true);
             if (item != null && item.hasItemMeta() && item.getItemMeta().hasLocalizedName()) {
                 String projectileName = e.getView().getTitle().replace("Edit Projectile: ", "");
                 String settingType = item.getItemMeta().getLocalizedName();

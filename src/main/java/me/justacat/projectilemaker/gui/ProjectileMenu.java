@@ -76,9 +76,16 @@ public class ProjectileMenu {
         guiBuilder.setSize(54);
 
         guiBuilder.setTitle("Edit Projectile: " + name);
-        List<String> lore = Arrays.asList(" ", Chat.colorMessage("&eClick here to edit this value"));
+        List<String> lore = new ArrayList<>();
+        lore.add("   ");
+        lore.add(Chat.colorMessage("&eClick here to edit this value"));
 
         Projectile projectile = FileManager.jsonToProjectile(FileManager.CreateFile(FileManager.projectilesFolder, name + ".json"));
+
+        if (projectile == null) {
+            System.out.println("error: this projectile seems to be null!");
+            return;
+        }
 
         lore.add(Chat.colorMessage("&eValue: &f" + projectile.getRange()));
 

@@ -24,6 +24,7 @@ public class PlayerEvents implements Listener {
     public void OnPlayerChat(AsyncPlayerChatEvent e) {
 
         Player player = e.getPlayer();
+        boolean skipRemoving = false;
         UUID uuid = player.getUniqueId();
         if (Chat.playerChatRequests.containsKey(uuid)) {
 
@@ -51,14 +52,16 @@ public class PlayerEvents implements Listener {
                 } else {
                     runnable = () -> Chat.sendPlayerChatRequest(player, Chat.playerChatRequests.get(uuid));
                     player.sendMessage(ChatColor.RED + "Invalid value, please try again!");
+                    skipRemoving = true;
                 }
                 Bukkit.getScheduler().runTask(JavaPlugin.getPlugin(ProjectileMaker.class), runnable);
 
             }
 
+            if (!skipRemoving) {
+                Chat.playerChatRequests.remove(uuid);
+            }
 
-
-            Chat.playerChatRequests.remove(uuid);
             Chat.playerAndResult.put(uuid, e.getMessage());
         }
 

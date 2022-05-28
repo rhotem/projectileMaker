@@ -53,25 +53,19 @@ public class FileManager {
 
     public static File createJSON(String name, File folder, Object data, boolean overRide) {
 
-        if (overRide) {
-
-            File file = CreateFile(folder, name + ".json");
-
-            if (file.exists()) {
-
-                file.delete();
-
-            }
-
-
-        }
 
         File file = CreateFile(folder, name + ".json");
 
         try {
 
             Gson gson = new Gson();
-            Writer writer = new FileWriter(file, true);
+            Writer writer;
+            if (overRide) {
+                writer = new FileWriter(file, false);
+            } else {
+                writer = new FileWriter(file, true);
+            }
+
             gson.toJson(data, writer);
             writer.flush();
             writer.close();
@@ -92,10 +86,12 @@ public class FileManager {
 
             Gson gson = new Gson();
             Reader reader = new FileReader(file);
-            return gson.fromJson(reader, Projectile.class);
+            Projectile projectile = gson.fromJson(reader, Projectile.class);
+            reader.close();
+            return projectile;
 
 
-        } catch (FileNotFoundException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
         return null;
