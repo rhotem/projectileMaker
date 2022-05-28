@@ -26,7 +26,11 @@ public class PlayerEvents implements Listener {
         Player player = e.getPlayer();
         UUID uuid = player.getUniqueId();
         if (Chat.playerChatRequests.containsKey(uuid)) {
+
+            if (Chat.playerChatRequests.get(uuid) == null) {return;}
+
             e.setCancelled(true);
+
 
 
             if (Chat.playerChatRequests.get(uuid).equals("newProjectile")) {
@@ -37,16 +41,18 @@ public class PlayerEvents implements Listener {
 
             } else if (Chat.playerChatRequests.get(uuid).contains("EDIT:")) {
 
+                Runnable runnable;
                 String setting = Chat.playerChatRequests.get(uuid).replace("EDIT:", "");
                 String name = ProjectileMenu.editMap.get(player.getUniqueId());
                 Projectile projectile = FileManager.jsonToProjectile(FileManager.CreateFile(FileManager.projectilesFolder, name + ".json"));
-                if (projectile.editSetting(name, e.getMessage())) {
+                if (projectile.editSetting(setting, e.getMessage())) {
                     projectile.saveProjectile();
-                    ProjectileMenu.editProjectile(name, player);
+                    runnable = () -> ProjectileMenu.editProjectile(name, player);
                 } else {
-                    Chat.sendPlayerChatRequest(player, Chat.playerChatRequests.get(uuid));
+                    runnable = () -> Chat.sendPlayerChatRequest(player, Chat.playerChatRequests.get(uuid));
                     player.sendMessage(ChatColor.RED + "Invalid value, please try again!");
                 }
+                Bukkit.getScheduler().runTask(JavaPlugin.getPlugin(ProjectileMaker.class), runnable);
 
             }
 

@@ -80,40 +80,43 @@ public class Projectile {
 
     public boolean editSetting(String setting, String value) {
 
-        int intValue = Integer.parseInt(value);
-        double doubleValue = Double.parseDouble(value);
 
 
 
-        switch (setting) {
 
-            case "Range":
-                range = doubleValue;
-                return true;
-            case "Damage":
-                damage = doubleValue;
-                return true;
-            case "Velocity":
-                velocity = doubleValue;
-                return true;
-            case "Delay":
-                delay = intValue;
-                return true;
-            case "Particle":
-                Particle particleValue;
-                try {
-                    particleValue = Particle.valueOf(value);
-                } catch (IllegalArgumentException e) {
+        try {
+            double doubleValue;
+            switch (setting) {
+                case "Range":
+                    doubleValue = Double.parseDouble(value);
+                    range = doubleValue;
+                    return true;
+                case "Damage":
+                    doubleValue = Double.parseDouble(value);
+                    damage = doubleValue;
+                    return true;
+                case "Velocity":
+                    doubleValue = Double.parseDouble(value);
+                    velocity = doubleValue;
+                    return true;
+                case "Delay":
+                    int intValue = Integer.parseInt(value);
+                    delay = intValue;
+                    return true;
+                case "Particle":
+                    Particle particleValue = Particle.valueOf(value);
+                    particle = particleValue;
+                    return true;
+                default:
                     return false;
-                }
-                particle = particleValue;
-                return true;
-            default:
-                return false;
 
 
 
+            }
+        } catch (Exception e) {
+            return false;
         }
+
 
 
     }

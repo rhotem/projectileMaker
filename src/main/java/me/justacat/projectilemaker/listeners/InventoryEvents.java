@@ -4,6 +4,7 @@ import me.justacat.projectilemaker.FileManager;
 import me.justacat.projectilemaker.Projectile;
 import me.justacat.projectilemaker.gui.ProjectileMenu;
 import me.justacat.projectilemaker.misc.Chat;
+import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -31,7 +32,7 @@ public class InventoryEvents implements Listener {
                 if (localName.equals("CreateProjectile"))  {
                     Chat.sendPlayerChatRequest(player, "newProjectile");
                 } else if (localName.equalsIgnoreCase("projectile")) {
-                    ProjectileMenu.editProjectile(item.getItemMeta().getDisplayName().replace("&7", ""), player);
+                    ProjectileMenu.editProjectile(item.getItemMeta().getDisplayName().replace(ChatColor.GRAY.toString(), ""), player);
                 }
 
 
@@ -42,7 +43,7 @@ public class InventoryEvents implements Listener {
             if (item != null && item.hasItemMeta() && item.getItemMeta().hasLocalizedName()) {
                 String projectileName = e.getView().getTitle().replace("Edit Projectile: ", "");
                 String settingType = item.getItemMeta().getLocalizedName();
-                String setting = item.getItemMeta().getDisplayName().replace("&7", "");
+                String setting = item.getItemMeta().getDisplayName().replace(ChatColor.GRAY.toString(), "");
                 Chat.sendPlayerChatRequest(player, "EDIT:" + setting);
 
             }
