@@ -3,20 +3,21 @@ package me.justacat.projectilemaker.misc;
 import me.justacat.projectilemaker.gui.ProjectileMenu;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.InventoryType;
 
 import java.sql.Time;
 import java.util.*;
 
 public class Chat {
 
-    public static List<UUID> playerChatRequests = new ArrayList<>();
+    public static HashMap<UUID, String> playerChatRequests = new HashMap<>();
     public static HashMap<UUID, String> playerAndResult = new HashMap<>();
 
     public static String colorMessage(String message){
         return ChatColor.translateAlternateColorCodes('&', message);
     }
 
-    public static String sendPlayerChatRequest(Player player, String ID) {
+    public static void sendPlayerChatRequest(Player player, String ID) {
 
         player.closeInventory();
         player.sendMessage(" ");
@@ -27,21 +28,8 @@ public class Chat {
         player.sendMessage(colorMessage("&6---------------------------------"));
         player.sendMessage(" ");
         playerAndResult.remove(player.getUniqueId());
-        playerChatRequests.add(player.getUniqueId());
+        playerChatRequests.put(player.getUniqueId(), ID);
 
-        Calendar time = Calendar.getInstance();
-        while (!playerAndResult.containsKey(player.getUniqueId())) {
-
-            if (playerChatRequests.contains(player.getUniqueId())) {
-                return "new request 123456";
-            }
-
-        }
-
-        if (ID.equals("newProjectile")) {
-            ProjectileMenu.openProjectileMenu(player);
-        }
-        return playerAndResult.get(player.getUniqueId());
 
     }
 

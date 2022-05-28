@@ -25,57 +25,9 @@ public class InventoryEvents implements Listener {
             if (e.getInventory().getItem(e.getRawSlot()) != null && e.getInventory().getItem(e.getRawSlot()).getItemMeta() != null && e.getInventory().getItem(e.getRawSlot()).getItemMeta().getLocalizedName().equals("CreateProjectile")) {
 
 
-                String name = Chat.sendPlayerChatRequest(player, "newProjectile");
-                if (name.equals("new request 123456")) {return;}
-                name = name.replace(":", "");
-                name = name.replace("/", "");
-                name = name.replace("\\", "");
-                name = name.replace(">", "");
-                name = name.replace("<", "");
-                name = name.replace("*", "");
-                name = name.replace("?", "");
-                name = name.replace("\"", "");
-                name = name.replace("|", "");
-                name = name.replace(" ", "_");
+                Chat.sendPlayerChatRequest(player, "newProjectile");
 
-                if (name.length() < 3) {
-                    name = Chat.sendPlayerChatRequest(player, "newProjectile");
-                    player.sendMessage(Chat.colorMessage("&cThis name is too short!"));
-                    return;
-                }
-                if (name.length() > 16) {
-                    name = Chat.sendPlayerChatRequest(player, "newProjectile");
-                    player.sendMessage(Chat.colorMessage("&cThis name is too long!"));
-                    return;
-                }
-
-                YamlConfiguration modifyProjectileList = YamlConfiguration.loadConfiguration(FileManager.projectileList);
-
-                List<String> projectileList = modifyProjectileList.getStringList("List");
-
-                if (projectileList.contains(name)) {
-
-                    name = Chat.sendPlayerChatRequest(player, "newProjectile");
-                    player.sendMessage(Chat.colorMessage("&cThere is already an existing projectile with this name!"));
-                    return;
-                } else {
-
-                    projectileList.add(name);
-                    modifyProjectileList.set("List", projectileList);
-
-                }
-
-                try {
-                    modifyProjectileList.save(FileManager.projectileList);
-                } catch (IOException ex) {
-                    System.out.println("Failed to save the projectile list!");
-                }
-
-                Projectile projectile = new Projectile(name);
-                ProjectileMenu.openProjectileMenu(player);
-
-
-            }
+           }
 
         }
 
