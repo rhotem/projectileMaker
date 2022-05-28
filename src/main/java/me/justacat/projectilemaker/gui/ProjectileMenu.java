@@ -1,7 +1,9 @@
 package me.justacat.projectilemaker.gui;
 
 import me.justacat.projectilemaker.FileManager;
+import me.justacat.projectilemaker.Projectile;
 import me.justacat.projectilemaker.misc.Chat;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -76,10 +78,30 @@ public class ProjectileMenu {
         guiBuilder.setTitle("Edit Projectile: " + name);
         List<String> lore = Arrays.asList(" ", Chat.colorMessage("&eClick here to edit this value"));
 
+        Projectile projectile = FileManager.jsonToProjectile(FileManager.CreateFile(FileManager.projectilesFolder, name + ".json"));
+
+        lore.add(Chat.colorMessage("&eValue: &f" + projectile.getRange()));
+
         guiBuilder.setItem(0, Material.BOW, 1, Chat.colorMessage("&7Range"), lore, true, "double");
+
+        lore.remove(Chat.colorMessage("&eValue: &f" + projectile.getRange()));
+        lore.add(Chat.colorMessage("&eValue: &f" + projectile.getVelocity()));
+
         guiBuilder.setItem(1, Material.SUGAR, 1, Chat.colorMessage("&7Velocity"), lore, true, "double");
+
+        lore.remove(Chat.colorMessage("&eValue: &f" + projectile.getVelocity()));
+        lore.add(Chat.colorMessage("&eValue: &f" + projectile.getDelay()));
+
         guiBuilder.setItem(2, Material.CLOCK, 1, Chat.colorMessage("&7Delay"), lore, true, "int");
+
+        lore.remove(Chat.colorMessage("&eValue: &f" + projectile.getDelay()));
+        lore.add(Chat.colorMessage("&eValue: &f" + projectile.getDamage()));
+
         guiBuilder.setItem(3, Material.DIAMOND_SWORD, 1, Chat.colorMessage("&7Damage"), lore, true, "double");
+
+        lore.remove(Chat.colorMessage("&eValue: &f" + projectile.getDamage()));
+        lore.add(Chat.colorMessage("&eValue: &f" + projectile.getParticle()));
+
         guiBuilder.setItem(4, Material.REDSTONE, 1, Chat.colorMessage("&7Particle"), lore, true, "particle");
 
 
