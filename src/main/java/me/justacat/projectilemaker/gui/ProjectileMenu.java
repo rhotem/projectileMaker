@@ -7,12 +7,15 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.checkerframework.checker.units.qual.C;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class ProjectileMenu {
+
+
+    public static HashMap<UUID, String> editMap = new HashMap<>();
+
 
     public static void openProjectileMenu(Player player) {
 
@@ -29,6 +32,7 @@ public class ProjectileMenu {
             ItemStack itemStack = new ItemStack(Material.BLAZE_ROD);
             ItemMeta itemMeta = itemStack.getItemMeta();
             itemMeta.setDisplayName(Chat.colorMessage("&7" + string));
+            itemMeta.setLocalizedName("Projectile");
             itemStack.setItemMeta(itemMeta);
             projectiles.add(itemStack);
         }
@@ -60,6 +64,29 @@ public class ProjectileMenu {
         player.openInventory(builder.toInventory());
 
 
+    }
+
+    public static void editProjectile(String name, Player player) {
+
+
+        editMap.put(player.getUniqueId(), name);
+        GuiBuilder guiBuilder = new GuiBuilder(player);
+        guiBuilder.setSize(54);
+
+        guiBuilder.setTitle("Edit Projectile: " + name);
+        List<String> lore = Arrays.asList(" ", Chat.colorMessage("&eClick here to edit this value"));
+
+        guiBuilder.setItem(0, Material.BOW, 1, Chat.colorMessage("&7Range"), lore, true, "double");
+        guiBuilder.setItem(1, Material.SUGAR, 1, Chat.colorMessage("&7Velocity"), lore, true, "double");
+        guiBuilder.setItem(2, Material.CLOCK, 1, Chat.colorMessage("&7Delay"), lore, true, "int");
+        guiBuilder.setItem(3, Material.DIAMOND_SWORD, 1, Chat.colorMessage("&7Damage"), lore, true, "double");
+        guiBuilder.setItem(4, Material.REDSTONE, 1, Chat.colorMessage("&7Particle"), lore, true, "particle");
+
+
+
+
+        guiBuilder.setEmpty(Material.GRAY_STAINED_GLASS_PANE, 1, " ", null, true);
+        player.openInventory(guiBuilder.toInventory());
     }
 
 

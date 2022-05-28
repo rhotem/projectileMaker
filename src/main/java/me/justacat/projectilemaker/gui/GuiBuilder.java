@@ -29,12 +29,15 @@ public class GuiBuilder {
         Inventory inventory = Bukkit.createInventory(player, size, title);
         for (int slot = 0; slot < size; slot++) {
 
+            ItemStack item;
             if (slots.get(slot) != null) {
-                inventory.setItem(slot, slots.get(slot));
+                item = slots.get(slot);
             } else {
-                inventory.setItem(slot, empty);
+                item = empty;
             }
 
+
+            inventory.setItem(slot, item);
         }
 
 
@@ -92,6 +95,8 @@ public class GuiBuilder {
         itemStack.setItemMeta(itemMeta);
         return itemStack;
     }
+
+
 
     public void loadHashMap(HashMap<Integer, ItemStack> map) {
         slots = map;

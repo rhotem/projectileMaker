@@ -86,7 +86,7 @@ public class FileManager {
 
     }
 
-    public Projectile jsonToProjectile(File file) {
+    public static Projectile jsonToProjectile(File file) {
 
         try {
 

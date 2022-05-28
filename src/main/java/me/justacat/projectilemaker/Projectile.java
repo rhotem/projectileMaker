@@ -27,7 +27,7 @@ public class Projectile {
 
     private double range = 20.0;
     private double velocity = 10.0;
-    private Particle particle = Particle.FLAME; //need to check if i can json that
+    private Particle particle = Particle.FLAME;
     private int delay = 1;
     private double damage = 5;
 
@@ -72,6 +72,53 @@ public class Projectile {
     public String getType() {return type;}
     public Particle getParticle() {return particle;}
     public double getDamage() {return damage;}
+
+
+
+
+
+
+    public boolean editSetting(String setting, String value) {
+
+        int intValue = Integer.parseInt(value);
+        double doubleValue = Double.parseDouble(value);
+
+
+
+        switch (setting) {
+
+            case "Range":
+                range = doubleValue;
+                return true;
+            case "Damage":
+                damage = doubleValue;
+                return true;
+            case "Velocity":
+                velocity = doubleValue;
+                return true;
+            case "Delay":
+                delay = intValue;
+                return true;
+            case "Particle":
+                Particle particleValue;
+                try {
+                    particleValue = Particle.valueOf(value);
+                } catch (IllegalArgumentException e) {
+                    return false;
+                }
+                particle = particleValue;
+                return true;
+            default:
+                return false;
+
+
+
+        }
+
+
+    }
+
+
 
     public void castAsBeam(Location location, LivingEntity caster, Vector direction) {
 
