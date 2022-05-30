@@ -9,6 +9,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class TabComplete implements TabCompleter {
@@ -36,6 +37,8 @@ public class TabComplete implements TabCompleter {
 
 
 
+        } else if (args.length == 3) {
+            return StringUtil.copyPartialMatches(args[2], Arrays.asList("RightClick", "LeftClick"), new ArrayList<>());
         }
 
         return null;

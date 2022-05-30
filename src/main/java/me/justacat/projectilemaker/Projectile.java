@@ -31,6 +31,7 @@ public class Projectile {
     private int delay = 1;
     private double damage = 5;
 
+    private double knockback = 1;
     //spiral
 
     private int branches;
@@ -122,6 +123,13 @@ public class Projectile {
     }
 
 
+    public void cast(Location location, LivingEntity caster, Vector direction) {
+
+        if (type.equals("Beam")) {
+            this.castAsBeam(location, caster, direction);
+        }
+
+    }
 
     public void castAsBeam(Location location, LivingEntity caster, Vector direction) {
 
@@ -140,6 +148,7 @@ public class Projectile {
                     //hit here
                     if (!location.getBlock().getType().equals(Material.AIR)) {
 
+
                         //hit event
                         this.cancel();
 
@@ -147,10 +156,12 @@ public class Projectile {
 
                     Collection<Entity> hit = location.getWorld().getNearbyEntities(location, 1, 1, 1);
                     hit.removeIf(entity -> !(entity instanceof LivingEntity));
+                    hit.remove(caster);
                     if (!hit.isEmpty()) {
                         for (Entity entity : hit) {
 
                             ((LivingEntity) entity).damage(damage, caster);
+                            entity.setVelocity(entity.getVelocity().add(direction.multiply(knockback)));
 
                         }
                         //hit event

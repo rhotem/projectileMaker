@@ -24,8 +24,10 @@ public class ProjectileMakerCommand implements CommandExecutor {
 
                     case "Menu":
                         ProjectileMenu.openProjectileMenu((Player) sender);
+                        break;
                     case "Help":
                         sender.sendMessage(Chat.colorMessage("&e/ProjectileMaker Menu \n &e/ProjectileMaker BindItem \n &e/ProjectileMaker Help \n"));
+                        break;
                     case "BindItem":
 
 
@@ -40,15 +42,16 @@ public class ProjectileMakerCommand implements CommandExecutor {
                         } else {
                             sender.sendMessage("Please specify a projectile name and a click type!");
                         }
+                        break;
 
 
                     default:
-                        sender.sendMessage(Chat.colorMessage("&e/ProjectileMaker Menu \n &e/ProjectileMaker BindItem \n &e/ProjectileMaker Help \n"));
-
+                        sender.sendMessage(Chat.colorMessage("&e/ProjectileMaker Menu \n&e/ProjectileMaker BindItem \n&e/ProjectileMaker Help \n"));
+                        break;
                 }
 
             } else {
-                sender.sendMessage(Chat.colorMessage("&e/ProjectileMaker Menu \n &e/ProjectileMaker BindItem \n &e/ProjectileMaker Help \n"));
+                sender.sendMessage(Chat.colorMessage("&e/ProjectileMaker Menu \n&e/ProjectileMaker BindItem \n&e/ProjectileMaker Help \n"));
             }
 
 

@@ -29,7 +29,8 @@ public class ClickEvent implements Listener {
 
         ItemMeta itemMeta = item.getItemMeta();
 
-        if (itemMeta.getPersistentDataContainer().has(leftClick)) {
+
+        if (itemMeta.getPersistentDataContainer().has(leftClick) && e.getAction().isLeftClick()) {
 
             String projectileName = itemMeta.getPersistentDataContainer().get(leftClick, PersistentDataType.STRING);
 
@@ -42,14 +43,14 @@ public class ClickEvent implements Listener {
 
         }
 
-        if (itemMeta.getPersistentDataContainer().has(rightClick)) {
+        if (itemMeta.getPersistentDataContainer().has(rightClick) && e.getAction().isRightClick()) {
 
             String projectileName = itemMeta.getPersistentDataContainer().get(rightClick, PersistentDataType.STRING);
 
             Projectile projectile = Projectile.projectileFromName(projectileName);
 
             if (projectile != null) {
-                projectile.castAsBeam(player.getLocation(), player, player.getLocation().getDirection());
+                projectile.cast(player.getLocation(), player, player.getLocation().getDirection());
             }
 
 
