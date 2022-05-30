@@ -5,6 +5,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.*;
+import java.util.List;
 
 public class FileManager {
 
@@ -99,6 +100,13 @@ public class FileManager {
 
     }
 
+
+    public static List<String> getProjectileList() {
+
+        YamlConfiguration yamlConfiguration = YamlConfiguration.loadConfiguration(projectileList);
+        return yamlConfiguration.getStringList("List");
+
+    }
 
 
 }

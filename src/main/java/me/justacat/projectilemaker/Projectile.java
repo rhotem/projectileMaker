@@ -104,7 +104,7 @@ public class Projectile {
                     delay = intValue;
                     return true;
                 case "Particle":
-                    Particle particleValue = Particle.valueOf(value);
+                    Particle particleValue = Particle.valueOf(value.toUpperCase());
                     particle = particleValue;
                     return true;
                 default:
@@ -166,6 +166,10 @@ public class Projectile {
     }
 
 
+
+    public static Projectile projectileFromName(String name) {
+        return FileManager.jsonToProjectile(FileManager.CreateFile(FileManager.projectilesFolder, name + ".json"));
+    }
 
 
     public static void createProjectile(String name, Player player) {

@@ -18,7 +18,7 @@ import org.bukkit.scheduler.BukkitTask;
 import java.lang.reflect.Method;
 import java.util.UUID;
 
-public class PlayerEvents implements Listener {
+public class ChatEvent implements Listener {
 
     @EventHandler
     public void OnPlayerChat(AsyncPlayerChatEvent e) {
