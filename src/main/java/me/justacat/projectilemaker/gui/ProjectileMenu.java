@@ -80,7 +80,7 @@ public class ProjectileMenu {
         lore.add("   ");
         lore.add(Chat.colorMessage("&eClick here to edit this value"));
 
-        Projectile projectile = Projectile.projectileFromName(name);
+        Projectile projectile = Projectile.projectileFromName(name, true);
 
         if (projectile == null) {
             System.out.println("error: this projectile seems to be null!");

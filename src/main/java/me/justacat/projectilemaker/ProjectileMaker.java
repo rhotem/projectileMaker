@@ -7,6 +7,7 @@ import me.justacat.projectilemaker.listeners.ChatEvent;
 import me.justacat.projectilemaker.listeners.ClickEvent;
 import me.justacat.projectilemaker.listeners.InventoryEvents;
 import org.bukkit.Bukkit;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class ProjectileMaker extends JavaPlugin {
@@ -16,6 +17,16 @@ public final class ProjectileMaker extends JavaPlugin {
 
 
         FileManager.CreateAllFolders();
+
+        YamlConfiguration yamlConfiguration = YamlConfiguration.loadConfiguration(FileManager.projectileList);
+
+        if (yamlConfiguration.get("List") != null) {
+            for (String projectile : yamlConfiguration.getStringList("List")) {
+
+                Projectile.loadedProjectiles.put(projectile, Projectile.projectileFromName(projectile, false));
+
+            }
+        }
 
 
         getCommand("test").setExecutor(new testCommand());

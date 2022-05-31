@@ -17,6 +17,7 @@ import org.bukkit.util.Vector;
 
 import java.io.IOException;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 
 public class Projectile {
@@ -43,11 +44,13 @@ public class Projectile {
     private BukkitTask task;
     private int cycles = 0;
 
+    public static HashMap<String, Projectile> loadedProjectiles = new HashMap<>();
 
     public Projectile(String name) {
 
         this.name = name;
         FileManager.createJSON(name, FileManager.projectilesFolder, this, true);
+        loadedProjectiles.put(name, this);
 
     }
 
@@ -178,8 +181,13 @@ public class Projectile {
 
 
 
-    public static Projectile projectileFromName(String name) {
-        return FileManager.jsonToProjectile(FileManager.CreateFile(FileManager.projectilesFolder, name + ".json"));
+    public static Projectile projectileFromName(String name, boolean loaded) {
+        if (loaded) {
+            return loadedProjectiles.get(name);
+        } else {
+            return FileManager.jsonToProjectile(FileManager.CreateFile(FileManager.projectilesFolder, name + ".json"));
+        }
+
     }
 
 
@@ -229,8 +237,11 @@ public class Projectile {
                     System.out.println("Failed to save the projectile list!");
                 }
 
-                Projectile projectile = new Projectile(name);
+                new Projectile(name);
                 ProjectileMenu.openProjectileMenu(player);
+
+
+
     }
 
 }
