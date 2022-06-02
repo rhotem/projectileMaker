@@ -41,9 +41,8 @@ public class Projectile {
     //cone
 
     //misc
-    private BukkitTask task;
-    private int cycles = 0;
 
+    private HashMap<Integer, Integer> cycles = new HashMap<>();
     public static HashMap<String, Projectile> loadedProjectiles = new HashMap<>();
 
     public Projectile(String name) {
@@ -55,9 +54,7 @@ public class Projectile {
     }
 
 
-    public void saveProjectile() {
-        FileManager.createJSON(name, FileManager.projectilesFolder, this, true);
-    }
+    public void saveProjectile() {FileManager.createJSON(name, FileManager.projectilesFolder, this, true);}
 
     public void setType(String type) {this.type = type;}
     public void setVelocity(double velocity) {this.velocity = velocity;}
@@ -134,26 +131,39 @@ public class Projectile {
 
     }
 
+
+
     public void castAsBeam(Location location, LivingEntity caster, Vector direction) {
 
 
         int looptimes = (int) (range*20 / velocity);
         direction.normalize().multiply(velocity/20);
 
-            task = new BukkitRunnable() {
+            BukkitTask task = new BukkitRunnable() {
                 @Override
                 public void run() {
 
+                    int ID = this.getTaskId();
+
+
+
                     location.add(direction);
                     location.getWorld().spawnParticle(particle, location, 10, 0, 0, 0, 0.05);
-                    cycles++;
+
+                    if (!cycles.containsKey(ID)) {
+                        cycles.put(ID, 0);
+                    } else {
+                        cycles.put(ID, cycles.get(ID) + 1);
+                    }
 
                     //hit here
                     if (!location.getBlock().getType().equals(Material.AIR)) {
 
 
                         //hit event
+                        cycles.remove(ID);
                         this.cancel();
+                        return;
 
                     }
 
@@ -168,11 +178,14 @@ public class Projectile {
 
                         }
                         //hit event
+                        cycles.remove(ID);
                         this.cancel();
+                        return;
                     }
 
-                    if (cycles >= looptimes) {
+                    if (cycles.get(ID) >= looptimes) {
                         this.cancel();
+                        cycles.remove(ID);
                     }
 
                 }

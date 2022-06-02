@@ -45,7 +45,7 @@ public class ChatEvent implements Listener {
                 Runnable runnable;
                 String setting = Chat.playerChatRequests.get(uuid).replace("EDIT:", "");
                 String name = ProjectileMenu.editMap.get(player.getUniqueId());
-                Projectile projectile = FileManager.jsonToProjectile(FileManager.CreateFile(FileManager.projectilesFolder, name + ".json"));
+                Projectile projectile = Projectile.loadedProjectiles.get(name);
                 if (projectile.editSetting(setting, e.getMessage())) {
                     projectile.saveProjectile();
                     runnable = () -> ProjectileMenu.editProjectile(name, player);

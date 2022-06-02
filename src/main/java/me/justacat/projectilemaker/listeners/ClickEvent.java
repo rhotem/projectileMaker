@@ -37,7 +37,7 @@ public class ClickEvent implements Listener {
             Projectile projectile = Projectile.projectileFromName(projectileName, true);
 
             if (projectile != null) {
-                projectile.castAsBeam(player.getLocation(), player, player.getLocation().getDirection());
+                projectile.cast(player.getEyeLocation(), player, player.getEyeLocation().getDirection());
             }
 
 
@@ -50,7 +50,7 @@ public class ClickEvent implements Listener {
             Projectile projectile = Projectile.projectileFromName(projectileName, true);
 
             if (projectile != null) {
-                projectile.cast(player.getLocation(), player, player.getLocation().getDirection());
+                projectile.cast(player.getEyeLocation(), player, player.getEyeLocation().getDirection());
             }
 
 

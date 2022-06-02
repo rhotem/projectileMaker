@@ -22,7 +22,8 @@ public class FileManager {
         projectilesFolder = new File(dataFolder, "projectiles");
         if (!projectilesFolder.exists()) {
             projectilesFolder.mkdir();
-            new Projectile("Firebolt");
+            Projectile firebolt = new Projectile("Firebolt");
+            firebolt.saveProjectile();
         }
 
     }
@@ -74,6 +75,7 @@ public class FileManager {
 
         } catch (IOException e) {
             e.printStackTrace();
+            System.out.println("unable to write/create " + name + ".json!");
         }
 
         return file;
