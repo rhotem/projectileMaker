@@ -18,15 +18,11 @@ public final class ProjectileMaker extends JavaPlugin {
 
         FileManager.CreateAllFolders();
 
-        YamlConfiguration yamlConfiguration = YamlConfiguration.loadConfiguration(FileManager.projectileList);
+        for (String projectile : FileManager.getProjectileList()) {
 
-        if (yamlConfiguration.get("List") != null) {
-            for (String projectile : yamlConfiguration.getStringList("List")) {
-
-                Projectile.loadedProjectiles.put(projectile, Projectile.projectileFromName(projectile, false));
-
-            }
+            Projectile.loadedProjectiles.put(projectile, Projectile.projectileFromName(projectile, false));
         }
+
 
 
         getCommand("test").setExecutor(new testCommand());

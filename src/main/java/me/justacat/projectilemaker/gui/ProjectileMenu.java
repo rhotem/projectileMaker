@@ -21,11 +21,8 @@ public class ProjectileMenu {
 
     public static void openProjectileMenu(Player player) {
 
-        YamlConfiguration yamlConfiguration = YamlConfiguration.loadConfiguration(FileManager.projectileList);
-        List<String> list = new ArrayList<>();
-        if (yamlConfiguration.get("List") != null) {
-            list = yamlConfiguration.getStringList("List");
-        }
+        List<String> list = FileManager.getProjectileList();
+
 
 
 

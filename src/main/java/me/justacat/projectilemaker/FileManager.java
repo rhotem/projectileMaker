@@ -5,6 +5,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class FileManager {
@@ -12,7 +13,6 @@ public class FileManager {
 
     public static final File dataFolder = JavaPlugin.getPlugin(ProjectileMaker.class).getDataFolder();
     public static File projectilesFolder;
-    public static File projectileList;
 
 
     public static void CreateAllFolders() {
@@ -22,9 +22,8 @@ public class FileManager {
         projectilesFolder = new File(dataFolder, "projectiles");
         if (!projectilesFolder.exists()) {
             projectilesFolder.mkdir();
+            new Projectile("Firebolt");
         }
-        projectileList = CreateFile(dataFolder, "ProjectileList.yml");
-
 
     }
 
@@ -101,10 +100,21 @@ public class FileManager {
     }
 
 
+
+
     public static List<String> getProjectileList() {
 
-        YamlConfiguration yamlConfiguration = YamlConfiguration.loadConfiguration(projectileList);
-        return yamlConfiguration.getStringList("List");
+        File[] files = projectilesFolder.listFiles();
+
+        if (files == null) {
+            return new ArrayList<>();
+        }
+
+        List<String> list = new ArrayList<>();
+        for (File file : files) {
+            list.add(file.getName());
+        }
+        return list;
 
     }
 

@@ -215,26 +215,14 @@ public class Projectile {
                     return;
                 }
 
-                YamlConfiguration modifyProjectileList = YamlConfiguration.loadConfiguration(FileManager.projectileList);
 
-                List<String> projectileList = modifyProjectileList.getStringList("List");
+                List<String> projectileList = FileManager.getProjectileList();
 
                 if (projectileList.contains(name)) {
 
                     Chat.sendPlayerChatRequest(player, "newProjectile");
                     player.sendMessage(Chat.colorMessage("&cThere is already an existing projectile with this name!"));
                     return;
-                } else {
-
-                    projectileList.add(name);
-                    modifyProjectileList.set("List", projectileList);
-
-                }
-
-                try {
-                    modifyProjectileList.save(FileManager.projectileList);
-                } catch (IOException ex) {
-                    System.out.println("Failed to save the projectile list!");
                 }
 
                 new Projectile(name);
