@@ -112,7 +112,12 @@ public class FileManager {
 
         List<String> list = new ArrayList<>();
         for (File file : files) {
-            list.add(file.getName());
+            String name = file.getName();
+            if (name.contains(".json")) {
+                name = name.replace(".json", "");
+                list.add(name);
+            }
+
         }
         return list;
 
