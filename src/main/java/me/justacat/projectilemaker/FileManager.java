@@ -1,7 +1,7 @@
 package me.justacat.projectilemaker;
 
 import com.google.gson.Gson;
-import org.bukkit.configuration.file.YamlConfiguration;
+import me.justacat.projectilemaker.projectiles.Projectile;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.*;

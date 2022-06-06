@@ -1,7 +1,7 @@
 package me.justacat.projectilemaker.commands;
 
 import me.justacat.projectilemaker.FileManager;
-import me.justacat.projectilemaker.Projectile;
+import me.justacat.projectilemaker.projectiles.Projectile;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;

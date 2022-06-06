@@ -1,15 +1,12 @@
 package me.justacat.projectilemaker.gui;
 
 import me.justacat.projectilemaker.FileManager;
-import me.justacat.projectilemaker.Projectile;
+import me.justacat.projectilemaker.projectiles.Projectile;
 import me.justacat.projectilemaker.misc.Chat;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.checkerframework.checker.units.qual.C;
 
 import java.util.*;
 
@@ -110,6 +107,11 @@ public class ProjectileMenu {
 
 
 
+
+
+
+
+        guiBuilder.setItem(49, Material.ARROW, 1, "&fGo Back", null, true, "goBack");
 
         guiBuilder.setEmpty(Material.GRAY_STAINED_GLASS_PANE, 1, " ", null, true);
         player.openInventory(guiBuilder.toInventory());

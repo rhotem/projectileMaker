@@ -1,12 +1,13 @@
-package me.justacat.projectilemaker;
+package me.justacat.projectilemaker.projectiles;
 
+import me.justacat.projectilemaker.FileManager;
+import me.justacat.projectilemaker.ProjectileMaker;
 import me.justacat.projectilemaker.gui.ProjectileMenu;
 import me.justacat.projectilemaker.misc.Chat;
+import me.justacat.projectilemaker.projectiles.hitevents.Explosion;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
-import org.bukkit.block.Block;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -15,7 +16,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.util.Vector;
 
-import java.io.IOException;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -43,6 +44,10 @@ public class Projectile {
     //misc
 
     private HashMap<Integer, Integer> cycles = new HashMap<>();
+
+
+    private Hit hitEvents = new Hit(Arrays.asList(new HitEvent[]{new Explosion(4, false, true)}));
+
     public static HashMap<String, Projectile> loadedProjectiles = new HashMap<>();
 
     public Projectile(String name) {
@@ -105,7 +110,7 @@ public class Projectile {
                     delay = intValue;
                     return true;
                 case "Particle":
-                    Particle particleValue = Particle.valueOf(value.toUpperCase());
+                    Particle particleValue = Particle.valueOf(value.toUpperCase().replace(" ", "_"));
                     particle = particleValue;
                     return true;
                 default:
@@ -156,11 +161,11 @@ public class Projectile {
                         cycles.put(ID, cycles.get(ID) + 1);
                     }
 
-                    //hit here
+                    hitEvents.trigger(location, caster);
                     if (!location.getBlock().getType().equals(Material.AIR)) {
 
 
-                        //hit event
+                        hitEvents.trigger(location, caster);
                         cycles.remove(ID);
                         this.cancel();
                         return;
@@ -177,7 +182,7 @@ public class Projectile {
                             entity.setVelocity(entity.getVelocity().add(direction.multiply(knockback)));
 
                         }
-                        //hit event
+                        hitEvents.trigger(location, caster);
                         cycles.remove(ID);
                         this.cancel();
                         return;

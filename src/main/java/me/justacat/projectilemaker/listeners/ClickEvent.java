@@ -1,6 +1,6 @@
 package me.justacat.projectilemaker.listeners;
 
-import me.justacat.projectilemaker.Projectile;
+import me.justacat.projectilemaker.projectiles.Projectile;
 import me.justacat.projectilemaker.ProjectileMaker;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;

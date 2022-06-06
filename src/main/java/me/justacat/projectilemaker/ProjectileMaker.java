@@ -6,8 +6,8 @@ import me.justacat.projectilemaker.commands.testCommand;
 import me.justacat.projectilemaker.listeners.ChatEvent;
 import me.justacat.projectilemaker.listeners.ClickEvent;
 import me.justacat.projectilemaker.listeners.InventoryEvents;
+import me.justacat.projectilemaker.projectiles.Projectile;
 import org.bukkit.Bukkit;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class ProjectileMaker extends JavaPlugin {

@@ -1,8 +1,6 @@
 package me.justacat.projectilemaker.listeners;
 
-import io.papermc.paper.event.player.AsyncChatEvent;
-import me.justacat.projectilemaker.FileManager;
-import me.justacat.projectilemaker.Projectile;
+import me.justacat.projectilemaker.projectiles.Projectile;
 import me.justacat.projectilemaker.ProjectileMaker;
 import me.justacat.projectilemaker.gui.ProjectileMenu;
 import me.justacat.projectilemaker.misc.Chat;
@@ -13,9 +11,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scheduler.BukkitTask;
 
-import java.lang.reflect.Method;
 import java.util.UUID;
 
 public class ChatEvent implements Listener {
