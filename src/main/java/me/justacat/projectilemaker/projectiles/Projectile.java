@@ -46,8 +46,6 @@ public class Projectile {
     private HashMap<Integer, Integer> cycles = new HashMap<>();
 
 
-    private Hit hitEvents = new Hit(Arrays.asList(new HitEvent[]{new Explosion(4, false, true)}));
-
     public static HashMap<String, Projectile> loadedProjectiles = new HashMap<>();
 
     public Projectile(String name) {
@@ -161,11 +159,10 @@ public class Projectile {
                         cycles.put(ID, cycles.get(ID) + 1);
                     }
 
-                    hitEvents.trigger(location, caster);
                     if (!location.getBlock().getType().equals(Material.AIR)) {
 
 
-                        hitEvents.trigger(location, caster);
+                        //hit
                         cycles.remove(ID);
                         this.cancel();
                         return;
@@ -182,7 +179,7 @@ public class Projectile {
                             entity.setVelocity(entity.getVelocity().add(direction.multiply(knockback)));
 
                         }
-                        hitEvents.trigger(location, caster);
+                        //hit
                         cycles.remove(ID);
                         this.cancel();
                         return;

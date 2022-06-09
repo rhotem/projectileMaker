@@ -4,8 +4,9 @@ import org.bukkit.Location;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 
-public interface HitEvent {
+public abstract class HitEvent {
 
-    void trigger(Location location, LivingEntity caster);
+
+    public abstract void trigger(Location location, LivingEntity caster);
 
 }

@@ -1,18 +1,19 @@
 package me.justacat.projectilemaker.projectiles;
 
+import it.unimi.dsi.fastutil.Hash;
 import org.bukkit.Location;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.checkerframework.checker.units.qual.C;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class Hit {
 
 
     private List<HitEvent> eventList = new ArrayList<>();
-
-    public Hit(){}
     public Hit(List<HitEvent> eventList) {this.eventList = eventList;}
 
 
