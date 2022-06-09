@@ -1,11 +1,9 @@
 package me.justacat.projectilemaker.projectiles.hitevents;
 
-import me.justacat.projectilemaker.projectiles.HitEvent;
 import org.bukkit.Location;
 import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
 
-public class Explosion extends HitEvent {
+public class Explosion {
 
     private float power = 3;
     private boolean fire = false;
@@ -17,14 +15,14 @@ public class Explosion extends HitEvent {
         this.power = power;
         this.fire = fire;
         this.safe = safe;
+
     }
 
-    public Explosion(){}
 
-    @Override
     public void trigger(Location location, LivingEntity caster) {
 
         location.createExplosion(caster, power, fire, !safe);
+
 
     }
 

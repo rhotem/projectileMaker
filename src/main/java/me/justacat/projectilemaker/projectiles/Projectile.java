@@ -4,7 +4,6 @@ import me.justacat.projectilemaker.FileManager;
 import me.justacat.projectilemaker.ProjectileMaker;
 import me.justacat.projectilemaker.gui.ProjectileMenu;
 import me.justacat.projectilemaker.misc.Chat;
-import me.justacat.projectilemaker.projectiles.hitevents.Explosion;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
@@ -16,10 +15,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.util.Vector;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public class Projectile {
 
@@ -42,6 +38,8 @@ public class Projectile {
     //cone
 
     //misc
+
+    private HitManager[] hitManagers = new HitManager[]{new HitManager(3, false, true)};
 
     private HashMap<Integer, Integer> cycles = new HashMap<>();
 
@@ -67,6 +65,8 @@ public class Projectile {
     public void setAngle(double angle) {this.angle = angle;}
     public void setBranches(int branches) {this.branches = branches;}
     public void setDamage(double damage) {this.damage = damage;}
+    public void setHitEvents(HitManager[] hitManagers) {this.hitManagers = hitManagers;}
+    public void setKnockback(double knockback) {this.knockback = knockback;}
 
     public int getDelay() {return delay;}
     public double getAngle() {return angle;}
@@ -77,8 +77,9 @@ public class Projectile {
     public Particle getParticle() {return particle;}
     public double getDamage() {return damage;}
 
+    public double getKnockback() {return knockback;}
 
-
+    public HitManager[] getHitEvents() {return hitManagers;}
 
 
 
@@ -162,7 +163,8 @@ public class Projectile {
                     if (!location.getBlock().getType().equals(Material.AIR)) {
 
 
-                        //hit
+                        hit(location, caster);
+
                         cycles.remove(ID);
                         this.cancel();
                         return;
@@ -179,7 +181,9 @@ public class Projectile {
                             entity.setVelocity(entity.getVelocity().add(direction.multiply(knockback)));
 
                         }
-                        //hit
+
+                        hit(location, caster);
+
                         cycles.remove(ID);
                         this.cancel();
                         return;
@@ -193,6 +197,16 @@ public class Projectile {
                 }
             }.runTaskTimer(JavaPlugin.getPlugin(ProjectileMaker.class), 0, delay);
     }
+
+
+
+
+    public void hit(Location location, LivingEntity caster) {
+        for (HitManager hitManager : hitManagers) {
+            hitManager.trigger(location, caster);
+        }
+    }
+
 
 
 
