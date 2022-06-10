@@ -39,7 +39,7 @@ public class Projectile {
 
     //misc
 
-    private HitManager[] hitManagers = new HitManager[]{new HitManager(3, false, true)};
+    private List<HitManager> hitManagers = Arrays.asList(new HitManager[]{new HitManager(3, false, true)});
 
     private HashMap<Integer, Integer> cycles = new HashMap<>();
 
@@ -65,7 +65,7 @@ public class Projectile {
     public void setAngle(double angle) {this.angle = angle;}
     public void setBranches(int branches) {this.branches = branches;}
     public void setDamage(double damage) {this.damage = damage;}
-    public void setHitEvents(HitManager[] hitManagers) {this.hitManagers = hitManagers;}
+    public void setHitEvents(List<HitManager> hitManagers) {this.hitManagers = hitManagers;}
     public void setKnockback(double knockback) {this.knockback = knockback;}
 
     public int getDelay() {return delay;}
@@ -79,7 +79,7 @@ public class Projectile {
 
     public double getKnockback() {return knockback;}
 
-    public HitManager[] getHitEvents() {return hitManagers;}
+    public List<HitManager> getHitEvents() {return hitManagers;}
 
 
 

@@ -1,6 +1,7 @@
 package me.justacat.projectilemaker.gui;
 
 import me.justacat.projectilemaker.FileManager;
+import me.justacat.projectilemaker.projectiles.HitManager;
 import me.justacat.projectilemaker.projectiles.Projectile;
 import me.justacat.projectilemaker.misc.Chat;
 import org.bukkit.Material;
@@ -106,7 +107,7 @@ public class ProjectileMenu {
         guiBuilder.setItem(4, Material.REDSTONE, 1, Chat.colorMessage("&7Particle"), lore, true, "particle");
 
 
-
+        guiBuilder.setItem(5, Material.TNT_MINECART, 1, Chat.colorMessage("&7Hit Effects"), null, true, "hitEffects");
 
 
 
@@ -115,6 +116,39 @@ public class ProjectileMenu {
 
         guiBuilder.setEmpty(Material.GRAY_STAINED_GLASS_PANE, 1, " ", null, true);
         player.openInventory(guiBuilder.toInventory());
+    }
+
+
+    public static void editHitEffects(Player player) {
+
+        String projectileName = editMap.get(player.getUniqueId());
+        Projectile projectile = Projectile.projectileFromName(projectileName, true);
+
+        List<HitManager> hitEffects = projectile.getHitEvents();
+
+        GuiBuilder guiBuilder = new GuiBuilder(player);
+        guiBuilder.setSize(54);
+
+        guiBuilder.setTitle("Edit Hit Events: " + projectileName);
+
+
+        int slot = 0;
+        for (HitManager hit : hitEffects) {
+
+            guiBuilder.setItem(slot, Material.TNT, 1, "Event " + (slot + 1) + ": " + hit.getType(), Arrays.asList("&0", "&7Click here to edit!"), true);
+
+
+            slot++;
+
+        }
+
+
+        guiBuilder.setItem(49, Material.ARROW, 1, "&fGo Back", null, true, "goBack");
+
+
+        player.openInventory(guiBuilder.toInventory());
+
+
     }
 
 

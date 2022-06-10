@@ -16,16 +16,20 @@ public class InventoryEvents implements Listener {
 
         Player player = (Player) e.getWhoClicked();
 
+        if (e.getRawSlot() >= e.getInventory().getSize()) {return;}
+
         if (e.getInventory().getItem(e.getRawSlot()) == null) {return;}
 
         ItemStack item = e.getInventory().getItem(e.getRawSlot());
 
-        if (e.getView().getTitle().contains("Projectile Maker")) {
+        String title = e.getView().getTitle();
+
+        if (title.contains("Projectile Maker")) {
 
             e.setCancelled(true);
             if (item != null && item.hasItemMeta() && item.getItemMeta().hasLocalizedName()) {
 
-                String localName = e.getInventory().getItem(e.getRawSlot()).getItemMeta().getLocalizedName();
+                String localName = item.getItemMeta().getLocalizedName();
                 if (localName.equals("CreateProjectile"))  {
                     Chat.sendPlayerChatRequest(player, "newProjectile");
                 } else if (localName.equalsIgnoreCase("projectile")) {
@@ -35,24 +39,39 @@ public class InventoryEvents implements Listener {
 
            }
 
-        } else if (e.getView().getTitle().contains("Edit Projectile: ")) {
+        } else if (title.contains("Edit Projectile: ")) {
             e.setCancelled(true);
             if (item != null && item.hasItemMeta() && item.getItemMeta().hasLocalizedName()) {
 
                 if (item.getItemMeta().getLocalizedName().equals("goBack")) {
                     ProjectileMenu.openProjectileMenu(player);
-                    return;
+
+                } else if (item.getItemMeta().getLocalizedName().equals("hitEffects")) {
+
+                    ProjectileMenu.editHitEffects(player);
+
+
+                } else {
+                    String projectileName = e.getView().getTitle().replace("Edit Projectile: ", "");
+                    String settingType = item.getItemMeta().getLocalizedName();
+                    String setting = item.getItemMeta().getDisplayName().replace(ChatColor.GRAY.toString(), "");
+                    Chat.sendPlayerChatRequest(player, "EDIT:" + setting);
                 }
 
-                String projectileName = e.getView().getTitle().replace("Edit Projectile: ", "");
-                String settingType = item.getItemMeta().getLocalizedName();
-                String setting = item.getItemMeta().getDisplayName().replace(ChatColor.GRAY.toString(), "");
-                Chat.sendPlayerChatRequest(player, "EDIT:" + setting);
+
+
 
             }
 
 
 
+        } else if (title.contains("Edit Hit Events: ")) {
+
+            e.setCancelled(true);
+
+            if (item.getItemMeta().getLocalizedName().equals("goBack")) {
+                ProjectileMenu.editProjectile(ProjectileMenu.editMap.get(player.getUniqueId()), player);
+            }
         }
 
 
