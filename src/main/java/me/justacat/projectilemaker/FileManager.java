@@ -1,6 +1,7 @@
 package me.justacat.projectilemaker;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import me.justacat.projectilemaker.projectiles.Projectile;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -59,7 +60,7 @@ public class FileManager {
 
         try {
 
-            Gson gson = new Gson();
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
             Writer writer;
             if (overRide) {
                 writer = new FileWriter(file, false);
