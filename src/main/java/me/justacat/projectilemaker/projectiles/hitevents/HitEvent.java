@@ -1,11 +1,15 @@
 package me.justacat.projectilemaker.projectiles.hitevents;
 
+import me.justacat.projectilemaker.misc.Parameter;
 import org.bukkit.Location;
 import org.bukkit.entity.LivingEntity;
 
-public interface HitEvent {
+import java.util.HashMap;
+
+public abstract class HitEvent {
 
 
-    void trigger(Location location, LivingEntity caster);
+    public HashMap<String, Parameter<?>> parameters = new HashMap<>();
+    public abstract void trigger(Location location, LivingEntity caster);
 
 }

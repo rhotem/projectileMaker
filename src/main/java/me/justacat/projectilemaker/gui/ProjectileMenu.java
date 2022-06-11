@@ -1,9 +1,11 @@
 package me.justacat.projectilemaker.gui;
 
 import me.justacat.projectilemaker.FileManager;
+import me.justacat.projectilemaker.misc.Parameter;
 import me.justacat.projectilemaker.projectiles.HitEventStorage;
 import me.justacat.projectilemaker.projectiles.Projectile;
 import me.justacat.projectilemaker.misc.Chat;
+import me.justacat.projectilemaker.projectiles.hitevents.HitEvent;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -110,7 +112,8 @@ public class ProjectileMenu {
         guiBuilder.setItem(4, Material.REDSTONE, 1, Chat.colorMessage("&7Particle"), lore, true, "particle");
 
 
-        guiBuilder.setItem(5, Material.TNT_MINECART, 1, Chat.colorMessage("&7Hit Effects"), null, true, "hitEffects");
+        lore.remove(Chat.colorMessage("&eValue: &f" + projectile.getParticle()));
+        guiBuilder.setItem(5, Material.TNT_MINECART, 1, Chat.colorMessage("&7Hit Effects"), lore, true, "hitEffects");
 
 
 
@@ -138,7 +141,7 @@ public class ProjectileMenu {
         int slot = 0;
         for (HitEventStorage hit : hitEffects) {
 
-            guiBuilder.setItem(slot, Material.TNT, 1, "Event " + (slot + 1) + ": " + hit.getType(), Arrays.asList("&0", "&7Click here to edit!"), true);
+            guiBuilder.setItem(slot, Material.TNT, 1, "Event " + (slot + 1) + ": " + hit.getType(), Arrays.asList("&0", "&7Click here to edit!"), true, String.valueOf(slot + 1));
 
 
             slot++;
@@ -156,6 +159,39 @@ public class ProjectileMenu {
         player.openInventory(guiBuilder.toInventory());
 
 
+    }
+
+    public static void editHitEffect(Player player, int number) {
+
+        GuiBuilder guiBuilder = new GuiBuilder(player);
+
+        guiBuilder.setSize(54);
+        guiBuilder.setTitle("Edit hit event: Event " + number);
+
+        String projectileName = editMap.get(player.getUniqueId());
+        Projectile projectile = Projectile.projectileFromName(projectileName, true);
+        HitEvent hitEvent = projectile.getHitEventStorageList().get(number - 1).getHitEvent();
+
+        int slot = 0;
+
+        List<String> lore = new ArrayList<>();
+        lore.add("   ");
+        lore.add(Chat.colorMessage("&eClick here to edit this value"));
+
+        List<Parameter<?>> parameters = new ArrayList<>();
+
+        hitEvent.parameters.forEach((s, parameter) -> parameters.add(parameter));
+
+        for (Parameter<?> parameter : parameters) {
+            System.out.println("class: " + parameter.getValue().getClass());
+            guiBuilder.setItem(slot, Material.GREEN_DYE, 1, "&7" + parameter.getName(), lore, true);
+
+            slot++;
+        }
+
+
+
+        player.openInventory(guiBuilder.toInventory());
     }
 
 

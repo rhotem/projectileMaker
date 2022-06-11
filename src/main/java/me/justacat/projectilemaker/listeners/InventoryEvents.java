@@ -83,6 +83,10 @@ public class InventoryEvents implements Listener {
                 projectile.saveProjectile();
                 ProjectileMenu.editHitEffects(player);
 
+            } else {
+
+                ProjectileMenu.editHitEffect(player, Integer.parseInt(item.getItemMeta().getLocalizedName()));
+
             }
 
 
