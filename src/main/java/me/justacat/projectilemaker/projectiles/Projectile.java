@@ -39,9 +39,9 @@ public class Projectile {
 
     //misc
 
-    private List<HitManager> hitManagers = Arrays.asList(new HitManager[]{new HitManager(3, false, true)});
+    private List<HitEventStorage> hitEventStorageList = Arrays.asList(new HitEventStorage[]{new HitEventStorage(3, false, true)});
 
-    private HashMap<Integer, Integer> cycles = new HashMap<>();
+    public static HashMap<Integer, Integer> cycles = new HashMap<>();
 
 
     public static HashMap<String, Projectile> loadedProjectiles = new HashMap<>();
@@ -65,7 +65,8 @@ public class Projectile {
     public void setAngle(double angle) {this.angle = angle;}
     public void setBranches(int branches) {this.branches = branches;}
     public void setDamage(double damage) {this.damage = damage;}
-    public void setHitEvents(List<HitManager> hitManagers) {this.hitManagers = hitManagers;}
+    public void setHitEvents(List<HitEventStorage> hitEventStorageList) {this.hitEventStorageList = hitEventStorageList;}
+    public void addHitEvent(HitEventStorage hitEventStorage) {hitEventStorageList.add(hitEventStorage);}
     public void setKnockback(double knockback) {this.knockback = knockback;}
 
     public int getDelay() {return delay;}
@@ -79,7 +80,9 @@ public class Projectile {
 
     public double getKnockback() {return knockback;}
 
-    public List<HitManager> getHitEvents() {return hitManagers;}
+    public List<HitEventStorage> getHitEventStorageList() {return hitEventStorageList;}
+
+
 
 
 
@@ -128,6 +131,8 @@ public class Projectile {
 
 
     public void cast(Location location, LivingEntity caster, Vector direction) {
+
+
 
         if (type.equals("Beam")) {
             this.castAsBeam(location, caster, direction);
@@ -202,9 +207,11 @@ public class Projectile {
 
 
     public void hit(Location location, LivingEntity caster) {
-        for (HitManager hitManager : hitManagers) {
-            hitManager.trigger(location, caster);
+
+        for (HitEventStorage hitEventStorage : this.hitEventStorageList) {
+            hitEventStorage.getHitEvent().trigger(location, caster);
         }
+
     }
 
 

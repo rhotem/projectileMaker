@@ -1,15 +1,16 @@
 package me.justacat.projectilemaker.projectiles;
 
 import me.justacat.projectilemaker.projectiles.hitevents.Explosion;
+import me.justacat.projectilemaker.projectiles.hitevents.HitEvent;
 import org.bukkit.Location;
 import org.bukkit.entity.LivingEntity;
 
-public class HitManager {
+public class HitEventStorage {
 
     private Explosion explosion;
     private String type;
 
-    public HitManager(float power, boolean fire, boolean safe) {
+    public HitEventStorage(float power, boolean fire, boolean safe) {
         this.explosion = new Explosion(power, fire, safe);
         this.type = "explosion";
     }
@@ -29,4 +30,14 @@ public class HitManager {
         this.type = type;
     }
 
+
+    public HitEvent getHitEvent() {
+
+        if (type.equals("explosion")) {
+            return explosion;
+        }
+
+        return null;
+
+    }
 }

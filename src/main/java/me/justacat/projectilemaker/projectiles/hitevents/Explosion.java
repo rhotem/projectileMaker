@@ -3,7 +3,7 @@ package me.justacat.projectilemaker.projectiles.hitevents;
 import org.bukkit.Location;
 import org.bukkit.entity.LivingEntity;
 
-public class Explosion {
+public class Explosion implements HitEvent{
 
     private float power = 3;
     private boolean fire = false;
@@ -18,7 +18,7 @@ public class Explosion {
 
     }
 
-
+    @Override
     public void trigger(Location location, LivingEntity caster) {
 
         location.createExplosion(caster, power, fire, !safe);

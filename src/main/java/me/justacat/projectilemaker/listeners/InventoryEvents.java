@@ -2,6 +2,8 @@ package me.justacat.projectilemaker.listeners;
 
 import me.justacat.projectilemaker.gui.ProjectileMenu;
 import me.justacat.projectilemaker.misc.Chat;
+import me.justacat.projectilemaker.projectiles.HitEventStorage;
+import me.justacat.projectilemaker.projectiles.Projectile;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -69,9 +71,21 @@ public class InventoryEvents implements Listener {
 
             e.setCancelled(true);
 
+
+            String projectileName = e.getView().getTitle().replace("Edit Hit Events: ", "");
+            Projectile projectile = Projectile.projectileFromName(projectileName, true);
+
             if (item.getItemMeta().getLocalizedName().equals("goBack")) {
                 ProjectileMenu.editProjectile(ProjectileMenu.editMap.get(player.getUniqueId()), player);
+            } else if (item.getItemMeta().getLocalizedName().equals("newHitEvent")) {
+
+                projectile.addHitEvent(new HitEventStorage(5, false, true));
+                projectile.saveProjectile();
+                ProjectileMenu.editHitEffects(player);
+
             }
+
+
         }
 
 

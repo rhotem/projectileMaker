@@ -1,7 +1,7 @@
 package me.justacat.projectilemaker.gui;
 
 import me.justacat.projectilemaker.FileManager;
-import me.justacat.projectilemaker.projectiles.HitManager;
+import me.justacat.projectilemaker.projectiles.HitEventStorage;
 import me.justacat.projectilemaker.projectiles.Projectile;
 import me.justacat.projectilemaker.misc.Chat;
 import org.bukkit.Material;
@@ -58,6 +58,9 @@ public class ProjectileMenu {
                 true,
                 "CreateProjectile"
                 );
+
+        builder.setEmpty(Material.GRAY_STAINED_GLASS_PANE, 1, " ", null, true);
+
         player.openInventory(builder.toInventory());
 
 
@@ -124,7 +127,7 @@ public class ProjectileMenu {
         String projectileName = editMap.get(player.getUniqueId());
         Projectile projectile = Projectile.projectileFromName(projectileName, true);
 
-        List<HitManager> hitEffects = projectile.getHitEvents();
+        List<HitEventStorage> hitEffects = projectile.getHitEventStorageList();
 
         GuiBuilder guiBuilder = new GuiBuilder(player);
         guiBuilder.setSize(54);
@@ -133,7 +136,7 @@ public class ProjectileMenu {
 
 
         int slot = 0;
-        for (HitManager hit : hitEffects) {
+        for (HitEventStorage hit : hitEffects) {
 
             guiBuilder.setItem(slot, Material.TNT, 1, "Event " + (slot + 1) + ": " + hit.getType(), Arrays.asList("&0", "&7Click here to edit!"), true);
 
@@ -142,8 +145,12 @@ public class ProjectileMenu {
 
         }
 
+        guiBuilder.setItem(slot, Material.WRITABLE_BOOK, 1, "&7Add Hit Event", Arrays.asList("&0", "&7Click here to add hit event!"), true, "newHitEvent");
+
 
         guiBuilder.setItem(49, Material.ARROW, 1, "&fGo Back", null, true, "goBack");
+
+        guiBuilder.setEmpty(Material.GRAY_STAINED_GLASS_PANE, 1, " ", null, true);
 
 
         player.openInventory(guiBuilder.toInventory());
