@@ -15,7 +15,7 @@ import java.util.List;
 
 public class ProjectileMakerCommand implements CommandExecutor {
 
-    private final String helpMessage = Chat.colorMessage("&e/ProjectileMaker Menu \n &e/ProjectileMaker BindItem \n &e/ProjectileMaker Help \n");
+    private final String helpMessage = Chat.colorMessage("&e/ProjectileMaker Menu \n&e/ProjectileMaker BindItem \n&e/ProjectileMaker Help \n&e/ProjectileMaker Reload");
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {

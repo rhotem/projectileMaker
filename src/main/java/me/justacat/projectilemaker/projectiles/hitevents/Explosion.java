@@ -9,6 +9,8 @@ import java.util.List;
 
 public class Explosion extends HitEvent {
 
+
+
     private Parameter<Float> power;
     private Parameter<Boolean> fire;
     private Parameter<Boolean> safe;
@@ -18,13 +20,7 @@ public class Explosion extends HitEvent {
         this.power = new Parameter<>("Power", power);
         this.fire = new Parameter<>("Fire", fire);
         this.safe = new Parameter<>("Safe", safe);
-        List<Parameter<?>> parameterList = new ArrayList<>();
-
-        parameterList.add(this.power);
-        parameterList.add(this.fire);
-        parameterList.add(this.safe);
-
-        parameters.put(this, parameterList);
+        load();
     }
 
     @Override
@@ -32,6 +28,17 @@ public class Explosion extends HitEvent {
 
         location.createExplosion(caster, power.getValue(), fire.getValue(), !safe.getValue());
 
+    }
+
+    @Override
+    public void load() {
+        parameters.remove(uuid);
+        List<Parameter<?>> parameterList = new ArrayList<>();
+
+        parameterList.add(this.power);
+        parameterList.add(this.fire);
+        parameterList.add(this.safe);
+        parameters.put(uuid, parameterList);
     }
 
 
@@ -43,4 +50,6 @@ public class Explosion extends HitEvent {
 
     public void setPower(Parameter<Float> power) {this.power = power;}
     public void setSafe(Parameter<Boolean> safe) {this.safe = safe;}
+
+
 }

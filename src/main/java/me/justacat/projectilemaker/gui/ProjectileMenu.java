@@ -179,7 +179,8 @@ public class ProjectileMenu {
         lore.add(Chat.colorMessage("&eClick here to edit this value"));
         lore.add("   ");
 
-        for (Parameter<?> parameter : HitEvent.parameters.get(hitEvent)) {
+
+        for (Parameter<?> parameter : HitEvent.parameters.get(hitEvent.getUuid())) {
             System.out.println("class: " + parameter.getValue().getClass());
             if (lore.size() > 3) {
                 lore.remove(3);

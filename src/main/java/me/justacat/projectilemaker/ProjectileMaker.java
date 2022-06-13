@@ -43,6 +43,7 @@ public final class ProjectileMaker extends JavaPlugin {
     public static boolean reload() {
 
         Bukkit.getLogger().log(Level.INFO, "reloading...");
+
         try {
             Projectile.loadedProjectiles.clear();
             for (String projectile : FileManager.getProjectileList()) {
