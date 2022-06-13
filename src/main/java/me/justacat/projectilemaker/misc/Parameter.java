@@ -30,8 +30,18 @@ public class Parameter<T> {
                 value = (T) Float.valueOf(chatValue);
                 return true;
             } else if (value instanceof Boolean) {
-                value = (T) Boolean.valueOf(chatValue);
-                return true;
+
+                if (chatValue.equalsIgnoreCase("true") | chatValue.equalsIgnoreCase("yes")) {
+                    value = (T) Boolean.TRUE;
+                    return true;
+                } else if (chatValue.equalsIgnoreCase("false") | chatValue.equalsIgnoreCase("no")) {
+                    value = (T) Boolean.FALSE;
+                    return true;
+                } else {
+                    return false;
+                }
+
+
             } else if (value instanceof Integer) {
                 value = (T) Integer.valueOf(chatValue);
                 return true;

@@ -2,8 +2,10 @@ package me.justacat.projectilemaker.listeners;
 
 import me.justacat.projectilemaker.gui.ProjectileMenu;
 import me.justacat.projectilemaker.misc.Chat;
+import me.justacat.projectilemaker.misc.Parameter;
 import me.justacat.projectilemaker.projectiles.HitEventStorage;
 import me.justacat.projectilemaker.projectiles.Projectile;
+import me.justacat.projectilemaker.projectiles.hitevents.HitEvent;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -99,7 +101,28 @@ public class InventoryEvents implements Listener {
                 ProjectileMenu.editHitEffects(player);
             } else if (item.getType().equals(Material.GREEN_DYE)) {
 
-                Chat.sendPlayerChatRequest(player, "EditHitEvent:" + item.getItemMeta().getDisplayName().replace(ChatColor.GRAY.toString(), ""));
+                if (item.getItemMeta().getLocalizedName().toUpperCase().contains("BOOLEAN")) {
+
+                    String projectileName = ProjectileMenu.projectileEditMap.get(player.getUniqueId());
+                    Projectile projectile = Projectile.loadedProjectiles.get(projectileName);
+
+                    int hitIndex = ProjectileMenu.hitEventEditMap.get(player.getUniqueId()) - 1;
+                    HitEvent hitEvent = projectile.getHitEventStorageList().get(hitIndex).getHitEvent();
+
+                    String settingName = item.getItemMeta().getDisplayName().replace(ChatColor.GRAY.toString(), "");
+                    Parameter<?> parameter = hitEvent.getParameterByName(settingName);
+
+                    if ((Boolean) parameter.getValue()) {
+                        ((Parameter<Boolean>) parameter).setValue(Boolean.FALSE);
+                    } else {
+                        ((Parameter<Boolean>) parameter).setValue(Boolean.TRUE);
+                    }
+                    ProjectileMenu.editHitEffect(player, hitIndex + 1);
+                    projectile.saveProjectile();
+                } else {
+                    Chat.sendPlayerChatRequest(player, "EditHitEvent:" + item.getItemMeta().getDisplayName().replace(ChatColor.GRAY.toString(), ""));
+                }
+
 
             }
 

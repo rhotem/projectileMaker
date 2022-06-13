@@ -25,6 +25,10 @@ public class Explosion extends HitEvent {
     @Override
     public void trigger(Location location, LivingEntity caster) {
 
+        if (power.getValue() > 100) {
+            power.setValue(100F);
+        }
+
         location.createExplosion(caster, power.getValue(), fire.getValue(), !safe.getValue());
 
     }
