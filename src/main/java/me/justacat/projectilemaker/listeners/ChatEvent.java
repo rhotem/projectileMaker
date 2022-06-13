@@ -1,9 +1,11 @@
 package me.justacat.projectilemaker.listeners;
 
-import me.justacat.projectilemaker.projectiles.Projectile;
 import me.justacat.projectilemaker.ProjectileMaker;
 import me.justacat.projectilemaker.gui.ProjectileMenu;
 import me.justacat.projectilemaker.misc.Chat;
+import me.justacat.projectilemaker.misc.Parameter;
+import me.justacat.projectilemaker.projectiles.Projectile;
+import me.justacat.projectilemaker.projectiles.hitevents.HitEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -40,7 +42,7 @@ public class ChatEvent implements Listener {
 
                 Runnable runnable;
                 String setting = Chat.playerChatRequests.get(uuid).replace("EDIT:", "");
-                String name = ProjectileMenu.editMap.get(player.getUniqueId());
+                String name = ProjectileMenu.projectileEditMap.get(player.getUniqueId());
                 Projectile projectile = Projectile.loadedProjectiles.get(name);
                 if (projectile.editSetting(setting, e.getMessage())) {
                     projectile.saveProjectile();
@@ -52,7 +54,35 @@ public class ChatEvent implements Listener {
                 }
                 Bukkit.getScheduler().runTask(JavaPlugin.getPlugin(ProjectileMaker.class), runnable);
 
+            } else if (Chat.playerChatRequests.get(uuid).contains("EditHitEvent:")) {
+
+                Runnable runnable;
+
+                String projectileName = ProjectileMenu.projectileEditMap.get(player.getUniqueId());
+                Projectile projectile = Projectile.loadedProjectiles.get(projectileName);
+
+                int hitIndex = ProjectileMenu.hitEventEditMap.get(uuid) - 1;
+                HitEvent hitEvent = projectile.getHitEventStorageList().get(hitIndex).getHitEvent();
+
+                String settingName = Chat.playerChatRequests.get(uuid).replace("EditHitEvent:", "");
+                Parameter<?> parameter = hitEvent.getParameterByName(settingName);
+
+                if (parameter.chatEdit(e.getMessage())) {
+                    projectile.saveProjectile();
+                    runnable = () -> ProjectileMenu.editHitEffect(player, hitIndex + 1);
+
+                } else {
+                    runnable = () -> Chat.sendPlayerChatRequest(player, Chat.playerChatRequests.get(uuid));
+                    player.sendMessage(ChatColor.RED + "Invalid value, please try again!");
+                    skipRemoving = true;
+                }
+                Bukkit.getScheduler().runTask(JavaPlugin.getPlugin(ProjectileMaker.class), runnable);
+
+
+
+
             }
+
 
             if (!skipRemoving) {
                 Chat.playerChatRequests.remove(uuid);

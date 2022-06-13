@@ -16,7 +16,9 @@ import java.util.*;
 public class ProjectileMenu {
 
 
-    public static HashMap<UUID, String> editMap = new HashMap<>();
+    public static HashMap<UUID, String> projectileEditMap = new HashMap<>();
+    public static HashMap<UUID, Integer> hitEventEditMap = new HashMap<>();
+
 
 
     public static void openProjectileMenu(Player player) {
@@ -71,7 +73,7 @@ public class ProjectileMenu {
     public static void editProjectile(String name, Player player) {
 
 
-        editMap.put(player.getUniqueId(), name);
+        projectileEditMap.put(player.getUniqueId(), name);
         GuiBuilder guiBuilder = new GuiBuilder(player);
         guiBuilder.setSize(54);
 
@@ -127,7 +129,7 @@ public class ProjectileMenu {
 
     public static void editHitEffects(Player player) {
 
-        String projectileName = editMap.get(player.getUniqueId());
+        String projectileName = projectileEditMap.get(player.getUniqueId());
         Projectile projectile = Projectile.projectileFromName(projectileName, true);
 
         List<HitEventStorage> hitEffects = projectile.getHitEventStorageList();
@@ -163,12 +165,13 @@ public class ProjectileMenu {
 
     public static void editHitEffect(Player player, int number) {
 
+        hitEventEditMap.put(player.getUniqueId(), number);
         GuiBuilder guiBuilder = new GuiBuilder(player);
 
-        guiBuilder.setSize(54);
+        guiBuilder.setSize(36);
         guiBuilder.setTitle("Edit hit event: Event " + number);
 
-        String projectileName = editMap.get(player.getUniqueId());
+        String projectileName = projectileEditMap.get(player.getUniqueId());
         Projectile projectile = Projectile.projectileFromName(projectileName, true);
         HitEvent hitEvent = projectile.getHitEventStorageList().get(number - 1).getHitEvent();
 
@@ -181,17 +184,19 @@ public class ProjectileMenu {
 
 
         for (Parameter<?> parameter : hitEvent.getParameters()) {
-            System.out.println("class: " + parameter.getValue().getClass());
             if (lore.size() > 3) {
                 lore.remove(3);
             }
 
             lore.add("&7Value: " + parameter.getValue());
-            guiBuilder.setItem(slot, Material.GREEN_DYE, 1, "&7" + parameter.getName(), lore, true);
+            guiBuilder.setItem(slot, Material.GREEN_DYE, 1, "&7" + parameter.getName(), lore, true, parameter.getValue().getClass().toString());
 
             slot++;
         }
 
+        guiBuilder.setItem(31, Material.ARROW, 1, "&fGo Back", null, true, "goBack");
+
+        guiBuilder.setEmpty(Material.GRAY_STAINED_GLASS_PANE, 1, " ", null, true);
 
 
         player.openInventory(guiBuilder.toInventory());

@@ -38,6 +38,7 @@ public class Explosion extends HitEvent {
         parameterList.add(this.safe);
 
         return parameterList;
+
     }
 
 

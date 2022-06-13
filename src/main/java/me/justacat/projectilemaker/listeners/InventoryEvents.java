@@ -5,6 +5,7 @@ import me.justacat.projectilemaker.misc.Chat;
 import me.justacat.projectilemaker.projectiles.HitEventStorage;
 import me.justacat.projectilemaker.projectiles.Projectile;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -76,7 +77,7 @@ public class InventoryEvents implements Listener {
             Projectile projectile = Projectile.projectileFromName(projectileName, true);
 
             if (item.getItemMeta().getLocalizedName().equals("goBack")) {
-                ProjectileMenu.editProjectile(ProjectileMenu.editMap.get(player.getUniqueId()), player);
+                ProjectileMenu.editProjectile(ProjectileMenu.projectileEditMap.get(player.getUniqueId()), player);
             } else if (item.getItemMeta().getLocalizedName().equals("newHitEvent")) {
 
                 projectile.addHitEvent(new HitEventStorage(5, false, true));
@@ -90,9 +91,20 @@ public class InventoryEvents implements Listener {
             }
 
 
+        } else if (title.contains("Edit hit event: Event ")) {
+
+            e.setCancelled(true);
+
+            if (item.getItemMeta().getLocalizedName().equals("goBack")) {
+                ProjectileMenu.editHitEffects(player);
+            } else if (item.getType().equals(Material.GREEN_DYE)) {
+
+                Chat.sendPlayerChatRequest(player, "EditHitEvent:" + item.getItemMeta().getDisplayName().replace(ChatColor.GRAY.toString(), ""));
+
+            }
+
+
         }
-
-
 
 
     }

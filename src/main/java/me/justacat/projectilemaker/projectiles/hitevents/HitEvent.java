@@ -11,4 +11,18 @@ public abstract class HitEvent {
     public abstract void trigger(Location location, LivingEntity caster);
 
     public abstract List<Parameter<?>> getParameters();
+
+    public Parameter<?> getParameterByName(String name) {
+
+        for (Parameter<?> parameter : getParameters()) {
+
+            if (parameter.getName().equals(name)) {
+
+                return parameter;
+            }
+
+        }
+        return null;
+
+    }
 }
