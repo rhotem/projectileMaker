@@ -23,6 +23,7 @@ public class TabComplete implements TabCompleter {
             list.add("Menu");
             list.add("Help");
             list.add("BindItem");
+            list.add("Reload");
 
 
             return StringUtil.copyPartialMatches(args[0], list, new ArrayList<>());

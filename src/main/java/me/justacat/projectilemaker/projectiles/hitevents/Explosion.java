@@ -4,43 +4,43 @@ import me.justacat.projectilemaker.misc.Parameter;
 import org.bukkit.Location;
 import org.bukkit.entity.LivingEntity;
 
-public class Explosion extends HitEvent{
+import java.util.ArrayList;
+import java.util.List;
 
-    private float power = 3;
-    private boolean fire = false;
+public class Explosion extends HitEvent {
 
-    private boolean safe = true;
+    private Parameter<Float> power;
+    private Parameter<Boolean> fire;
+    private Parameter<Boolean> safe;
 
 
     public Explosion(float power, boolean fire, boolean safe) {
-        this.power = power;
-        this.fire = fire;
-        this.safe = safe;
-        updateParameters();
+        this.power = new Parameter<>("Power", power);
+        this.fire = new Parameter<>("Fire", fire);
+        this.safe = new Parameter<>("Safe", safe);
+        List<Parameter<?>> parameterList = new ArrayList<>();
+
+        parameterList.add(this.power);
+        parameterList.add(this.fire);
+        parameterList.add(this.safe);
+
+        parameters.put(this, parameterList);
     }
 
     @Override
     public void trigger(Location location, LivingEntity caster) {
 
-        location.createExplosion(caster, power, fire, !safe);
-
+        location.createExplosion(caster, power.getValue(), fire.getValue(), !safe.getValue());
 
     }
 
-    private void updateParameters() {
-        parameters.put("power", new Parameter<Float>("Power", power));
-        parameters.put("fire", new Parameter<Boolean>("Fire", fire));
-        parameters.put("safe", new Parameter<Boolean>("Safe", safe));
-    }
 
+    public Parameter<Boolean> getFire() {return fire;}
+    public Parameter<Boolean> getSafe() {return safe;}
 
-    public void setFire(boolean fire) {this.fire = fire;}
-    public boolean isFire() {return fire;}
-    public boolean isSafe() {return safe;}
+    public Parameter<Float> getPower() {return power;}
+    public void setFire(Parameter<Boolean> fire) {this.fire = fire;}
 
-    public float getPower() {return power;}
-
-    public void setPower(float power) {this.power = power;}
-
-    public void setSafe(boolean safe) {this.safe = safe;}
+    public void setPower(Parameter<Float> power) {this.power = power;}
+    public void setSafe(Parameter<Boolean> safe) {this.safe = safe;}
 }

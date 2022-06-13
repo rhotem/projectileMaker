@@ -1,10 +1,10 @@
 package me.justacat.projectilemaker.gui;
 
 import me.justacat.projectilemaker.FileManager;
+import me.justacat.projectilemaker.misc.Chat;
 import me.justacat.projectilemaker.misc.Parameter;
 import me.justacat.projectilemaker.projectiles.HitEventStorage;
 import me.justacat.projectilemaker.projectiles.Projectile;
-import me.justacat.projectilemaker.misc.Chat;
 import me.justacat.projectilemaker.projectiles.hitevents.HitEvent;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -177,13 +177,15 @@ public class ProjectileMenu {
         List<String> lore = new ArrayList<>();
         lore.add("   ");
         lore.add(Chat.colorMessage("&eClick here to edit this value"));
+        lore.add("   ");
 
-        List<Parameter<?>> parameters = new ArrayList<>();
-
-        hitEvent.parameters.forEach((s, parameter) -> parameters.add(parameter));
-
-        for (Parameter<?> parameter : parameters) {
+        for (Parameter<?> parameter : HitEvent.parameters.get(hitEvent)) {
             System.out.println("class: " + parameter.getValue().getClass());
+            if (lore.size() > 3) {
+                lore.remove(3);
+            }
+
+            lore.add("&7Value: " + parameter.getValue());
             guiBuilder.setItem(slot, Material.GREEN_DYE, 1, "&7" + parameter.getName(), lore, true);
 
             slot++;

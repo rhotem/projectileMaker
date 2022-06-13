@@ -1,6 +1,7 @@
 package me.justacat.projectilemaker.commands;
 
 import me.justacat.projectilemaker.FileManager;
+import me.justacat.projectilemaker.ProjectileMaker;
 import me.justacat.projectilemaker.gui.ProjectileMenu;
 import me.justacat.projectilemaker.misc.Chat;
 import me.justacat.projectilemaker.misc.NBT;
@@ -14,21 +15,20 @@ import java.util.List;
 
 public class ProjectileMakerCommand implements CommandExecutor {
 
+    private final String helpMessage = Chat.colorMessage("&e/ProjectileMaker Menu \n &e/ProjectileMaker BindItem \n &e/ProjectileMaker Help \n");
+
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if (sender instanceof Player) {
 
             if (args.length >= 1) {
 
-                switch (args[0]) {
+                switch (args[0].toUpperCase()) {
 
-                    case "Menu":
+                    case "MENU":
                         ProjectileMenu.openProjectileMenu((Player) sender);
                         break;
-                    case "Help":
-                        sender.sendMessage(Chat.colorMessage("&e/ProjectileMaker Menu \n &e/ProjectileMaker BindItem \n &e/ProjectileMaker Help \n"));
-                        break;
-                    case "BindItem":
+                    case "BINDITEM":
 
 
                         if (args.length == 3) {
@@ -43,15 +43,21 @@ public class ProjectileMakerCommand implements CommandExecutor {
                             sender.sendMessage("Please specify a projectile name and a click type!");
                         }
                         break;
-
-
+                    case "RELOAD":
+                        boolean success = ProjectileMaker.reload();
+                        if (success) {
+                            sender.sendMessage("Reloaded!");
+                        } else {
+                            sender.sendMessage("There was an error while reloading the plugin. Look at the console for more details.");
+                        }
+                        break;
                     default:
-                        sender.sendMessage(Chat.colorMessage("&e/ProjectileMaker Menu \n&e/ProjectileMaker BindItem \n&e/ProjectileMaker Help \n"));
+                        sender.sendMessage(helpMessage);
                         break;
                 }
 
             } else {
-                sender.sendMessage(Chat.colorMessage("&e/ProjectileMaker Menu \n&e/ProjectileMaker BindItem \n&e/ProjectileMaker Help \n"));
+                sender.sendMessage(helpMessage);
             }
 
 

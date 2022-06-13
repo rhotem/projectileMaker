@@ -1,12 +1,5 @@
 package me.justacat.projectilemaker.misc;
 
-import me.justacat.projectilemaker.projectiles.hitevents.Explosion;
-import org.checkerframework.checker.units.qual.K;
-
-import java.lang.reflect.Type;
-import java.util.HashMap;
-import java.util.List;
-
 public class Parameter<T> {
 
 
