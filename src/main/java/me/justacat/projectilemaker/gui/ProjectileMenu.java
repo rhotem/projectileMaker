@@ -180,7 +180,7 @@ public class ProjectileMenu {
         lore.add("   ");
 
 
-        for (Parameter<?> parameter : HitEvent.parameters.get(hitEvent.getUuid())) {
+        for (Parameter<?> parameter : hitEvent.getParameters()) {
             System.out.println("class: " + parameter.getValue().getClass());
             if (lore.size() > 3) {
                 lore.remove(3);

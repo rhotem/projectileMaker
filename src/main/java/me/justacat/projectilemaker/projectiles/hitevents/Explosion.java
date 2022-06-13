@@ -20,7 +20,6 @@ public class Explosion extends HitEvent {
         this.power = new Parameter<>("Power", power);
         this.fire = new Parameter<>("Fire", fire);
         this.safe = new Parameter<>("Safe", safe);
-        load();
     }
 
     @Override
@@ -31,14 +30,14 @@ public class Explosion extends HitEvent {
     }
 
     @Override
-    public void load() {
-        parameters.remove(uuid);
+    public List<Parameter<?>> getParameters() {
         List<Parameter<?>> parameterList = new ArrayList<>();
 
         parameterList.add(this.power);
         parameterList.add(this.fire);
         parameterList.add(this.safe);
-        parameters.put(uuid, parameterList);
+
+        return parameterList;
     }
 
 

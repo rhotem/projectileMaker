@@ -2,7 +2,6 @@ package me.justacat.projectilemaker;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import me.justacat.projectilemaker.projectiles.HitEventStorage;
 import me.justacat.projectilemaker.projectiles.Projectile;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -92,10 +91,6 @@ public class FileManager {
             Reader reader = new FileReader(file);
             Projectile projectile = gson.fromJson(reader, Projectile.class);
             reader.close();
-
-            for (HitEventStorage hitEventStorage : projectile.getHitEventStorageList()) {
-                hitEventStorage.getHitEvent().load();
-            }
 
             return projectile;
 
