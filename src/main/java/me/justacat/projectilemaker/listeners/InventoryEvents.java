@@ -88,8 +88,12 @@ public class InventoryEvents implements Listener {
                 ProjectileMenu.editHitEffects(player);
 
             } else {
+                try {
+                    ProjectileMenu.editHitEffect(player, Integer.parseInt(item.getItemMeta().getLocalizedName()));
+                } catch (NumberFormatException ignored) {
 
-                ProjectileMenu.editHitEffect(player, Integer.parseInt(item.getItemMeta().getLocalizedName()));
+                }
+
 
             }
 
@@ -118,7 +122,7 @@ public class InventoryEvents implements Listener {
                     } else {
                         ((Parameter<Boolean>) parameter).setValue(Boolean.TRUE);
                     }
-                    player.playSound(player, Sound.BLOCK_LEVER_CLICK, 1, 0);
+                    player.playSound(player, Sound.BLOCK_LEVER_CLICK, 0.3F, 0.3F);
                     ProjectileMenu.editHitEffect(player, hitIndex + 1);
                     projectile.saveProjectile();
                 } else {
