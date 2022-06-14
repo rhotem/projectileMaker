@@ -8,6 +8,7 @@ import me.justacat.projectilemaker.projectiles.Projectile;
 import me.justacat.projectilemaker.projectiles.hitevents.HitEvent;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -117,6 +118,7 @@ public class InventoryEvents implements Listener {
                     } else {
                         ((Parameter<Boolean>) parameter).setValue(Boolean.TRUE);
                     }
+                    player.playSound(player, Sound.BLOCK_LEVER_CLICK, 1, 0);
                     ProjectileMenu.editHitEffect(player, hitIndex + 1);
                     projectile.saveProjectile();
                 } else {
