@@ -39,7 +39,7 @@ public class Projectile {
 
     //misc
 
-    private List<HitEventStorage> hitEventStorageList = Arrays.asList(new HitEventStorage[]{new HitEventStorage(3, false, true)});
+    private List<HitEventStorage> hitEventStorageList = Collections.singletonList(HitEventStorage.newExplosion(3, false, true));
 
     public static HashMap<Integer, Integer> cycles = new HashMap<>();
 

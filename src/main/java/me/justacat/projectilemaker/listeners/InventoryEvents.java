@@ -76,16 +76,14 @@ public class InventoryEvents implements Listener {
             e.setCancelled(true);
 
 
-            String projectileName = e.getView().getTitle().replace("Edit Hit Events: ", "");
-            Projectile projectile = Projectile.projectileFromName(projectileName, true);
-
             if (item.getItemMeta().getLocalizedName().equals("goBack")) {
                 ProjectileMenu.editProjectile(ProjectileMenu.projectileEditMap.get(player.getUniqueId()), player);
             } else if (item.getItemMeta().getLocalizedName().equals("newHitEvent")) {
 
-                projectile.addHitEvent(new HitEventStorage(5, false, true));
-                projectile.saveProjectile();
-                ProjectileMenu.editHitEffects(player);
+
+                ProjectileMenu.createHitEvent(player);
+
+
 
             } else {
                 try {
@@ -132,6 +130,33 @@ public class InventoryEvents implements Listener {
 
             }
 
+
+        } else if (title.equals("New Hit Event")) {
+
+            e.setCancelled(true);
+
+            if (item.getItemMeta().getLocalizedName().equals("goBack")) {
+                ProjectileMenu.editHitEffects(player);
+            } else {
+
+                Projectile projectile = Projectile.projectileFromName(ProjectileMenu.projectileEditMap.get(player.getUniqueId()), true);
+
+                switch (item.getItemMeta().getDisplayName().replace(ChatColor.GRAY.toString(), "")) {
+
+                    case "Explosion":
+                        projectile.addHitEvent(HitEventStorage.newExplosion(5, false, true));
+                        projectile.saveProjectile();
+                        ProjectileMenu.editHitEffects(player);
+                        break;
+                    case "Drill":
+                        projectile.addHitEvent(HitEventStorage.newDrill(30, true, 3));
+                        projectile.saveProjectile();
+                        ProjectileMenu.editHitEffects(player);
+                        break;
+
+                }
+
+            }
 
         }
 

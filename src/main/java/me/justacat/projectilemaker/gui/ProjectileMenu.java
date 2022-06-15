@@ -203,5 +203,26 @@ public class ProjectileMenu {
     }
 
 
+    public static void createHitEvent(Player player) {
+
+        GuiBuilder guiBuilder = new GuiBuilder(player);
+
+        guiBuilder.setTitle("New Hit Event");
+
+        guiBuilder.setSize(36);
+
+        guiBuilder.setItem(31, Material.ARROW, 1, "&fGo Back", null, true, "goBack");
+
+        guiBuilder.setEmpty(Material.GRAY_STAINED_GLASS_PANE, 1, " ", null, true);
+
+        guiBuilder.setItem(0, Material.TNT, 1, "&7Explosion", Arrays.asList("&0", "&bCreates an explosion"), true);
+        guiBuilder.setItem(1, Material.IRON_PICKAXE, 1, "&7Drill", Arrays.asList("&0", "&bMine blocks at a straight line!"), true);
+
+
+
+        player.openInventory(guiBuilder.toInventory());
+    }
+
+
 
 }

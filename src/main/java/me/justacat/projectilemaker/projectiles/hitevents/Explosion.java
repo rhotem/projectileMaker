@@ -2,6 +2,7 @@ package me.justacat.projectilemaker.projectiles.hitevents;
 
 import me.justacat.projectilemaker.misc.Parameter;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.entity.LivingEntity;
 
 import java.util.ArrayList;
@@ -20,6 +21,7 @@ public class Explosion extends HitEvent {
         this.power = new Parameter<>("Power", power);
         this.fire = new Parameter<>("Fire", fire);
         this.safe = new Parameter<>("Safe", safe);
+        this.display = Material.TNT;
     }
 
     @Override
