@@ -29,10 +29,20 @@ public class ChatEvent implements Listener {
             if (Chat.playerChatRequests.get(uuid) == null) {return;}
 
             e.setCancelled(true);
+            
+            //cancel
+            if (e.getMessage().equalsIgnoreCase("Cancel")) {
+                Chat.playerChatRequests.remove(uuid);
+                Runnable runnable = () -> ProjectileMenu.openProjectileMenu(player);
+                Bukkit.getScheduler().runTask(JavaPlugin.getPlugin(ProjectileMaker.class), runnable);
+                return;
+            }
+
 
 
 
             if (Chat.playerChatRequests.get(uuid).equals("newProjectile")) {
+
 
                 Runnable runnable = () -> Projectile.createProjectile(e.getMessage(), player);
 

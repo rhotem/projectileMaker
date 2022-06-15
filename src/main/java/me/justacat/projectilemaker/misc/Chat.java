@@ -27,6 +27,7 @@ public class Chat {
         player.sendMessage(colorMessage("&7  Please insert a value in chat!  "));
         player.sendMessage(" ");
         player.sendMessage(colorMessage("&6---------------------------------"));
+        player.sendMessage(colorMessage("&7Type \"Cancel\" to cancel!"));
         player.sendMessage(" ");
         playerAndResult.remove(player.getUniqueId());
         playerChatRequests.put(player.getUniqueId(), ID);
