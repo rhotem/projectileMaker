@@ -23,11 +23,11 @@ public class HitEventStorage {
     }
 
 
-    public static HitEventStorage newDrill(int length, boolean drops, int radius) {
+    public static HitEventStorage newDrill(int length, boolean drops, int radius, int delay) {
 
         HitEventStorage hitEventStorage = new HitEventStorage();
 
-        hitEventStorage.setDrill(new Drill(length, drops, radius));
+        hitEventStorage.setDrill(new Drill(length, drops, radius, delay));
         hitEventStorage.setType("drill");
 
         return hitEventStorage;

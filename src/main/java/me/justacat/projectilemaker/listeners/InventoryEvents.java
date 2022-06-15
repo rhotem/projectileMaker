@@ -149,7 +149,7 @@ public class InventoryEvents implements Listener {
                         ProjectileMenu.editHitEffects(player);
                         break;
                     case "Drill":
-                        projectile.addHitEvent(HitEventStorage.newDrill(30, true, 3));
+                        projectile.addHitEvent(HitEventStorage.newDrill(30, true, 3, 1));
                         projectile.saveProjectile();
                         ProjectileMenu.editHitEffects(player);
                         break;

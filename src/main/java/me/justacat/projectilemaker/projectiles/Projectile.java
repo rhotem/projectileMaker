@@ -155,7 +155,6 @@ public class Projectile {
                     int ID = this.getTaskId();
 
 
-
                     location.add(direction);
                     location.getWorld().spawnParticle(particle, location, 10, 0, 0, 0, 0.05);
 
