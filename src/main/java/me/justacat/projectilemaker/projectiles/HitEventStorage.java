@@ -3,11 +3,15 @@ package me.justacat.projectilemaker.projectiles;
 import me.justacat.projectilemaker.projectiles.hitevents.Drill;
 import me.justacat.projectilemaker.projectiles.hitevents.Explosion;
 import me.justacat.projectilemaker.projectiles.hitevents.HitEvent;
+import me.justacat.projectilemaker.projectiles.hitevents.SpawnEntity;
+import org.bukkit.entity.EntityType;
 
 public class HitEventStorage {
 
     private Explosion explosion = null;
     private Drill drill = null;
+
+    private SpawnEntity spawnEntity = null;
     private String type;
 
 
@@ -33,6 +37,16 @@ public class HitEventStorage {
         return hitEventStorage;
     }
 
+    public static HitEventStorage newSpawnEntity(EntityType type, int amount, double spread) {
+
+        HitEventStorage hitEventStorage = new HitEventStorage();
+
+        hitEventStorage.setType("spawn");
+        hitEventStorage.setSpawnEntity(new SpawnEntity(type, amount, spread));
+
+        return hitEventStorage;
+    }
+
 
     public String getType() {
         return type;
@@ -44,13 +58,18 @@ public class HitEventStorage {
 
     public void setDrill(Drill drill) {this.drill = drill;}
 
+    public void setSpawnEntity(SpawnEntity spawnEntity) {this.spawnEntity = spawnEntity;}
+
     public void setExplosion(Explosion explosion) {this.explosion = explosion;}
     public HitEvent getHitEvent() {
 
-        if (type.equals("explosion")) {
-            return explosion;
-        } else if (type.equals("drill")) {
-            return drill;
+        switch (type) {
+            case "explosion":
+                return explosion;
+            case "drill":
+                return drill;
+            case "spawn":
+                return spawnEntity;
         }
 
         return null;

@@ -31,15 +31,21 @@ public class TabComplete implements TabCompleter {
 
         } else if (args.length == 2) {
 
+            if (args[1].equals("BindItem")) {
+                List<String> projectiles = FileManager.getProjectileList();
 
-            List<String> projectiles = FileManager.getProjectileList();
+                return StringUtil.copyPartialMatches(args[1], projectiles, new ArrayList<>());
+            }
 
-            return StringUtil.copyPartialMatches(args[1], projectiles, new ArrayList<>());
+
 
 
 
         } else if (args.length == 3) {
-            return StringUtil.copyPartialMatches(args[2], Arrays.asList("RightClick", "LeftClick"), new ArrayList<>());
+
+            if (args[1].equals("BindItem")) {
+                return StringUtil.copyPartialMatches(args[2], Arrays.asList("RightClick", "LeftClick"), new ArrayList<>());
+            }
         }
 
         return null;

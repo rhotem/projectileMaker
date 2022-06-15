@@ -4,6 +4,7 @@ import me.justacat.projectilemaker.ProjectileMaker;
 import me.justacat.projectilemaker.misc.Parameter;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -54,6 +55,8 @@ public class Drill extends HitEvent {
 
                 }
                 location.add(vector.normalize());
+
+                location.getWorld().playSound(location, Sound.BLOCK_STONE_BREAK, 3F, 0.2F);
 
                 if (cycles > length.getValue()) {
                     this.cancel();

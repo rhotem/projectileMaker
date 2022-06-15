@@ -9,6 +9,7 @@ import me.justacat.projectilemaker.projectiles.hitevents.HitEvent;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -161,6 +162,11 @@ public class InventoryEvents implements Listener {
                         break;
                     case "Drill":
                         projectile.addHitEvent(HitEventStorage.newDrill(30, true, 3, 1));
+                        projectile.saveProjectile();
+                        ProjectileMenu.editHitEffects(player);
+                        break;
+                    case "Spawn Entity":
+                        projectile.addHitEvent(HitEventStorage.newSpawnEntity(EntityType.ZOMBIE, 2, 2));
                         projectile.saveProjectile();
                         ProjectileMenu.editHitEffects(player);
                         break;

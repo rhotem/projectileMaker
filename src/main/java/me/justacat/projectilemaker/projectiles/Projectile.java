@@ -195,8 +195,11 @@ public class Projectile {
                     }
 
                     if (cycles.get(ID) >= looptimes) {
-                        this.cancel();
+
+                        hit(location, caster);
                         cycles.remove(ID);
+                        this.cancel();
+
                     }
 
                 }
