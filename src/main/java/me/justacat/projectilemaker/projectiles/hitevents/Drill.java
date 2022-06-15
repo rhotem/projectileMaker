@@ -55,7 +55,7 @@ public class Drill extends HitEvent {
                 }
                 location.add(vector.normalize());
 
-                if (cycles < length.getValue()) {
+                if (cycles > length.getValue()) {
                     this.cancel();
                 }
                 cycles++;
