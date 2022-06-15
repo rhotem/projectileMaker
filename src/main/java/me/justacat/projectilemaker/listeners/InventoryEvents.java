@@ -128,6 +128,17 @@ public class InventoryEvents implements Listener {
                 }
 
 
+            } else if (item.getItemMeta().getLocalizedName().equals("delete")) {
+
+                String projectileName = ProjectileMenu.projectileEditMap.get(player.getUniqueId());
+                Projectile projectile = Projectile.loadedProjectiles.get(projectileName);
+
+                int hitIndex = ProjectileMenu.hitEventEditMap.get(player.getUniqueId()) - 1;
+
+                projectile.deleteHitEvent(hitIndex);
+                projectile.saveProjectile();
+                ProjectileMenu.editHitEffects(player);
+
             }
 
 

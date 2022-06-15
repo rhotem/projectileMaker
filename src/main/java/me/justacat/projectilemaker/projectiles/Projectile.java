@@ -66,6 +66,7 @@ public class Projectile {
     public void setBranches(int branches) {this.branches = branches;}
     public void setDamage(double damage) {this.damage = damage;}
     public void setHitEvents(List<HitEventStorage> hitEventStorageList) {this.hitEventStorageList = hitEventStorageList;}
+    public void deleteHitEvent(int index) {hitEventStorageList.remove(index);}
     public void addHitEvent(HitEventStorage hitEventStorage) {hitEventStorageList.add(hitEventStorage);}
     public void setKnockback(double knockback) {this.knockback = knockback;}
 

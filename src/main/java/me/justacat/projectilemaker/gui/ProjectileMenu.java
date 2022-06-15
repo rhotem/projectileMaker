@@ -198,6 +198,8 @@ public class ProjectileMenu {
 
         guiBuilder.setEmpty(Material.GRAY_STAINED_GLASS_PANE, 1, " ", null, true);
 
+        guiBuilder.setItem(35, Material.REDSTONE_BLOCK, 1, "&cDelete Hit Event", null, true, "delete");
+
 
         player.openInventory(guiBuilder.toInventory());
     }
