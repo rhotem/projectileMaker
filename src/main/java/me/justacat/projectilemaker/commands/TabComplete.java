@@ -31,7 +31,7 @@ public class TabComplete implements TabCompleter {
 
         } else if (args.length == 2) {
 
-            if (args[1].equals("BindItem")) {
+            if (args[0].equals("BindItem")) {
                 List<String> projectiles = FileManager.getProjectileList();
 
                 return StringUtil.copyPartialMatches(args[1], projectiles, new ArrayList<>());
@@ -43,7 +43,7 @@ public class TabComplete implements TabCompleter {
 
         } else if (args.length == 3) {
 
-            if (args[1].equals("BindItem")) {
+            if (args[0].equals("BindItem")) {
                 return StringUtil.copyPartialMatches(args[2], Arrays.asList("RightClick", "LeftClick"), new ArrayList<>());
             }
         }

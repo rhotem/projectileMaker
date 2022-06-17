@@ -55,8 +55,16 @@ public class Parameter<T> {
                 value = (T) EntityType.valueOf(chatValue);
                 return true;
             } else if (value instanceof PotionEffectType) {
-                value = (T) PotionEffectType.getByName(chatValue);
-                return true;
+                if (PotionEffectType.getByName(chatValue) != null) {
+                    value = (T) PotionEffectType.getByName(chatValue);
+                    return true;
+                } else if (PotionEffectType.getById(Integer.parseInt(chatValue)) != null) {
+                    value = (T) PotionEffectType.getById(Integer.parseInt(chatValue));
+                    return true;
+                } else {
+                    return false;
+                }
+
             } else {
                 return false;
             }
