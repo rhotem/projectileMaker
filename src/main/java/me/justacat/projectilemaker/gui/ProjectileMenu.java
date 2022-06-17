@@ -221,7 +221,7 @@ public class ProjectileMenu {
         guiBuilder.setItem(1, Material.IRON_PICKAXE, 1, "&7Drill", Arrays.asList("&0", "&bMines blocks at a straight line!"), true);
         guiBuilder.setItem(2, Material.CREEPER_SPAWN_EGG, 1, "&7Spawn Entity", Arrays.asList("&0", "&bSpawns entities!"), true);
         guiBuilder.setItem(3, Material.SPLASH_POTION, 1, "&7Potion Effect", Arrays.asList("&0", "&bGives nearby entities potion effect!"), true);
-        guiBuilder.setItem(4, Material.TNT_MINECART, 1, "&7Explosive Drill", Arrays.asList("&0", "&bLike drill, but explosive."), true);
+        guiBuilder.setItem(4, Material.TNT_MINECART, 1, "&7Explosive Drill", Arrays.asList("&0", "&bOthers may call this thing \"Ray of death\"!"), true);
 
 
         player.openInventory(guiBuilder.toInventory());
