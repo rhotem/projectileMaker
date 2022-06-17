@@ -25,11 +25,11 @@ public class Drill extends HitEvent {
 
 
     public Drill(int length, boolean drops, int radius, int delay) {
-        this.length = new Parameter<>("length", length);
-        this.drops = new Parameter<>("drops", drops);
-        this.radius = new Parameter<>("radius", radius);
-        this.delay = new Parameter<>("delay", delay);
-        this.display = Material.IRON_PICKAXE;
+        super(Material.IRON_PICKAXE);
+        this.length = new Parameter<>("Length", length);
+        this.drops = new Parameter<>("Drops", drops);
+        this.radius = new Parameter<>("Radius", radius);
+        this.delay = new Parameter<>("Delay", delay);
     }
 
 

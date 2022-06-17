@@ -170,7 +170,10 @@ public class InventoryEvents implements Listener {
                         projectile.saveProjectile();
                         ProjectileMenu.editHitEffects(player);
                         break;
-
+                    case "Potion Effect":
+                        projectile.addHitEvent(HitEventStorage.newPotion());
+                        projectile.saveProjectile();;
+                        ProjectileMenu.editHitEffects(player);
                 }
 
             }

@@ -1,6 +1,7 @@
 package me.justacat.projectilemaker.misc;
 
 import org.bukkit.entity.EntityType;
+import org.bukkit.potion.PotionEffectType;
 
 public class Parameter<T> {
 
@@ -52,6 +53,9 @@ public class Parameter<T> {
                 return true;
             } else if (value instanceof EntityType) {
                 value = (T) EntityType.valueOf(chatValue);
+                return true;
+            } else if (value instanceof PotionEffectType) {
+                value = (T) PotionEffectType.getByName(chatValue);
                 return true;
             } else {
                 return false;

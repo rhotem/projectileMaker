@@ -1,16 +1,13 @@
 package me.justacat.projectilemaker.projectiles;
 
-import me.justacat.projectilemaker.projectiles.hitevents.Drill;
-import me.justacat.projectilemaker.projectiles.hitevents.Explosion;
-import me.justacat.projectilemaker.projectiles.hitevents.HitEvent;
-import me.justacat.projectilemaker.projectiles.hitevents.SpawnEntity;
+import me.justacat.projectilemaker.projectiles.hitevents.*;
 import org.bukkit.entity.EntityType;
 
 public class HitEventStorage {
 
     private Explosion explosion = null;
     private Drill drill = null;
-
+    private Potion potion = null;
     private SpawnEntity spawnEntity = null;
     private String type;
 
@@ -47,6 +44,17 @@ public class HitEventStorage {
         return hitEventStorage;
     }
 
+    public static HitEventStorage newPotion() {
+
+        HitEventStorage hitEventStorage = new HitEventStorage();
+
+        hitEventStorage.setType("potion");
+        hitEventStorage.setPotion(new Potion());
+
+        return hitEventStorage;
+
+    }
+
 
     public String getType() {
         return type;
@@ -60,6 +68,8 @@ public class HitEventStorage {
 
     public void setSpawnEntity(SpawnEntity spawnEntity) {this.spawnEntity = spawnEntity;}
 
+    public void setPotion(Potion potion) {this.potion = potion;}
+
     public void setExplosion(Explosion explosion) {this.explosion = explosion;}
     public HitEvent getHitEvent() {
 
@@ -70,6 +80,8 @@ public class HitEventStorage {
                 return drill;
             case "spawn":
                 return spawnEntity;
+            case "potion":
+                return potion;
         }
 
         return null;

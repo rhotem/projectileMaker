@@ -18,10 +18,10 @@ public class SpawnEntity extends HitEvent {
 
 
     public SpawnEntity(EntityType type, int amount, double spread) {
-        this.type = new Parameter<>("type", type);
-        this.amount = new Parameter<>("amount", amount);
-        this.spread = new Parameter<>("spread", spread);
-        this.display = Material.CREEPER_SPAWN_EGG;
+        super(Material.CREEPER_SPAWN_EGG);
+        this.type = new Parameter<>("Type", type);
+        this.amount = new Parameter<>("Amount", amount);
+        this.spread = new Parameter<>("Spread", spread);
     }
 
     @Override

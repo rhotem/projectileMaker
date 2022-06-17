@@ -18,10 +18,10 @@ public class Explosion extends HitEvent {
 
 
     public Explosion(float power, boolean fire, boolean safe) {
+        super(Material.TNT);
         this.power = new Parameter<>("Power", power);
         this.fire = new Parameter<>("Fire", fire);
         this.safe = new Parameter<>("Safe", safe);
-        this.display = Material.TNT;
     }
 
     @Override
@@ -48,14 +48,7 @@ public class Explosion extends HitEvent {
     }
 
 
-    public Parameter<Boolean> getFire() {return fire;}
-    public Parameter<Boolean> getSafe() {return safe;}
 
-    public Parameter<Float> getPower() {return power;}
-    public void setFire(Parameter<Boolean> fire) {this.fire = fire;}
-
-    public void setPower(Parameter<Float> power) {this.power = power;}
-    public void setSafe(Parameter<Boolean> safe) {this.safe = safe;}
 
 
 }

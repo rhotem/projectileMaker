@@ -11,6 +11,11 @@ public abstract class HitEvent {
 
     protected Material display;
 
+
+
+    public HitEvent(Material display) {this.display = display;}
+
+
     public abstract void trigger(Location location, LivingEntity caster);
 
     public abstract List<Parameter<?>> getParameters();
