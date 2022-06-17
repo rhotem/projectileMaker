@@ -95,6 +95,8 @@ public class HitEventStorage {
                 return spawnEntity;
             case "potion":
                 return potion;
+            case "explosiveDrill":
+                return explosiveDrill;
         }
 
         return null;
