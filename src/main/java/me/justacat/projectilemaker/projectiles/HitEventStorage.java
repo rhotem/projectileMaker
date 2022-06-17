@@ -9,6 +9,7 @@ public class HitEventStorage {
     private Drill drill = null;
     private Potion potion = null;
     private SpawnEntity spawnEntity = null;
+    private ExplosiveDrill explosiveDrill = null;
     private String type;
 
 
@@ -55,6 +56,17 @@ public class HitEventStorage {
 
     }
 
+    public static HitEventStorage newExplosiveDrill() {
+
+        HitEventStorage hitEventStorage = new HitEventStorage();
+
+        hitEventStorage.setType("explosiveDrill");
+        hitEventStorage.setExplosiveDrill(new ExplosiveDrill());
+
+        return hitEventStorage;
+
+    }
+
 
     public String getType() {
         return type;
@@ -65,6 +77,7 @@ public class HitEventStorage {
     }
 
     public void setDrill(Drill drill) {this.drill = drill;}
+    public void setExplosiveDrill(ExplosiveDrill explosiveDrill) {this.explosiveDrill = explosiveDrill;}
 
     public void setSpawnEntity(SpawnEntity spawnEntity) {this.spawnEntity = spawnEntity;}
 

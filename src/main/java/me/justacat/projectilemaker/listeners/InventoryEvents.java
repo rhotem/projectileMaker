@@ -59,8 +59,6 @@ public class InventoryEvents implements Listener {
 
 
                 } else {
-                    String projectileName = e.getView().getTitle().replace("Edit Projectile: ", "");
-                    String settingType = item.getItemMeta().getLocalizedName();
                     String setting = item.getItemMeta().getDisplayName().replace(ChatColor.GRAY.toString(), "");
                     Chat.sendPlayerChatRequest(player, "EDIT:" + setting);
                 }
@@ -172,7 +170,11 @@ public class InventoryEvents implements Listener {
                         break;
                     case "Potion Effect":
                         projectile.addHitEvent(HitEventStorage.newPotion());
-                        projectile.saveProjectile();;
+                        projectile.saveProjectile();
+                        ProjectileMenu.editHitEffects(player);
+                    case "Explosive Drill":
+                        projectile.addHitEvent(HitEventStorage.newExplosiveDrill());
+                        projectile.saveProjectile();
                         ProjectileMenu.editHitEffects(player);
                 }
 
