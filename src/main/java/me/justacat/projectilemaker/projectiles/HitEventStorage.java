@@ -10,6 +10,7 @@ public class HitEventStorage {
     private Potion potion = null;
     private SpawnEntity spawnEntity = null;
     private ExplosiveDrill explosiveDrill = null;
+    private BackSender backSender = null;
     private String type;
 
 
@@ -67,14 +68,18 @@ public class HitEventStorage {
 
     }
 
+    public static HitEventStorage newBackSender() {
+        HitEventStorage hitEventStorage = new HitEventStorage();
 
-    public String getType() {
-        return type;
+        hitEventStorage.setType("backSender");
+        hitEventStorage.setBackSender(new BackSender());
+
+        return hitEventStorage;
     }
 
-    public void setType(String type) {
-        this.type = type;
-    }
+    public String getType() {return type;}
+
+    public void setType(String type) {this.type = type;}
 
     public void setDrill(Drill drill) {this.drill = drill;}
     public void setExplosiveDrill(ExplosiveDrill explosiveDrill) {this.explosiveDrill = explosiveDrill;}
@@ -82,6 +87,8 @@ public class HitEventStorage {
     public void setSpawnEntity(SpawnEntity spawnEntity) {this.spawnEntity = spawnEntity;}
 
     public void setPotion(Potion potion) {this.potion = potion;}
+
+    public void setBackSender(BackSender backSender) {this.backSender = backSender;}
 
     public void setExplosion(Explosion explosion) {this.explosion = explosion;}
     public HitEvent getHitEvent() {
@@ -97,6 +104,8 @@ public class HitEventStorage {
                 return potion;
             case "explosiveDrill":
                 return explosiveDrill;
+            case "backSender":
+                return backSender;
         }
 
         return null;

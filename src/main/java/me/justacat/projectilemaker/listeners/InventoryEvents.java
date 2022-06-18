@@ -155,28 +155,27 @@ public class InventoryEvents implements Listener {
 
                     case "Explosion":
                         projectile.addHitEvent(HitEventStorage.newExplosion(5, false, true));
-                        projectile.saveProjectile();
-                        ProjectileMenu.editHitEffects(player);
                         break;
                     case "Drill":
                         projectile.addHitEvent(HitEventStorage.newDrill(30, true, 3, 1));
-                        projectile.saveProjectile();
-                        ProjectileMenu.editHitEffects(player);
                         break;
                     case "Spawn Entity":
                         projectile.addHitEvent(HitEventStorage.newSpawnEntity(EntityType.ZOMBIE, 2, 2));
-                        projectile.saveProjectile();
-                        ProjectileMenu.editHitEffects(player);
                         break;
                     case "Potion Effect":
                         projectile.addHitEvent(HitEventStorage.newPotion());
-                        projectile.saveProjectile();
-                        ProjectileMenu.editHitEffects(player);
+                        break;
                     case "Explosive Drill":
                         projectile.addHitEvent(HitEventStorage.newExplosiveDrill());
-                        projectile.saveProjectile();
-                        ProjectileMenu.editHitEffects(player);
+                        break;
+                    case "Back To The Sender!":
+                        projectile.addHitEvent(HitEventStorage.newBackSender());
+                        break;
+                    default:
+                        return;
                 }
+                projectile.saveProjectile();
+                ProjectileMenu.editHitEffects(player);
 
             }
 
