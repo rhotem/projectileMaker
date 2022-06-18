@@ -59,7 +59,7 @@ public class Parameter<T> {
                 } else if (name.equals("Potion Effect")) {
 
                     if (PotionEffectType.getByName(chatValue.toUpperCase().replace(" ", "_")) != null) {
-                        value = (T) chatValue;
+                        value = (T) chatValue.toUpperCase().replace(" ", "_");
                         return true;
                     } else {
                         return false;
