@@ -21,7 +21,7 @@ public class BackSender extends HitEvent {
 
     public BackSender() {
         super(Material.ALLIUM);
-        type = new Parameter<>("Type", FileManager.getProjectileList().get(0));
+        type = new Parameter<>("Projectile Type", FileManager.getProjectileList().get(0));
 
     }
 

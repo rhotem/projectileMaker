@@ -1,5 +1,7 @@
 package me.justacat.projectilemaker.misc;
 
+import me.justacat.projectilemaker.FileManager;
+import me.justacat.projectilemaker.projectiles.Projectile;
 import org.bukkit.entity.EntityType;
 import org.bukkit.potion.PotionEffectType;
 
@@ -27,7 +29,42 @@ public class Parameter<T> {
         try {
 
             if (value instanceof String) {
-                value = (T) chatValue;
+
+                if (name.equals("Projectile Type")) {
+
+                    if (Projectile.projectileFromName(chatValue, true) != null) {
+                        value = (T) chatValue;
+                    } else {
+
+                        for (String name : FileManager.getProjectileList()) {
+
+                            if (name.toUpperCase().contains(chatValue.toUpperCase())) {
+
+                                value = (T) name;
+                                return true;
+
+                            } else if (chatValue.toUpperCase().contains(name.toUpperCase())) {
+                                value = (T) name;
+                                return true;
+                            }
+
+                        }
+
+                        return false;
+
+
+                    }
+
+
+                } else if (name.equals("Potion Effect")) {
+
+                    PotionEffectType.getByName(chatValue.toUpperCase().replace(" ", "_"));
+                    value = (T) chatValue;
+
+                } else {
+                    value = (T) chatValue;
+                }
+
                 return true;
             } else if (value instanceof Float) {
                 value = (T) Float.valueOf(chatValue);
