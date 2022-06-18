@@ -32,12 +32,18 @@ public class BackSender extends HitEvent {
 
         Vector vector = new Vector(casterLoc.getX() - location.getX(), casterLoc.getY() - location.getY(), casterLoc.getZ() - location.getZ());
 
+
+        if (vector.length() <= 4) {
+            return;
+        }
+
         Projectile projectile;
         if (Projectile.projectileFromName(type.getValue(), true) == null) {
             Bukkit.getLogger().log(Level.WARNING, "Invalid projectile!");
             projectile = Projectile.projectileFromName(FileManager.getProjectileList().get(0), true);
+        } else {
+            projectile = Projectile.projectileFromName(type.getValue(), true);
         }
-        projectile = Projectile.projectileFromName(type.getValue(), true);
         projectile.cast(location, caster, vector);
 
     }
