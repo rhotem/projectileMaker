@@ -1,7 +1,9 @@
 package me.justacat.projectilemaker.projectiles.hitevents;
 
+import me.justacat.projectilemaker.FileManager;
 import me.justacat.projectilemaker.misc.Parameter;
 import me.justacat.projectilemaker.projectiles.Projectile;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.LivingEntity;
@@ -9,21 +11,18 @@ import org.bukkit.util.Vector;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.logging.Level;
 
 public class BackSender extends HitEvent {
 
 
-    Parameter<Projectile> type;
+    Parameter<String> type;
 
 
     public BackSender() {
         super(Material.ALLIUM);
-        Projectile[] array = Projectile.loadedProjectiles.values().toArray(new Projectile[]{});
-        type = new Parameter<>("Type", array[0]);
-        if (type.getValue() == null) {
-            Projectile projectile = new Projectile("newProjectile");
-            type.setValue(Projectile.projectileFromName("newProjectile", true));
-        }
+        type = new Parameter<>("Type", FileManager.getProjectileList().get(0));
+
     }
 
     @Override
@@ -32,7 +31,14 @@ public class BackSender extends HitEvent {
         Location casterLoc = caster.getLocation();
 
         Vector vector = new Vector(casterLoc.getX() - location.getX(), casterLoc.getY() - location.getY(), casterLoc.getZ() - location.getZ());
-        type.getValue().cast(location, caster, vector);
+
+        Projectile projectile;
+        if (Projectile.projectileFromName(type.getValue(), true) == null) {
+            Bukkit.getLogger().log(Level.WARNING, "Invalid projectile!");
+            projectile = Projectile.projectileFromName(FileManager.getProjectileList().get(0), true);
+        }
+        projectile = Projectile.projectileFromName(type.getValue(), true);
+        projectile.cast(location, caster, vector);
 
     }
 

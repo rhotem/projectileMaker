@@ -70,6 +70,8 @@ public class Projectile {
     public void addHitEvent(HitEventStorage hitEventStorage) {hitEventStorageList.add(hitEventStorage);}
     public void setKnockback(double knockback) {this.knockback = knockback;}
 
+    public String getName() {return name;}
+
     public int getDelay() {return delay;}
     public double getAngle() {return angle;}
     public double getRange() {return range;}
