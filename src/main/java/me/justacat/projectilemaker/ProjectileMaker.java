@@ -40,9 +40,11 @@ public final class ProjectileMaker extends JavaPlugin {
     }
 
 
-    public static boolean reload() {
+    public static boolean reload(boolean log) {
+        if (log) {
+            Bukkit.getLogger().log(Level.INFO, "reloading...");
+        }
 
-        Bukkit.getLogger().log(Level.INFO, "reloading...");
 
         try {
             Projectile.loadedProjectiles.clear();
@@ -51,11 +53,21 @@ public final class ProjectileMaker extends JavaPlugin {
             }
         } catch (Exception e) {
             e.getCause().printStackTrace();
-            Bukkit.getLogger().log(Level.WARNING, "Reload failed :(");
+            if (log) {
+                Bukkit.getLogger().log(Level.WARNING, "Reload failed :(");
+            }
+
             return false;
         }
 
-        Bukkit.getLogger().log(Level.INFO, "Successfully reloaded ProjectileMaker!");
+        if (log) {
+            Bukkit.getLogger().log(Level.INFO, "Successfully reloaded ProjectileMaker!");
+        }
+
         return true;
+    }
+
+    public static boolean reload() {
+        return reload(true);
     }
 }

@@ -39,7 +39,7 @@ public class Projectile {
 
     //misc
 
-    private List<HitEventStorage> hitEventStorageList = Collections.singletonList(HitEventStorage.newExplosion(3, false, true));
+    private List<HitEventStorage> hitEventStorageList = Arrays.asList(HitEventStorage.newExplosion(3, false, true));
 
     public static HashMap<Integer, Integer> cycles = new HashMap<>();
 
@@ -47,7 +47,6 @@ public class Projectile {
     public static HashMap<String, Projectile> loadedProjectiles = new HashMap<>();
 
     public Projectile(String name) {
-
         this.name = name;
         FileManager.createJSON(name, FileManager.projectilesFolder, this, true);
         loadedProjectiles.put(name, this);
@@ -57,20 +56,12 @@ public class Projectile {
 
     public void saveProjectile() {FileManager.createJSON(name, FileManager.projectilesFolder, this, true);}
 
-    public void setType(String type) {this.type = type;}
-    public void setVelocity(double velocity) {this.velocity = velocity;}
-    public void setDelay(int delay) {this.delay = delay;}
-    public void setParticle(Particle particle) {this.particle = particle;}
-    public void setRange(double range) {this.range = range;}
-    public void setAngle(double angle) {this.angle = angle;}
-    public void setBranches(int branches) {this.branches = branches;}
-    public void setDamage(double damage) {this.damage = damage;}
-    public void setHitEvents(List<HitEventStorage> hitEventStorageList) {this.hitEventStorageList = hitEventStorageList;}
-    public void deleteHitEvent(int index) {hitEventStorageList.remove(index);}
-    public void addHitEvent(HitEventStorage hitEventStorage) {hitEventStorageList.add(hitEventStorage);}
-    public void setKnockback(double knockback) {this.knockback = knockback;}
 
-    public String getName() {return name;}
+    public void deleteHitEvent(int index) {
+        hitEventStorageList.remove(index);
+    }
+    public void addHitEvent(HitEventStorage hitEventStorage) {hitEventStorageList.add(hitEventStorage);}
+
 
     public int getDelay() {return delay;}
     public double getAngle() {return angle;}
@@ -233,41 +224,42 @@ public class Projectile {
 
 
     public static void createProjectile(String name, Player player) {
-        if (name.equals("new request 123456")) {return;}
-                name = name.replace(":", "");
-                name = name.replace("/", "");
-                name = name.replace("\\", "");
-                name = name.replace(">", "");
-                name = name.replace("<", "");
-                name = name.replace("*", "");
-                name = name.replace("?", "");
-                name = name.replace("\"", "");
-                name = name.replace("|", "");
-                name = name.replace(" ", "_");
 
-                if (name.length() < 3) {
-                    Chat.sendPlayerChatRequest(player, "newProjectile");
-                    player.sendMessage(Chat.colorMessage("&cThis name is too short!"));
-                    return;
-                }
-                if (name.length() > 16) {
-                    Chat.sendPlayerChatRequest(player, "newProjectile");
-                    player.sendMessage(Chat.colorMessage("&cThis name is too long!"));
-                    return;
-                }
+        name = name.replace(":", "");
+        name = name.replace("/", "");
+        name = name.replace("\\", "");
+        name = name.replace(">", "");
+        name = name.replace("<", "");
+        name = name.replace("*", "");
+        name = name.replace("?", "");
+        name = name.replace("\"", "");
+        name = name.replace("|", "");
+        name = name.replace(" ", "_");
+
+        if (name.length() < 3) {
+            Chat.sendPlayerChatRequest(player, "newProjectile");
+            player.sendMessage(Chat.colorMessage("&cThis name is too short!"));
+            return;
+        }
+        if (name.length() > 16) {
+            Chat.sendPlayerChatRequest(player, "newProjectile");
+            player.sendMessage(Chat.colorMessage("&cThis name is too long!"));
+            return;
+        }
 
 
-                List<String> projectileList = FileManager.getProjectileList();
+        List<String> projectileList = FileManager.getProjectileList();
 
-                if (projectileList.contains(name)) {
+        if (projectileList.contains(name)) {
 
-                    Chat.sendPlayerChatRequest(player, "newProjectile");
-                    player.sendMessage(Chat.colorMessage("&cThere is already an existing projectile with this name!"));
-                    return;
-                }
+            Chat.sendPlayerChatRequest(player, "newProjectile");
+            player.sendMessage(Chat.colorMessage("&cThere is already an existing projectile with this name!"));
+            return;
+        }
 
-                new Projectile(name);
-                ProjectileMenu.openProjectileMenu(player);
+        Projectile projectile = new Projectile(name);
+        projectile.saveProjectile();
+        ProjectileMenu.openProjectileMenu(player);
 
 
 
