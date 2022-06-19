@@ -132,7 +132,7 @@ public class ProjectileMenu {
         String projectileName = projectileEditMap.get(player.getUniqueId());
         Projectile projectile = Projectile.projectileFromName(projectileName, true);
 
-        List<HitEventStorage> hitEffects = projectile.getHitEventStorageList();
+        List<HitEventStorage> hitEffects = projectile.getHitEventList();
 
         GuiBuilder guiBuilder = new GuiBuilder(player);
         guiBuilder.setSize(54);
@@ -173,7 +173,7 @@ public class ProjectileMenu {
 
         String projectileName = projectileEditMap.get(player.getUniqueId());
         Projectile projectile = Projectile.projectileFromName(projectileName, true);
-        HitEvent hitEvent = projectile.getHitEventStorageList().get(number - 1).getHitEvent();
+        HitEvent hitEvent = projectile.getHitEventList().get(number - 1).getHitEvent();
 
         int slot = 0;
 

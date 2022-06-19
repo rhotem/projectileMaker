@@ -109,7 +109,7 @@ public class InventoryEvents implements Listener {
                     Projectile projectile = Projectile.loadedProjectiles.get(projectileName);
 
                     int hitIndex = ProjectileMenu.hitEventEditMap.get(player.getUniqueId()) - 1;
-                    HitEvent hitEvent = projectile.getHitEventStorageList().get(hitIndex).getHitEvent();
+                    HitEvent hitEvent = projectile.getHitEventList().get(hitIndex).getHitEvent();
 
                     String settingName = item.getItemMeta().getDisplayName().replace(ChatColor.GRAY.toString(), "");
                     Parameter<?> parameter = hitEvent.getParameterByName(settingName);

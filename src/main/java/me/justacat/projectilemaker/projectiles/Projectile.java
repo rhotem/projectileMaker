@@ -39,7 +39,7 @@ public class Projectile {
 
     //misc
 
-    private List<HitEventStorage> hitEventStorageList = Arrays.asList(HitEventStorage.newExplosion(3, false, true));
+    private List<HitEventStorage> hitEventList = new ArrayList<>();
 
     public static HashMap<Integer, Integer> cycles = new HashMap<>();
 
@@ -50,17 +50,15 @@ public class Projectile {
         this.name = name;
         FileManager.createJSON(name, FileManager.projectilesFolder, this, true);
         loadedProjectiles.put(name, this);
-
+        hitEventList.add(HitEventStorage.newExplosion(3, false, true));
     }
 
 
     public void saveProjectile() {FileManager.createJSON(name, FileManager.projectilesFolder, this, true);}
 
 
-    public void deleteHitEvent(int index) {
-        hitEventStorageList.remove(index);
-    }
-    public void addHitEvent(HitEventStorage hitEventStorage) {hitEventStorageList.add(hitEventStorage);}
+    public void deleteHitEvent(int index) {hitEventList.remove(index);}
+    public void addHitEvent(HitEventStorage hitEventStorage) {hitEventList.add(hitEventStorage);}
 
 
     public int getDelay() {return delay;}
@@ -74,7 +72,7 @@ public class Projectile {
 
     public double getKnockback() {return knockback;}
 
-    public List<HitEventStorage> getHitEventStorageList() {return hitEventStorageList;}
+    public List<HitEventStorage> getHitEventList() {return hitEventList;}
 
 
 
@@ -204,7 +202,7 @@ public class Projectile {
 
     public void hit(Location location, LivingEntity caster) {
 
-        for (HitEventStorage hitEventStorage : this.hitEventStorageList) {
+        for (HitEventStorage hitEventStorage : this.hitEventList) {
             hitEventStorage.getHitEvent().trigger(location, caster);
         }
 
