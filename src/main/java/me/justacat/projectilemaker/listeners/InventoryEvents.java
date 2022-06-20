@@ -22,7 +22,6 @@ public class InventoryEvents implements Listener {
     public void OnInventoryClick(InventoryClickEvent e) {
 
         Player player = (Player) e.getWhoClicked();
-
         if (e.getRawSlot() >= e.getInventory().getSize()) {return;}
 
         if (e.getInventory().getItem(e.getRawSlot()) == null) {return;}

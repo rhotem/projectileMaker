@@ -18,7 +18,10 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.util.Vector;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
 
 public class Projectile {
 
@@ -26,15 +29,25 @@ public class Projectile {
     private String name;
     private String type = "Beam";
 
+
+
     private Parameter<Double> range = new Parameter<>("Range", 20.0, Material.BOW);
     private Parameter<Double> velocity = new Parameter<>("Velocity", 10.0, Material.SUGAR);
     private Parameter<Particle> particle = new Parameter<>("Particle", Particle.FLAME, Material.REDSTONE);
 
-    private Parameter<Integer> delay = new Parameter<>("Delay", 1, Material.CLOCK);
-
+    private Parameter<Integer> delay = new Parameter<>("Tick Delay", 1, Material.CLOCK);
+    private Parameter<Integer> castDelay = new Parameter<>("Cast Delay", 1, Material.CLOCK);
     private Parameter<Double> damage = new Parameter<>("Damage", 5.0, Material.IRON_SWORD);
 
     private Parameter<Double> knockback = new Parameter<>("Knockback", 0.2, Material.SLIME_BALL);
+
+    private Parameter<Double> particleOffset = new Parameter<>("Particle Offset", 0D, Material.YELLOW_DYE);
+
+    private Parameter<Double> particleOffsetY = new Parameter<>("Particle Offset Y", 0D, Material.GREEN_DYE);
+
+    private Parameter<Integer> particleAmount = new Parameter<>("Particle Amount", 10, Material.REDSTONE_LAMP);
+
+    private Parameter<Double> particleSpeed = new Parameter<>("Particle Speed", 0.05, Material.FEATHER);
     //spiral
 
     private int branches;
@@ -76,10 +89,15 @@ public class Projectile {
 
         parameters.add(range);
         parameters.add(velocity);
-        parameters.add(particle);
         parameters.add(delay);
+        parameters.add(castDelay);
         parameters.add(damage);
         parameters.add(knockback);
+        parameters.add(particle);
+        parameters.add(particleAmount);
+        parameters.add(particleOffset);
+        parameters.add(particleOffsetY);
+        parameters.add(particleSpeed);
 
         return parameters;
 
@@ -128,7 +146,7 @@ public class Projectile {
 
 
                     location.add(direction);
-                    location.getWorld().spawnParticle(particle.getValue(), location, 10, 0, 0, 0, 0.05);
+                    location.getWorld().spawnParticle(particle.getValue(), location, (int) particleAmount.getValue(), (double) particleOffset.getValue(), (double) particleOffsetY.getValue(), (double) particleOffset.getValue(),(double) particleSpeed.getValue());
 
                     if (!cycles.containsKey(ID)) {
                         cycles.put(ID, 0);
@@ -174,7 +192,7 @@ public class Projectile {
                     }
 
                 }
-            }.runTaskTimer(JavaPlugin.getPlugin(ProjectileMaker.class), 0, delay.getValue());
+            }.runTaskTimer(JavaPlugin.getPlugin(ProjectileMaker.class), castDelay.getValue(), delay.getValue());
     }
 
 
