@@ -4,6 +4,7 @@ import me.justacat.projectilemaker.FileManager;
 import me.justacat.projectilemaker.ProjectileMaker;
 import me.justacat.projectilemaker.gui.ProjectileMenu;
 import me.justacat.projectilemaker.misc.Chat;
+import me.justacat.projectilemaker.misc.Parameter;
 import me.justacat.projectilemaker.projectiles.hitevents.Delay;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -25,13 +26,15 @@ public class Projectile {
     private String name;
     private String type = "Beam";
 
-    private double range = 20.0;
-    private double velocity = 10.0;
-    private Particle particle = Particle.FLAME;
-    private int delay = 1;
-    private double damage = 5;
+    private Parameter<Double> range = new Parameter<>("Range", 20.0, Material.BOW);
+    private Parameter<Double> velocity = new Parameter<>("Velocity", 10.0, Material.SUGAR);
+    private Parameter<Particle> particle = new Parameter<>("Particle", Particle.FLAME, Material.REDSTONE);
 
-    private double knockback = 1;
+    private Parameter<Integer> delay = new Parameter<>("Delay", 1, Material.CLOCK);
+
+    private Parameter<Double> damage = new Parameter<>("Damage", 5.0, Material.IRON_SWORD);
+
+    private Parameter<Double> knockback = new Parameter<>("Knockback", 0.2, Material.SLIME_BALL);
     //spiral
 
     private int branches;
@@ -63,65 +66,40 @@ public class Projectile {
     public void addHitEvent(HitEventStorage hitEventStorage) {hitEventList.add(hitEventStorage);}
 
 
-    public int getDelay() {return delay;}
-    public double getAngle() {return angle;}
-    public double getRange() {return range;}
-    public double getVelocity() {return velocity;}
-    public int getBranches() {return branches;}
-    public String getType() {return type;}
-    public Particle getParticle() {return particle;}
-    public double getDamage() {return damage;}
-
-    public double getKnockback() {return knockback;}
 
     public List<HitEventStorage> getHitEventList() {return hitEventList;}
 
 
+    public List<Parameter<?>> getParameters() {
 
+        List<Parameter<?>> parameters = new ArrayList<>();
 
+        parameters.add(range);
+        parameters.add(velocity);
+        parameters.add(particle);
+        parameters.add(delay);
+        parameters.add(damage);
+        parameters.add(knockback);
 
-    public boolean editSetting(String setting, String value) {
-
-
-
-
-
-        try {
-            double doubleValue;
-            switch (setting) {
-                case "Range":
-                    doubleValue = Double.parseDouble(value);
-                    range = doubleValue;
-                    return true;
-                case "Damage":
-                    doubleValue = Double.parseDouble(value);
-                    damage = doubleValue;
-                    return true;
-                case "Velocity":
-                    doubleValue = Double.parseDouble(value);
-                    velocity = doubleValue;
-                    return true;
-                case "Delay":
-                    int intValue = Integer.parseInt(value);
-                    delay = intValue;
-                    return true;
-                case "Particle":
-                    Particle particleValue = Particle.valueOf(value.toUpperCase().replace(" ", "_"));
-                    particle = particleValue;
-                    return true;
-                default:
-                    return false;
-
-
-
-            }
-        } catch (Exception e) {
-            return false;
-        }
-
-
+        return parameters;
 
     }
+
+    public Parameter<?> getParameterByName(String name) {
+
+        for (Parameter<?> parameter : getParameters()) {
+
+            if (parameter.getName().equalsIgnoreCase(name)) {
+
+                return parameter;
+            }
+
+        }
+        return null;
+
+    }
+
+
 
 
     public void cast(Location location, LivingEntity caster, Vector direction) {
@@ -139,8 +117,8 @@ public class Projectile {
     public void castAsBeam(Location location, LivingEntity caster, Vector direction) {
 
 
-        int looptimes = (int) (range*20 / velocity);
-        direction.normalize().multiply(velocity/20);
+        int looptimes = (int) (range.getValue() * 20 / velocity.getValue());
+        direction.normalize().multiply(velocity.getValue() / 20);
 
             BukkitTask task = new BukkitRunnable() {
                 @Override
@@ -150,7 +128,7 @@ public class Projectile {
 
 
                     location.add(direction);
-                    location.getWorld().spawnParticle(particle, location, 10, 0, 0, 0, 0.05);
+                    location.getWorld().spawnParticle(particle.getValue(), location, 10, 0, 0, 0, 0.05);
 
                     if (!cycles.containsKey(ID)) {
                         cycles.put(ID, 0);
@@ -175,8 +153,8 @@ public class Projectile {
                     if (!hit.isEmpty()) {
                         for (Entity entity : hit) {
 
-                            ((LivingEntity) entity).damage(damage, caster);
-                            entity.setVelocity(entity.getVelocity().add(direction.multiply(knockback)));
+                            ((LivingEntity) entity).damage(damage.getValue(), caster);
+                            entity.setVelocity(entity.getVelocity().add(direction.multiply(knockback.getValue())));
 
                         }
 
@@ -196,7 +174,7 @@ public class Projectile {
                     }
 
                 }
-            }.runTaskTimer(JavaPlugin.getPlugin(ProjectileMaker.class), 0, delay);
+            }.runTaskTimer(JavaPlugin.getPlugin(ProjectileMaker.class), 0, delay.getValue());
     }
 
 
