@@ -89,33 +89,26 @@ public class ProjectileMenu {
             return;
         }
 
-        lore.add(Chat.colorMessage("&eValue: &f" + projectile.getRange()));
+        int slot = 0;
 
-        guiBuilder.setItem(0, Material.BOW, 1, Chat.colorMessage("&7Range"), lore, true, "double");
+        for (Parameter<?> parameter : projectile.getParameters()) {
 
-        lore.remove(Chat.colorMessage("&eValue: &f" + projectile.getRange()));
-        lore.add(Chat.colorMessage("&eValue: &f" + projectile.getVelocity()));
+            if (lore.size() > 2) {
+                lore.remove(2);
+            }
 
-        guiBuilder.setItem(1, Material.SUGAR, 1, Chat.colorMessage("&7Velocity"), lore, true, "double");
+            lore.add("&eValue: &f" + parameter.getValue());
+            guiBuilder.setItem(slot, parameter.getDisplay(), 1, "&7" + parameter.getName(), lore, true, "Editable");
 
-        lore.remove(Chat.colorMessage("&eValue: &f" + projectile.getVelocity()));
-        lore.add(Chat.colorMessage("&eValue: &f" + projectile.getDelay()));
+            slot++;
 
-        guiBuilder.setItem(2, Material.CLOCK, 1, Chat.colorMessage("&7Delay"), lore, true, "int");
+        }
 
-        lore.remove(Chat.colorMessage("&eValue: &f" + projectile.getDelay()));
-        lore.add(Chat.colorMessage("&eValue: &f" + projectile.getDamage()));
+        if (lore.size() > 2) {
+            lore.remove(2);
+        }
 
-        guiBuilder.setItem(3, Material.DIAMOND_SWORD, 1, Chat.colorMessage("&7Damage"), lore, true, "double");
-
-        lore.remove(Chat.colorMessage("&eValue: &f" + projectile.getDamage()));
-        lore.add(Chat.colorMessage("&eValue: &f" + projectile.getParticle()));
-
-        guiBuilder.setItem(4, Material.REDSTONE, 1, Chat.colorMessage("&7Particle"), lore, true, "particle");
-
-
-        lore.remove(Chat.colorMessage("&eValue: &f" + projectile.getParticle()));
-        guiBuilder.setItem(5, Material.TNT_MINECART, 1, Chat.colorMessage("&7Hit Effects"), lore, true, "hitEffects");
+        guiBuilder.setItem(slot, Material.TNT_MINECART, 1, Chat.colorMessage("&7Hit Effects"), lore, true, "hitEffects");
 
 
 

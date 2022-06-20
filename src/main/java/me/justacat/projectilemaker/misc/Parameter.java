@@ -2,6 +2,8 @@ package me.justacat.projectilemaker.misc;
 
 import me.justacat.projectilemaker.FileManager;
 import me.justacat.projectilemaker.projectiles.Projectile;
+import org.bukkit.Material;
+import org.bukkit.Particle;
 import org.bukkit.entity.EntityType;
 import org.bukkit.potion.PotionEffectType;
 
@@ -11,9 +13,17 @@ public class Parameter<T> {
     private T value;
     private final String name;
 
+    private Material display = null;
+
     public Parameter(String name, T value) {
         this.name = name;
         this.value = value;
+    }
+
+    public Parameter(String name, T value, Material display) {
+        this.name = name;
+        this.value = value;
+        this.display = display;
     }
 
 
@@ -23,6 +33,7 @@ public class Parameter<T> {
 
     public String getName() {return name;}
 
+    public Material getDisplay() {return display;}
 
     public boolean chatEdit(String chatValue) {
 
@@ -97,16 +108,11 @@ public class Parameter<T> {
             } else if (value instanceof EntityType) {
                 value = (T) EntityType.valueOf(chatValue);
                 return true;
-            } else if (value instanceof PotionEffectType) {
-                if (PotionEffectType.getByName(chatValue) != null) {
-                    value = (T) PotionEffectType.getByName(chatValue);
-                    return true;
-                } else if (PotionEffectType.getById(Integer.parseInt(chatValue)) != null) {
-                    value = (T) PotionEffectType.getById(Integer.parseInt(chatValue));
-                    return true;
-                } else {
-                    return false;
-                }
+
+            } else if (value instanceof Particle) {
+
+                value = (T) Particle.valueOf(chatValue.replace(" ", "_").toUpperCase());
+                return true;
 
             } else {
                 return false;
