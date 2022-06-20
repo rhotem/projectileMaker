@@ -223,6 +223,8 @@ public class ProjectileMenu {
         guiBuilder.setItem(3, Material.SPLASH_POTION, 1, "&7Potion Effect", Arrays.asList("&0", "&bGives nearby entities potion effect!"), true);
         guiBuilder.setItem(4, Material.TNT_MINECART, 1, "&7Explosive Drill", Arrays.asList("&0", "&bOthers may call this thing \"Ray of death\"!"), true);
         guiBuilder.setItem(5, Material.ALLIUM, 1, "&7Back To The Sender!", Arrays.asList("&0", "&bShoots a projectile back to the caster!"), true);
+        guiBuilder.setItem(6, Material.CLOCK, 1, "&7Delay", Arrays.asList("&0", "&bWaits before the next hit event (time in ticks)!"), true);
+
 
         player.openInventory(guiBuilder.toInventory());
     }

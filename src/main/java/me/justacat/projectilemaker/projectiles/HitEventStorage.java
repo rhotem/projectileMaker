@@ -11,7 +11,9 @@ public class HitEventStorage {
     private SpawnEntity spawnEntity = null;
     private ExplosiveDrill explosiveDrill = null;
     private BackSender backSender = null;
+    private Delay delay = null;
     private String type;
+
 
 
     public static HitEventStorage newExplosion(float power, boolean fire, boolean safe) {
@@ -19,7 +21,7 @@ public class HitEventStorage {
         HitEventStorage hitEventStorage = new HitEventStorage();
 
         hitEventStorage.setExplosion(new Explosion(power, fire, safe));
-        hitEventStorage.setType("explosion");
+        hitEventStorage.setType("Explosion");
 
 
         return hitEventStorage;
@@ -31,7 +33,7 @@ public class HitEventStorage {
         HitEventStorage hitEventStorage = new HitEventStorage();
 
         hitEventStorage.setDrill(new Drill(length, drops, radius, delay));
-        hitEventStorage.setType("drill");
+        hitEventStorage.setType("Drill");
 
         return hitEventStorage;
     }
@@ -40,7 +42,7 @@ public class HitEventStorage {
 
         HitEventStorage hitEventStorage = new HitEventStorage();
 
-        hitEventStorage.setType("spawn");
+        hitEventStorage.setType("Spawn");
         hitEventStorage.setSpawnEntity(new SpawnEntity(type, amount, spread));
 
         return hitEventStorage;
@@ -50,7 +52,7 @@ public class HitEventStorage {
 
         HitEventStorage hitEventStorage = new HitEventStorage();
 
-        hitEventStorage.setType("potion");
+        hitEventStorage.setType("Potion");
         hitEventStorage.setPotion(new Potion());
 
         return hitEventStorage;
@@ -61,7 +63,7 @@ public class HitEventStorage {
 
         HitEventStorage hitEventStorage = new HitEventStorage();
 
-        hitEventStorage.setType("explosiveDrill");
+        hitEventStorage.setType("Explosive Drill");
         hitEventStorage.setExplosiveDrill(new ExplosiveDrill());
 
         return hitEventStorage;
@@ -71,10 +73,20 @@ public class HitEventStorage {
     public static HitEventStorage newBackSender() {
         HitEventStorage hitEventStorage = new HitEventStorage();
 
-        hitEventStorage.setType("backSender");
+        hitEventStorage.setType("Back To The Sender");
         hitEventStorage.setBackSender(new BackSender());
 
         return hitEventStorage;
+    }
+
+    public static HitEventStorage newDelay() {
+        HitEventStorage hitEventStorage = new HitEventStorage();
+
+        hitEventStorage.setType("Delay");
+        hitEventStorage.setDelay(new Delay());
+
+        return hitEventStorage;
+
     }
 
     public String getType() {return type;}
@@ -83,6 +95,8 @@ public class HitEventStorage {
 
     public void setDrill(Drill drill) {this.drill = drill;}
     public void setExplosiveDrill(ExplosiveDrill explosiveDrill) {this.explosiveDrill = explosiveDrill;}
+
+    public void setDelay(Delay delay) {this.delay = delay;}
 
     public void setSpawnEntity(SpawnEntity spawnEntity) {this.spawnEntity = spawnEntity;}
 
@@ -94,18 +108,20 @@ public class HitEventStorage {
     public HitEvent getHitEvent() {
 
         switch (type) {
-            case "explosion":
+            case "Explosion":
                 return explosion;
-            case "drill":
+            case "Drill":
                 return drill;
-            case "spawn":
+            case "Spawn":
                 return spawnEntity;
-            case "potion":
+            case "Potion":
                 return potion;
-            case "explosiveDrill":
+            case "Explosive Drill":
                 return explosiveDrill;
-            case "backSender":
+            case "Back To The Sender":
                 return backSender;
+            case "Delay":
+                return delay;
         }
 
         return null;

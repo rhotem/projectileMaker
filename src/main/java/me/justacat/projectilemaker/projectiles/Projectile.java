@@ -4,6 +4,8 @@ import me.justacat.projectilemaker.FileManager;
 import me.justacat.projectilemaker.ProjectileMaker;
 import me.justacat.projectilemaker.gui.ProjectileMenu;
 import me.justacat.projectilemaker.misc.Chat;
+import me.justacat.projectilemaker.projectiles.hitevents.Delay;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
@@ -202,8 +204,17 @@ public class Projectile {
 
     public void hit(Location location, LivingEntity caster) {
 
+        double delay = 0;
         for (HitEventStorage hitEventStorage : this.hitEventList) {
-            hitEventStorage.getHitEvent().trigger(location, caster);
+
+            if (hitEventStorage.getHitEvent() instanceof Delay) {
+                delay = delay + ((Delay) hitEventStorage.getHitEvent()).getDelay();
+            } else {
+                Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(ProjectileMaker.class), () -> {
+                    hitEventStorage.getHitEvent().trigger(location, caster);
+                }, (long) delay);
+            }
+
         }
 
     }

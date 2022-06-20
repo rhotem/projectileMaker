@@ -171,6 +171,9 @@ public class InventoryEvents implements Listener {
                     case "Back To The Sender!":
                         projectile.addHitEvent(HitEventStorage.newBackSender());
                         break;
+                    case "Delay":
+                        projectile.addHitEvent(HitEventStorage.newDelay());
+                        break;
                     default:
                         return;
                 }
