@@ -27,7 +27,6 @@ public class FileManager {
         projectilesFolder = new File(dataFolder, "projectiles");
         if (!projectilesFolder.exists()) {
             projectilesFolder.mkdir();
-            ProjectileMaker.registerHitEvents();
             Projectile firebolt = new Projectile("Firebolt");
             firebolt.saveProjectile();
         }

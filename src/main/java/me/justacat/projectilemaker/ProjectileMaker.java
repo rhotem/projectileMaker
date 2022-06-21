@@ -22,7 +22,7 @@ public final class ProjectileMaker extends JavaPlugin {
 
 
 
-
+        registerHitEvents();
         FileManager.CreateAllFolders();
 
 
@@ -48,7 +48,6 @@ public final class ProjectileMaker extends JavaPlugin {
     }
 
     public static void registerHitEvents() {
-        System.out.println("register");
         List<HitEvent> list = Arrays.asList(
                 new Delay(),
                 new Drill(),
@@ -59,7 +58,6 @@ public final class ProjectileMaker extends JavaPlugin {
                 new Teleport()
         );
 
-        System.out.println("register");
         for (HitEvent hitEvent : list) {
             HitEvent.registerHitEvent(hitEvent);
         }
