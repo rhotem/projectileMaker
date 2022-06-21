@@ -6,6 +6,8 @@ import me.justacat.projectilemaker.gui.ProjectileMenu;
 import me.justacat.projectilemaker.misc.Chat;
 import me.justacat.projectilemaker.misc.Parameter;
 import me.justacat.projectilemaker.projectiles.hitevents.Delay;
+import me.justacat.projectilemaker.projectiles.hitevents.Explosion;
+import me.justacat.projectilemaker.projectiles.hitevents.HitEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -57,7 +59,8 @@ public class Projectile {
 
     //misc
 
-    private List<HitEventStorage> hitEventList = new ArrayList<>();
+
+    private List<HitEvent> hitEventList = new ArrayList<>();
 
     public static HashMap<Integer, Integer> cycles = new HashMap<>();
 
@@ -68,7 +71,7 @@ public class Projectile {
         this.name = name;
         FileManager.createJSON(name, FileManager.projectilesFolder, this, true);
         loadedProjectiles.put(name, this);
-        hitEventList.add(HitEventStorage.newExplosion(3, false, true));
+        hitEventList.add(new Explosion());
     }
 
 
@@ -76,11 +79,11 @@ public class Projectile {
 
 
     public void deleteHitEvent(int index) {hitEventList.remove(index);}
-    public void addHitEvent(HitEventStorage hitEventStorage) {hitEventList.add(hitEventStorage);}
+    public void addHitEvent(HitEvent hitEvent) {hitEventList.add(hitEvent);}
 
 
 
-    public List<HitEventStorage> getHitEventList() {return hitEventList;}
+    public List<HitEvent> getHitEventList() {return hitEventList;}
 
 
     public List<Parameter<?>> getParameters() {
@@ -201,13 +204,13 @@ public class Projectile {
     public void hit(Location location, LivingEntity caster) {
 
         double delay = 0;
-        for (HitEventStorage hitEventStorage : this.hitEventList) {
+        for (HitEvent hitEvent : this.hitEventList) {
 
-            if (hitEventStorage.getHitEvent() instanceof Delay) {
-                delay = delay + ((Delay) hitEventStorage.getHitEvent()).getDelay();
+            if (hitEvent instanceof Delay) {
+                delay = delay + ((Delay) hitEvent).getDelay();
             } else {
                 Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(ProjectileMaker.class), () -> {
-                    hitEventStorage.getHitEvent().trigger(location, caster);
+                    hitEvent.trigger(location, caster);
                 }, (long) delay);
             }
 

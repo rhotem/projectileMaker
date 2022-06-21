@@ -6,9 +6,12 @@ import me.justacat.projectilemaker.listeners.ChatEvent;
 import me.justacat.projectilemaker.listeners.ClickEvent;
 import me.justacat.projectilemaker.listeners.InventoryEvents;
 import me.justacat.projectilemaker.projectiles.Projectile;
+import me.justacat.projectilemaker.projectiles.hitevents.*;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.logging.Level;
 
 public final class ProjectileMaker extends JavaPlugin {
@@ -18,7 +21,11 @@ public final class ProjectileMaker extends JavaPlugin {
     public void onEnable() {
 
 
+
+
         FileManager.CreateAllFolders();
+
+
 
         for (String projectile : FileManager.getProjectileList()) {
 
@@ -33,10 +40,30 @@ public final class ProjectileMaker extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new ChatEvent(), this);
         Bukkit.getPluginManager().registerEvents(new ClickEvent(), this);
 
+        Bukkit.getLogger().info("Done!");
     }
 
     @Override
     public void onDisable() {
+    }
+
+    public static void registerHitEvents() {
+        System.out.println("register");
+        List<HitEvent> list = Arrays.asList(
+                new Delay(),
+                new Drill(),
+                new Explosion(),
+                new ExplosiveDrill(),
+                new Potion(),
+                new SpawnEntity(),
+                new Teleport()
+        );
+
+        System.out.println("register");
+        for (HitEvent hitEvent : list) {
+            HitEvent.registerHitEvent(hitEvent);
+        }
+
     }
 
 

@@ -23,7 +23,7 @@ public class ExplosiveDrill extends HitEvent {
 
 
     public ExplosiveDrill() {
-        super(Material.TNT_MINECART);
+        super(Material.TNT_MINECART, "Explosive Drill", "Others may call this thing \"Ray of death\"!");
         this.length = new Parameter<>("Length", 30);
         this.power = new Parameter<>("Power", 10);
         this.delay = new Parameter<>("Delay", 1);

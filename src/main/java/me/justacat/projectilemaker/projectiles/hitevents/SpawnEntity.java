@@ -12,16 +12,13 @@ import java.util.List;
 public class SpawnEntity extends HitEvent {
 
 
-    Parameter<EntityType> type;
-    Parameter<Integer> amount;
-    Parameter<Double> spread;
+    Parameter<EntityType> type = new Parameter<>("Type", EntityType.ZOMBIE);
+    Parameter<Integer> amount = new Parameter<>("Amount", 3);
+    Parameter<Double> spread = new Parameter<>("Spread", 5.0);
 
 
-    public SpawnEntity(EntityType type, int amount, double spread) {
-        super(Material.CREEPER_SPAWN_EGG);
-        this.type = new Parameter<>("Type", type);
-        this.amount = new Parameter<>("Amount", amount);
-        this.spread = new Parameter<>("Spread", spread);
+    public SpawnEntity() {
+        super(Material.CREEPER_SPAWN_EGG, "Spawn Entity", "Spawns entities!");
     }
 
     @Override

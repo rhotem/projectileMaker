@@ -14,7 +14,7 @@ public class Teleport extends HitEvent {
     Parameter<Boolean> sound = new Parameter<>("Sound", true);
 
     public Teleport() {
-        super(Material.ENDER_PEARL);
+        super(Material.ENDER_PEARL, "Teleport", "Teleports the caster to the hit location");
     }
 
     @Override

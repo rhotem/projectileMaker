@@ -24,11 +24,8 @@ public class Potion extends HitEvent {
     private Parameter<Boolean> showIcon;
 
 
-    //another test
-
-
     public Potion() {
-        super(Material.SPLASH_POTION);
+        super(Material.SPLASH_POTION, "Potion Effect", "Gives nearby entities potion effect!");
         this.effect = new Parameter<>("Potion Effect", "POISON");
         this.radius = new Parameter<>("Radius", 5D);
         this.duration = new Parameter<>("Duration", 30);

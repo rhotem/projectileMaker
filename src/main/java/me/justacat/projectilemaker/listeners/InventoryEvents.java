@@ -3,13 +3,11 @@ package me.justacat.projectilemaker.listeners;
 import me.justacat.projectilemaker.gui.ProjectileMenu;
 import me.justacat.projectilemaker.misc.Chat;
 import me.justacat.projectilemaker.misc.Parameter;
-import me.justacat.projectilemaker.projectiles.HitEventStorage;
 import me.justacat.projectilemaker.projectiles.Projectile;
 import me.justacat.projectilemaker.projectiles.hitevents.HitEvent;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -108,7 +106,7 @@ public class InventoryEvents implements Listener {
                     Projectile projectile = Projectile.loadedProjectiles.get(projectileName);
 
                     int hitIndex = ProjectileMenu.hitEventEditMap.get(player.getUniqueId()) - 1;
-                    HitEvent hitEvent = projectile.getHitEventList().get(hitIndex).getHitEvent();
+                    HitEvent hitEvent = projectile.getHitEventList().get(hitIndex);
 
                     String settingName = item.getItemMeta().getDisplayName().replace(ChatColor.GRAY.toString(), "");
                     Parameter<?> parameter = hitEvent.getParameterByName(settingName);
@@ -150,34 +148,17 @@ public class InventoryEvents implements Listener {
 
                 Projectile projectile = Projectile.projectileFromName(ProjectileMenu.projectileEditMap.get(player.getUniqueId()), true);
 
-                switch (item.getItemMeta().getDisplayName().replace(ChatColor.GRAY.toString(), "")) {
+                String name = item.getItemMeta().getDisplayName().replace(ChatColor.GRAY.toString(), "");
 
-                    case "Explosion":
-                        projectile.addHitEvent(HitEventStorage.newExplosion(5, false, true));
-                        break;
-                    case "Drill":
-                        projectile.addHitEvent(HitEventStorage.newDrill(30, true, 3, 1));
-                        break;
-                    case "Spawn Entity":
-                        projectile.addHitEvent(HitEventStorage.newSpawnEntity(EntityType.ZOMBIE, 2, 2));
-                        break;
-                    case "Potion Effect":
-                        projectile.addHitEvent(HitEventStorage.newPotion());
-                        break;
-                    case "Explosive Drill":
-                        projectile.addHitEvent(HitEventStorage.newExplosiveDrill());
-                        break;
-                    case "Back To The Sender!":
-                        projectile.addHitEvent(HitEventStorage.newBackSender());
-                        break;
-                    case "Delay":
-                        projectile.addHitEvent(HitEventStorage.newDelay());
-                        break;
-                    default:
-                        return;
+
+                if (HitEvent.hitEvents.containsKey(name)) {
+                    HitEvent hitEvent = HitEvent.hitEvents.get(name);
+                    projectile.addHitEvent(hitEvent);
+                    projectile.saveProjectile();
+                    ProjectileMenu.editHitEffects(player);
                 }
-                projectile.saveProjectile();
-                ProjectileMenu.editHitEffects(player);
+
+
 
             }
 

@@ -20,7 +20,7 @@ public class BackSender extends HitEvent {
 
 
     public BackSender() {
-        super(Material.ALLIUM);
+        super(Material.ALLIUM, "Back To The Sender!", "Shoots a projectile back to the caster!");
         type = new Parameter<>("Projectile Type", FileManager.getProjectileList().get(0));
 
     }

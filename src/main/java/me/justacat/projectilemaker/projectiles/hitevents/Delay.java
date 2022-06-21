@@ -13,7 +13,7 @@ public class Delay extends HitEvent {
     Parameter<Double> time;
 
     public Delay() {
-        super(Material.CLOCK);
+        super(Material.CLOCK, "Delay", "Waits before the next hit event (time in ticks)!");
         time = new Parameter<>("Time", 10D);
     }
 
