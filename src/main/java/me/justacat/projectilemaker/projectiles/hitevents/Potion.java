@@ -22,7 +22,7 @@ public class Potion extends HitEvent {
     private Parameter<Integer> level;
     private Parameter<Boolean> particles;
     private Parameter<Boolean> showIcon;
-
+    //test
     public Potion() {
         super(Material.SPLASH_POTION);
         this.effect = new Parameter<>("Potion Effect", "POISON");
