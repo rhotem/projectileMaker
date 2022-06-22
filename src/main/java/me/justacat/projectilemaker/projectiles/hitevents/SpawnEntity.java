@@ -18,7 +18,7 @@ public class SpawnEntity extends HitEvent {
 
 
     public SpawnEntity() {
-        super(Material.CREEPER_SPAWN_EGG, "Spawn Entity", "Spawns entities!");
+        super("Spawn Entity");
     }
 
     @Override

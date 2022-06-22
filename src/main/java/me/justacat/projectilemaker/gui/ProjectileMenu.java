@@ -135,7 +135,7 @@ public class ProjectileMenu {
         int slot = 0;
         for (HitEvent hit : hitEffects) {
 
-            guiBuilder.setItem(slot, hit.getDisplay(), 1, "&7Event " + (slot + 1) + ": " + hit.getName(), Arrays.asList("&0", "&aClick here to edit!"), true, String.valueOf(slot + 1));
+            guiBuilder.setItem(slot, HitEvent.nameToMaterial.get(hit.getName()), 1, "&7Event " + (slot + 1) + ": " + hit.getName(), Arrays.asList("&0", "&aClick here to edit!"), true, String.valueOf(slot + 1));
 
 
             slot++;
@@ -213,7 +213,7 @@ public class ProjectileMenu {
         int slot = 0;
 
         for (HitEvent hitEvent : HitEvent.getHitEvents()) {
-            guiBuilder.setItem(slot, hitEvent.getDisplay(), 1, "&7" + hitEvent.getName(), Arrays.asList("&0", "&b" + hitEvent.getDescription()), true);
+            guiBuilder.setItem(slot, HitEvent.nameToMaterial.get(hitEvent.getName()), 1, "&7" + hitEvent.getName(), Arrays.asList("&0", "&b" + HitEvent.nameToDescription.get(hitEvent.getName())), true);
             slot++;
         }
 

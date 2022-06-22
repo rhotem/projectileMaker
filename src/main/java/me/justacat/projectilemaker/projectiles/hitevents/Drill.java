@@ -25,7 +25,7 @@ public class Drill extends HitEvent {
 
 
     public Drill() {
-        super(Material.IRON_PICKAXE, "Drill", "Mines blocks at a straight line!");
+        super("Drill");
     }
 
 

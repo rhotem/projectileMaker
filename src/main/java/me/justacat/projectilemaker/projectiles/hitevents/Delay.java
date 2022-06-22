@@ -2,7 +2,6 @@ package me.justacat.projectilemaker.projectiles.hitevents;
 
 import me.justacat.projectilemaker.misc.Parameter;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.entity.LivingEntity;
 
 import java.util.Collections;
@@ -13,7 +12,7 @@ public class Delay extends HitEvent {
     Parameter<Double> time;
 
     public Delay() {
-        super(Material.CLOCK, "Delay", "Waits before the next hit event (time in ticks)!");
+        super("Delay");
         time = new Parameter<>("Time", 10D);
     }
 

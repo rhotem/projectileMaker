@@ -13,16 +13,14 @@ import java.util.Set;
 
 public abstract class HitEvent {
 
-    protected Material display;
     protected String name;
-    protected String description;
 
 
     public static HashMap<String, HitEvent> hitEvents = new HashMap<>();
+    public static HashMap<String, String> nameToDescription = new HashMap<>();
+    public static HashMap<String, Material> nameToMaterial = new HashMap<>();
 
-    public HitEvent(Material display, String name, String description) {
-        this.display = display;
-        this.description = description;
+    public HitEvent(String name) {
         this.name = name;
     }
 
@@ -45,14 +43,16 @@ public abstract class HitEvent {
 
     }
 
-    public Material getDisplay() {return display;}
-    public String getDescription() {return description;}
+
     public String getName() {return name;}
 
 
-    public static void registerHitEvent(HitEvent hitEvent) {
-        hitEvents.put(hitEvent.getName(), hitEvent);
-        FileManager.adapter.registerSubtype(hitEvent.getClass(), hitEvent.getName());
+    public static void registerHitEvent(HitEvent hitEvent, String description, Material display) {
+        String name = hitEvent.getName();
+        hitEvents.put(name, hitEvent);
+        nameToDescription.put(name, description);
+        nameToMaterial.put(name, display);
+        FileManager.adapter.registerSubtype(hitEvent.getClass(), name);
     }
 
     public static List<HitEvent> getHitEvents() {

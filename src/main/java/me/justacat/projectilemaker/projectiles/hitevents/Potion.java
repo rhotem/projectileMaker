@@ -3,7 +3,6 @@ package me.justacat.projectilemaker.projectiles.hitevents;
 import me.justacat.projectilemaker.misc.Parameter;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -25,7 +24,7 @@ public class Potion extends HitEvent {
 
 
     public Potion() {
-        super(Material.SPLASH_POTION, "Potion Effect", "Gives nearby entities potion effect!");
+        super("Potion Effect");
         this.effect = new Parameter<>("Potion Effect", "POISON");
         this.radius = new Parameter<>("Radius", 5D);
         this.duration = new Parameter<>("Duration", 30);

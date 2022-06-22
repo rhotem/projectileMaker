@@ -2,7 +2,6 @@ package me.justacat.projectilemaker.projectiles.hitevents;
 
 import me.justacat.projectilemaker.misc.Parameter;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.entity.LivingEntity;
 
 import java.util.ArrayList;
@@ -18,7 +17,7 @@ public class Explosion extends HitEvent {
 
 
     public Explosion() {
-        super(Material.TNT, "Explosion", "Creates an explosion!");
+        super("Explosion");
     }
 
     @Override
