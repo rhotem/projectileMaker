@@ -2,7 +2,6 @@ package me.justacat.projectilemaker.projectiles.hitevents;
 
 import me.justacat.projectilemaker.misc.Parameter;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.entity.LivingEntity;
 
 import java.util.ArrayList;
@@ -12,16 +11,13 @@ public class Explosion extends HitEvent {
 
 
 
-    private Parameter<Float> power;
-    private Parameter<Boolean> fire;
-    private Parameter<Boolean> safe;
+    private Parameter<Float> power = new Parameter<>("Power", 3F);
+    private Parameter<Boolean> fire = new Parameter<>("Fire", false);
+    private Parameter<Boolean> safe = new Parameter<>("Safe", true);
 
 
-    public Explosion(float power, boolean fire, boolean safe) {
-        super(Material.TNT);
-        this.power = new Parameter<>("Power", power);
-        this.fire = new Parameter<>("Fire", fire);
-        this.safe = new Parameter<>("Safe", safe);
+    public Explosion() {
+        super("Explosion");
     }
 
     @Override

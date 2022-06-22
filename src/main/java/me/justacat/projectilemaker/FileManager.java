@@ -2,7 +2,9 @@ package me.justacat.projectilemaker;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import me.justacat.projectilemaker.misc.RuntimeTypeAdapterFactory;
 import me.justacat.projectilemaker.projectiles.Projectile;
+import me.justacat.projectilemaker.projectiles.hitevents.HitEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.*;
@@ -14,6 +16,8 @@ public class FileManager {
 
     public static final File dataFolder = JavaPlugin.getPlugin(ProjectileMaker.class).getDataFolder();
     public static File projectilesFolder;
+
+    public static RuntimeTypeAdapterFactory<HitEvent> adapter = RuntimeTypeAdapterFactory.of(HitEvent.class);
 
 
     public static void CreateAllFolders() {
@@ -52,7 +56,6 @@ public class FileManager {
 
 
     }
-
     public static File createJSON(String name, File folder, Object data, boolean overRide) {
 
 
@@ -60,7 +63,7 @@ public class FileManager {
 
         try {
 
-            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            Gson gson = new GsonBuilder().setPrettyPrinting().registerTypeAdapterFactory(adapter).create();
             Writer writer;
             if (overRide) {
                 writer = new FileWriter(file, false);
@@ -87,7 +90,8 @@ public class FileManager {
 
         try {
 
-            Gson gson = new Gson();
+
+            Gson gson = new GsonBuilder().registerTypeAdapterFactory(adapter).create();
             Reader reader = new FileReader(file);
             Projectile projectile = gson.fromJson(reader, Projectile.class);
             reader.close();

@@ -3,7 +3,6 @@ package me.justacat.projectilemaker.projectiles.hitevents;
 import me.justacat.projectilemaker.ProjectileMaker;
 import me.justacat.projectilemaker.misc.Parameter;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -23,7 +22,7 @@ public class ExplosiveDrill extends HitEvent {
 
 
     public ExplosiveDrill() {
-        super(Material.TNT_MINECART);
+        super("Explosive Drill");
         this.length = new Parameter<>("Length", 30);
         this.power = new Parameter<>("Power", 10);
         this.delay = new Parameter<>("Delay", 1);

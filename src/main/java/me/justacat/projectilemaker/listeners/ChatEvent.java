@@ -72,7 +72,7 @@ public class ChatEvent implements Listener {
                 Projectile projectile = Projectile.loadedProjectiles.get(projectileName);
 
                 int hitIndex = ProjectileMenu.hitEventEditMap.get(uuid) - 1;
-                HitEvent hitEvent = projectile.getHitEventList().get(hitIndex).getHitEvent();
+                HitEvent hitEvent = projectile.getHitEventList().get(hitIndex);
 
                 String settingName = Chat.playerChatRequests.get(uuid).replace("EditHitEvent:", "");
                 Parameter<?> parameter = hitEvent.getParameterByName(settingName);

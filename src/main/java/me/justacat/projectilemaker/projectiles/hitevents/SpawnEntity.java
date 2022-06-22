@@ -2,7 +2,6 @@ package me.justacat.projectilemaker.projectiles.hitevents;
 
 import me.justacat.projectilemaker.misc.Parameter;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 
@@ -12,16 +11,13 @@ import java.util.List;
 public class SpawnEntity extends HitEvent {
 
 
-    Parameter<EntityType> type;
-    Parameter<Integer> amount;
-    Parameter<Double> spread;
+    Parameter<EntityType> entityType = new Parameter<>("Type", EntityType.ZOMBIE);
+    Parameter<Integer> amount = new Parameter<>("Amount", 3);
+    Parameter<Double> spread = new Parameter<>("Spread", 5.0);
 
 
-    public SpawnEntity(EntityType type, int amount, double spread) {
-        super(Material.CREEPER_SPAWN_EGG);
-        this.type = new Parameter<>("Type", type);
-        this.amount = new Parameter<>("Amount", amount);
-        this.spread = new Parameter<>("Spread", spread);
+    public SpawnEntity() {
+        super("Spawn Entity");
     }
 
     @Override
@@ -34,7 +30,7 @@ public class SpawnEntity extends HitEvent {
             double z = Math.random() * spread.getValue() * 2 - spread.getValue();
 
             Location spawnLoc = new Location(location.getWorld(), location.getX() + x, location.getY() + y, location.getZ() + z);
-            spawnLoc.getWorld().spawnEntity(spawnLoc, type.getValue(), true);
+            spawnLoc.getWorld().spawnEntity(spawnLoc, entityType.getValue(), true);
         }
 
 
@@ -46,7 +42,7 @@ public class SpawnEntity extends HitEvent {
 
         List<Parameter<?>> parameterList = new ArrayList<>();
 
-        parameterList.add(type);
+        parameterList.add(entityType);
         parameterList.add(amount);
         parameterList.add(spread);
 

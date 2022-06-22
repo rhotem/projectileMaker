@@ -2,7 +2,6 @@ package me.justacat.projectilemaker.projectiles.hitevents;
 
 import me.justacat.projectilemaker.misc.Parameter;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.LivingEntity;
 
@@ -14,7 +13,7 @@ public class Teleport extends HitEvent {
     Parameter<Boolean> sound = new Parameter<>("Sound", true);
 
     public Teleport() {
-        super(Material.ENDER_PEARL);
+        super("Teleport");
     }
 
     @Override

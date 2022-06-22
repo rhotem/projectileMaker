@@ -16,20 +16,16 @@ import java.util.List;
 
 public class Drill extends HitEvent {
 
-    private Parameter<Integer> length;
-    private Parameter<Boolean> drops;
+    private Parameter<Integer> length = new Parameter<>("Length", 30);
+    private Parameter<Boolean> drops = new Parameter<>("Drops", true);
 
-    private Parameter<Integer> radius;
+    private Parameter<Integer> radius = new Parameter<>("Radius", 3);
 
-    private Parameter<Integer> delay;
+    private Parameter<Integer> delay = new Parameter<>("Delay", 1);
 
 
-    public Drill(int length, boolean drops, int radius, int delay) {
-        super(Material.IRON_PICKAXE);
-        this.length = new Parameter<>("Length", length);
-        this.drops = new Parameter<>("Drops", drops);
-        this.radius = new Parameter<>("Radius", radius);
-        this.delay = new Parameter<>("Delay", delay);
+    public Drill() {
+        super("Drill");
     }
 
 

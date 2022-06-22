@@ -3,7 +3,6 @@ package me.justacat.projectilemaker.gui;
 import me.justacat.projectilemaker.FileManager;
 import me.justacat.projectilemaker.misc.Chat;
 import me.justacat.projectilemaker.misc.Parameter;
-import me.justacat.projectilemaker.projectiles.HitEventStorage;
 import me.justacat.projectilemaker.projectiles.Projectile;
 import me.justacat.projectilemaker.projectiles.hitevents.HitEvent;
 import org.bukkit.Material;
@@ -125,7 +124,7 @@ public class ProjectileMenu {
         String projectileName = projectileEditMap.get(player.getUniqueId());
         Projectile projectile = Projectile.projectileFromName(projectileName, true);
 
-        List<HitEventStorage> hitEffects = projectile.getHitEventList();
+        List<HitEvent> hitEffects = projectile.getHitEventList();
 
         GuiBuilder guiBuilder = new GuiBuilder(player);
         guiBuilder.setSize(54);
@@ -134,9 +133,9 @@ public class ProjectileMenu {
 
 
         int slot = 0;
-        for (HitEventStorage hit : hitEffects) {
+        for (HitEvent hit : hitEffects) {
 
-            guiBuilder.setItem(slot, hit.getHitEvent().getDisplay(), 1, "&7Event " + (slot + 1) + ": " + hit.getType(), Arrays.asList("&0", "&aClick here to edit!"), true, String.valueOf(slot + 1));
+            guiBuilder.setItem(slot, HitEvent.nameToMaterial.get(hit.getName()), 1, "&7Event " + (slot + 1) + ": " + hit.getName(), Arrays.asList("&0", "&aClick here to edit!"), true, String.valueOf(slot + 1));
 
 
             slot++;
@@ -166,7 +165,7 @@ public class ProjectileMenu {
 
         String projectileName = projectileEditMap.get(player.getUniqueId());
         Projectile projectile = Projectile.projectileFromName(projectileName, true);
-        HitEvent hitEvent = projectile.getHitEventList().get(number - 1).getHitEvent();
+        HitEvent hitEvent = projectile.getHitEventList().get(number - 1);
 
         int slot = 0;
 
@@ -210,14 +209,13 @@ public class ProjectileMenu {
 
         guiBuilder.setEmpty(Material.GRAY_STAINED_GLASS_PANE, 1, " ", null, true);
 
-        guiBuilder.setItem(0, Material.TNT, 1, "&7Explosion", Arrays.asList("&0", "&bCreates an explosion!"), true);
-        guiBuilder.setItem(1, Material.IRON_PICKAXE, 1, "&7Drill", Arrays.asList("&0", "&bMines blocks at a straight line!"), true);
-        guiBuilder.setItem(2, Material.CREEPER_SPAWN_EGG, 1, "&7Spawn Entity", Arrays.asList("&0", "&bSpawns entities!"), true);
-        guiBuilder.setItem(3, Material.SPLASH_POTION, 1, "&7Potion Effect", Arrays.asList("&0", "&bGives nearby entities potion effect!"), true);
-        guiBuilder.setItem(4, Material.TNT_MINECART, 1, "&7Explosive Drill", Arrays.asList("&0", "&bOthers may call this thing \"Ray of death\"!"), true);
-        guiBuilder.setItem(5, Material.ALLIUM, 1, "&7Back To The Sender!", Arrays.asList("&0", "&bShoots a projectile back to the caster!"), true);
-        guiBuilder.setItem(6, Material.CLOCK, 1, "&7Delay", Arrays.asList("&0", "&bWaits before the next hit event (time in ticks)!"), true);
 
+        int slot = 0;
+
+        for (HitEvent hitEvent : HitEvent.getHitEvents()) {
+            guiBuilder.setItem(slot, HitEvent.nameToMaterial.get(hitEvent.getName()), 1, "&7" + hitEvent.getName(), Arrays.asList("&0", "&b" + HitEvent.nameToDescription.get(hitEvent.getName())), true);
+            slot++;
+        }
 
         player.openInventory(guiBuilder.toInventory());
     }
