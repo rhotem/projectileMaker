@@ -200,7 +200,7 @@ public final class RuntimeTypeAdapterFactory<T> implements TypeAdapterFactory {
 
     @Override
     public <R> TypeAdapter<R> create(Gson gson, TypeToken<R> type) {
-        if (type.getRawType() != baseType) {
+        if (null == type || !baseType.isAssignableFrom(type.getRawType())) {
             return null;
         }
 
