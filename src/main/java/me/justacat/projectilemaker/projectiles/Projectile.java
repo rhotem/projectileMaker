@@ -5,6 +5,7 @@ import me.justacat.projectilemaker.ProjectileMaker;
 import me.justacat.projectilemaker.gui.ProjectileMenu;
 import me.justacat.projectilemaker.misc.Chat;
 import me.justacat.projectilemaker.misc.Parameter;
+import me.justacat.projectilemaker.misc.VecMath;
 import me.justacat.projectilemaker.projectiles.hitevents.Delay;
 import me.justacat.projectilemaker.projectiles.hitevents.Explosion;
 import me.justacat.projectilemaker.projectiles.hitevents.HitEvent;
@@ -12,12 +13,12 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
@@ -52,8 +53,9 @@ public class Projectile {
     private Parameter<Double> particleSpeed = new Parameter<>("Particle Speed", 0.05, Material.FEATHER);
     //spiral
 
-    private int branches;
-    private double angle;
+    private Parameter<Double> radius = new Parameter<>("Radius", 1.0, Material.MAP);
+    private Parameter<Integer> branches = new Parameter<>("Branches", 5, Material.STICK);
+    private Parameter<Double> angle = new Parameter<>("Angle", 10.0, Material.IRON_INGOT);
 
     //cone
 
@@ -88,6 +90,16 @@ public class Projectile {
 
     public List<Parameter<?>> getParameters() {
 
+        if (type.equals("Beam")) {
+            return getBeamParameters();
+        } else if (type.equals("Spiral")) {
+            return getSpiralParameters();
+        }
+
+        return new ArrayList<>();
+    }
+
+    private List<Parameter<?>> getBeamParameters() {
         List<Parameter<?>> parameters = new ArrayList<>();
 
         parameters.add(range);
@@ -103,9 +115,17 @@ public class Projectile {
         parameters.add(particleSpeed);
 
         return parameters;
-
     }
 
+    private List<Parameter<?>> getSpiralParameters() {
+        List<Parameter<?>> parameters = getBeamParameters();
+
+        parameters.add(angle);
+        parameters.add(radius);
+        parameters.add(branches);
+
+        return parameters;
+    }
     public Parameter<?> getParameterByName(String name) {
 
         for (Parameter<?> parameter : getParameters()) {
@@ -128,10 +148,14 @@ public class Projectile {
 
 
         if (type.equals("Beam")) {
-            this.castAsBeam(location, caster, direction);
+            castAsBeam(location, caster, direction);
+        } else if (type.equals("Spiral")) {
+            castAsSpiral(location, caster, direction);
         }
 
     }
+
+
 
 
 
@@ -141,7 +165,7 @@ public class Projectile {
         int looptimes = (int) (range.getValue() * 20 / velocity.getValue());
         direction.normalize().multiply(velocity.getValue() / 20);
 
-            BukkitTask task = new BukkitRunnable() {
+            new BukkitRunnable() {
                 @Override
                 public void run() {
 
@@ -198,6 +222,81 @@ public class Projectile {
             }.runTaskTimer(JavaPlugin.getPlugin(ProjectileMaker.class), castDelay.getValue(), delay.getValue());
     }
 
+
+    public void castAsSpiral(Location location, LivingEntity caster, Vector direction) {
+
+        int looptimes = (int) (range.getValue() * 20 / velocity.getValue());
+        direction.normalize().multiply(velocity.getValue() / 20);
+        Vector perpendicular = VecMath.perpendicular(direction);
+        perpendicular.normalize();
+        boolean[] hits = new boolean[branches.getValue()];
+        for (int h = 0; h < branches.getValue(); h++) {hits[h] = false;}
+        new BukkitRunnable() {
+
+                Location loc;
+                int cycles = 0;
+                final int branches = Projectile.this.branches.getValue();
+                @Override
+                public void run() {
+
+                    cycles++;
+                    location.add(direction);
+                    if (cycles >= looptimes) {
+
+                        for (int b = 0; b < branches; b++) {
+                            if (!hits[b]) {
+
+                                loc = location.clone();
+                                loc.add(perpendicular.clone().multiply((cycles * velocity.getValue() / 20) * Math.tan(Math.toRadians(angle.getValue())) + radius.getValue()));
+
+
+
+                                hits[b] = true;
+                                hit(loc, caster);
+
+
+
+
+                            }
+                            perpendicular.rotateAroundAxis(direction, Math.toRadians(360.0 / branches));
+                        }
+                        this.cancel();
+
+                    }
+
+
+                    if (particle != null) {
+                        for (int b = 0; b < branches; b++) {
+                            if (!hits[b]) {
+
+                                loc = location.clone();
+                                loc.add(perpendicular.clone().multiply((cycles * velocity.getValue() / 20) * Math.tan(Math.toRadians(angle.getValue())) + radius.getValue()));
+                                loc.getWorld().spawnParticle(particle.getValue(), loc,(int) particleAmount.getValue(),(double) particleOffset.getValue(),(double) particleOffsetY.getValue(),(double) particleOffset.getValue(),(double) particleSpeed.getValue());
+                                Collection<Entity> hit = loc.getWorld().getNearbyEntities(loc, 1, 1, 1);
+                                hit.removeIf(entity -> !(entity instanceof LivingEntity));
+                                hit.remove(caster);
+
+                                if (!hit.isEmpty()) {
+                                    hits[b] = true;
+                                    hit(loc, caster);
+                                    for (Entity entity : hit) {
+                                        ((LivingEntity) entity).damage(damage.getValue(), caster);
+                                    }
+                                }
+                                Block block = loc.getBlock();
+                                if (block.getType() != Material.AIR) {
+                                    hits[b] = true;
+                                    hit(loc, caster);
+                                }
+
+                            }
+                            perpendicular.rotateAroundAxis(direction, Math.toRadians(360.0 / branches));
+                        }
+                        perpendicular.rotateAroundAxis(direction, Math.toRadians(angle.getValue()));
+                    }
+                }
+            }.runTaskTimer(JavaPlugin.getPlugin(ProjectileMaker.class), 0, delay.getValue());
+    }
 
 
 
