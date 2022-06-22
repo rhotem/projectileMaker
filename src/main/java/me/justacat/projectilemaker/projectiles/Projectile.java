@@ -30,7 +30,7 @@ public class Projectile {
 
     //general settings
     private String name;
-    private String type = "Beam";
+    private Parameter<String> type = new Parameter<>("Type", "Beam", Material.PAPER);
 
 
 
@@ -87,12 +87,12 @@ public class Projectile {
 
     public List<HitEvent> getHitEventList() {return hitEventList;}
 
-
+    public String getType() {return type.getValue();}
     public List<Parameter<?>> getParameters() {
 
-        if (type.equals("Beam")) {
+        if (type.getValue().equals("Beam")) {
             return getBeamParameters();
-        } else if (type.equals("Spiral")) {
+        } else if (type.getValue().equals("Spiral")) {
             return getSpiralParameters();
         }
 
@@ -102,6 +102,7 @@ public class Projectile {
     private List<Parameter<?>> getBeamParameters() {
         List<Parameter<?>> parameters = new ArrayList<>();
 
+        parameters.add(type);
         parameters.add(range);
         parameters.add(velocity);
         parameters.add(delay);
@@ -147,9 +148,9 @@ public class Projectile {
 
 
 
-        if (type.equals("Beam")) {
+        if (type.getValue().equals("Beam")) {
             castAsBeam(location, caster, direction);
-        } else if (type.equals("Spiral")) {
+        } else if (type.getValue().equals("Spiral")) {
             castAsSpiral(location, caster, direction);
         }
 
