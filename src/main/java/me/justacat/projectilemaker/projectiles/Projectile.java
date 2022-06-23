@@ -51,13 +51,14 @@ public class Projectile {
     private Parameter<Integer> particleAmount = new Parameter<>("Particle Amount", 10, Material.REDSTONE_LAMP);
 
     private Parameter<Double> particleSpeed = new Parameter<>("Particle Speed", 0.05, Material.FEATHER);
+
+    private Parameter<Double> homing = new Parameter<>("Homing Rate", 0.0, Material.BREWING_STAND);
+
     //spiral
 
     private Parameter<Double> radius = new Parameter<>("Radius", 1.0, Material.MAP);
     private Parameter<Integer> branches = new Parameter<>("Branches", 5, Material.STICK);
     private Parameter<Double> angle = new Parameter<>("Angle", 10.0, Material.IRON_INGOT);
-
-    //cone
 
     //misc
 
@@ -114,6 +115,7 @@ public class Projectile {
         parameters.add(particleOffset);
         parameters.add(particleOffsetY);
         parameters.add(particleSpeed);
+        parameters.add(homing);
 
         return parameters;
     }
@@ -124,6 +126,8 @@ public class Projectile {
         parameters.add(angle);
         parameters.add(radius);
         parameters.add(branches);
+
+        parameters.remove(homing);
 
         return parameters;
     }
@@ -174,6 +178,28 @@ public class Projectile {
 
 
                     location.add(direction);
+
+                    //homing
+                    if (homing.getValue() != 0) {
+                        Collection<LivingEntity> livingEntities = location.getNearbyLivingEntities(10);
+                        livingEntities.remove(caster);
+                        if (!livingEntities.isEmpty()) {
+                            Entity nearest = null;
+                            double distance = 1000;
+                            for (LivingEntity near : livingEntities) {
+
+                                if (nearest == null | distance > location.distance(near.getLocation())) {
+                                    nearest = near;
+                                    distance = location.distance(near.getLocation());
+                                }
+
+                            }
+                            Location nearestLocation = nearest.getLocation();
+                            location.add(new Vector(nearestLocation.getX() - location.getX(), nearestLocation.getY() - location.getY(), nearestLocation.getZ() - location.getZ()).normalize().multiply(homing.getValue()));
+                        }
+
+                    }
+
                     location.getWorld().spawnParticle(particle.getValue(), location, (int) particleAmount.getValue(), (double) particleOffset.getValue(), (double) particleOffsetY.getValue(), (double) particleOffset.getValue(),(double) particleSpeed.getValue());
 
                     if (!cycles.containsKey(ID)) {

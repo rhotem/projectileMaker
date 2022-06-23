@@ -66,7 +66,7 @@ public class InventoryEvents implements Listener {
                             projectile.getParameterByName("Type").chatEdit("Beam");
                         }
                         player.playSound(player, Sound.BLOCK_LEVER_CLICK, 0.5F, 0.5F);
-                        ProjectileMenu.openProjectileMenu(player);
+                        ProjectileMenu.editProjectile(ProjectileMenu.projectileEditMap.get(player.getUniqueId()), player);
                     } else {
                         Chat.sendPlayerChatRequest(player, "EDIT:" + setting);
                     }
