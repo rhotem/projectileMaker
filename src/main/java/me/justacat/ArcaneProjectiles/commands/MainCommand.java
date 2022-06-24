@@ -26,7 +26,7 @@ public class MainCommand implements CommandExecutor {
                 switch (args[0].toUpperCase()) {
 
                     case "MENU":
-                        ProjectileMenu.openProjectileMenu((Player) sender);
+                        ProjectileMenu.openMainMenu((Player) sender);
                         break;
                     case "BINDITEM":
 

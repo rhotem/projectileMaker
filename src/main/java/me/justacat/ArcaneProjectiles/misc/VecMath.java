@@ -18,8 +18,8 @@ public class VecMath {
         location.setDirection(vector);
         return location.getYaw();
     }
-    public static Vector vecFromAng(double pitch, double yaw){ return new Location(Bukkit.getWorld("world"), 0D, 0D, 0D,(float) yaw,(float) pitch).getDirection(); }
-    public static Vector angledVec(Vector vector, double pitch, double yaw) {return VecMath.vecFromAng( VecMath.getPitch(vector) + pitch, VecMath.getYaw(vector) + yaw);}
+    public static Vector vecFromAng(float pitch, float yaw){ return new Location(Bukkit.getWorld("world"), 0D, 0D, 0D, yaw, pitch).getDirection(); }
+    public static Vector angledVec(Vector vector, float pitch, float yaw) {return VecMath.vecFromAng( VecMath.getPitch(vector) + pitch, VecMath.getYaw(vector) + yaw);}
     public static Vector perpendicular(Vector vector) {return VecMath.angledVec(vector, 90, 0);}
 
 

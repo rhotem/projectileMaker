@@ -1,14 +1,18 @@
 package me.justacat.ArcaneProjectiles.gui;
 
+import com.jeff_media.morepersistentdatatypes.DataType;
+import me.justacat.ArcaneProjectiles.ArcaneProjectiles;
 import me.justacat.ArcaneProjectiles.FileManager;
 import me.justacat.ArcaneProjectiles.misc.Chat;
 import me.justacat.ArcaneProjectiles.misc.Parameter;
 import me.justacat.ArcaneProjectiles.projectiles.Projectile;
 import me.justacat.ArcaneProjectiles.projectiles.hitevents.HitEvent;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.*;
 
@@ -18,7 +22,22 @@ public class ProjectileMenu {
     public static HashMap<UUID, String> projectileEditMap = new HashMap<>();
     public static HashMap<UUID, Integer> hitEventEditMap = new HashMap<>();
 
+    public static HashMap<UUID, ItemStack> editedItem = new HashMap<>();
 
+    public static void openMainMenu(Player player) {
+        GuiBuilder guiBuilder = new GuiBuilder(player);
+
+        guiBuilder.setTitle("Arcane Projectiles");
+
+        guiBuilder.setSize(27);
+        guiBuilder.setItem(11, Material.BLAZE_ROD, 1, "&bProjectile Maker", Arrays.asList("&0", "&7Click here to edit & create projectiles!", "&0"), true);
+        guiBuilder.setItem(15, Material.IRON_SWORD, 1, "&bItem Binder", Arrays.asList("&0", "&7Click here to add & remove projectiles from an item!", "&0"), true);
+
+        guiBuilder.setEmpty(Material.GRAY_STAINED_GLASS_PANE, 1, "&0", null, true);
+
+
+        player.openInventory(guiBuilder.toInventory());
+    }
 
     public static void openProjectileMenu(Player player) {
 
@@ -220,6 +239,83 @@ public class ProjectileMenu {
         player.openInventory(guiBuilder.toInventory());
     }
 
+    public static void openEmptyItemMenu(Player player) {
 
+        editedItem.remove(player.getUniqueId());
 
+        GuiBuilder guiBuilder = new GuiBuilder(player);
+
+        guiBuilder.setEmpty(Material.GRAY_STAINED_GLASS_PANE, 1, "&0", null, true);
+
+        guiBuilder.setTitle("Edit Item's Projectiles");
+
+        guiBuilder.setSize(27);
+
+        guiBuilder.setItem(13, Material.ORANGE_STAINED_GLASS_PANE, 1, "&cInsert Item Here!", null, true);
+
+        player.openInventory(guiBuilder.toInventory());
+    }
+
+    public static void openItemMenu(Player player, ItemStack item) {
+
+        editedItem.put(player.getUniqueId(), item);
+
+        GuiBuilder guiBuilder = new GuiBuilder(player);
+
+        guiBuilder.setSize(45);
+
+        guiBuilder.setItem(22, item);
+
+        guiBuilder.setTitle("Edit Item's Projectiles");
+
+        for (int slot : new int[]{4, 13, 31, 40}) {
+            guiBuilder.setItem(slot, Material.GRAY_STAINED_GLASS_PANE, 1, "&0", null, true);
+        }
+
+        int[] right = new int[]{5, 6, 7, 8, 14, 15, 16, 17, 23, 24, 25, 26, 32, 33, 34, 35, 41, 42, 43, 44};
+        int[] left = new int[]{0, 1, 2, 3, 9, 10, 11, 12, 18, 19, 20, 21, 27, 28, 29, 30, 36, 37, 28 ,39};
+
+        ItemMeta itemMeta = item.getItemMeta();
+
+        NamespacedKey leftClick = new NamespacedKey(JavaPlugin.getPlugin(ArcaneProjectiles.class), "LeftClick");
+        NamespacedKey rightClick = new NamespacedKey(JavaPlugin.getPlugin(ArcaneProjectiles.class), "RightClick");
+
+        List<String> rightProjectiles = itemMeta.getPersistentDataContainer().get(rightClick, DataType.asList(DataType.STRING));
+        List<String> leftProjectiles = itemMeta.getPersistentDataContainer().get(leftClick, DataType.asList(DataType.STRING));
+
+        if (rightProjectiles == null) rightProjectiles = new ArrayList<>();
+        if (leftProjectiles == null) leftProjectiles = new ArrayList<>();
+
+        int leftSlot = 0;
+        int rightSlot = 0;
+
+        for (String projectile : leftProjectiles) {
+
+            guiBuilder.setItem(left[leftSlot], Material.BLAZE_POWDER, 1, "&a" + projectile, Arrays.asList("&0", "&4Click Here To Remove!", "&0"), true, String.valueOf(leftSlot));
+            leftSlot++;
+
+        }
+
+        for (String projectile : rightProjectiles) {
+
+            guiBuilder.setItem(right[rightSlot], Material.BLAZE_POWDER, 1, "&a" + projectile, Arrays.asList("&0", "&4Click Here To Remove!", "&0"), true, String.valueOf(rightSlot));
+            rightSlot++;
+
+        }
+
+        guiBuilder.setItem(right[rightSlot], Material.BOOK, 1, "&7Add &bRight-click&7 Projectile!", Arrays.asList("&0", "&aClick here to add a projectile!", "&0"), true);
+        guiBuilder.setItem(left[leftSlot], Material.BOOK, 1, "&7Add &bLeft-click&7 Projectile!", Arrays.asList("&0", "&aClick here to add a projectile!", "&0"), true);
+
+        player.openInventory(guiBuilder.toInventory());
+    }
+
+    public static void openLastItemMenu(Player player) {
+
+        if (editedItem.containsKey(player.getUniqueId())) {
+            openItemMenu(player, editedItem.get(player.getUniqueId()));
+        } else {
+            openEmptyItemMenu(player);
+        }
+
+    }
 }

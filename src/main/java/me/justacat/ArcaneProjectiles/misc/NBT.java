@@ -43,6 +43,26 @@ public class NBT {
         return item;
     }
 
+    public static ItemStack removeProjectile(ItemStack item, int index, String clickType) {
+
+        NamespacedKey namespacedKey = new NamespacedKey(JavaPlugin.getPlugin(ArcaneProjectiles.class), clickType);
+        List<String> projectiles = item.getItemMeta().getPersistentDataContainer().get(namespacedKey, DataType.asList(DataType.STRING));
+
+        if (projectiles == null) {
+            return item;
+        }
+
+        if (projectiles.size() > index) {
+
+            projectiles.remove(index);
+            ItemMeta itemMeta = item.getItemMeta();
+            itemMeta.getPersistentDataContainer().set(namespacedKey, DataType.asList(DataType.STRING), projectiles);
+            item.setItemMeta(itemMeta);
+        }
+        return item;
+
+    }
+
 
 
 
