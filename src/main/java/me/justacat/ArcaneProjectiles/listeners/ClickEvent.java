@@ -1,5 +1,6 @@
 package me.justacat.ArcaneProjectiles.listeners;
 
+import com.jeff_media.morepersistentdatatypes.DataType;
 import me.justacat.ArcaneProjectiles.ArcaneProjectiles;
 import me.justacat.ArcaneProjectiles.projectiles.Projectile;
 import org.bukkit.NamespacedKey;
@@ -10,8 +11,9 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.util.List;
 
 public class ClickEvent implements Listener {
 
@@ -32,25 +34,35 @@ public class ClickEvent implements Listener {
 
         if (itemMeta.getPersistentDataContainer().has(leftClick) && e.getAction().isLeftClick()) {
 
-            String projectileName = itemMeta.getPersistentDataContainer().get(leftClick, PersistentDataType.STRING);
+            List<String> projectileList = itemMeta.getPersistentDataContainer().get(leftClick, DataType.asList(DataType.STRING));
 
-            Projectile projectile = Projectile.projectileFromName(projectileName, true);
+            if (projectileList == null) return;
 
-            if (projectile != null) {
-                projectile.cast(player.getEyeLocation(), player, player.getEyeLocation().getDirection());
+
+            for (String projectileName : projectileList) {
+                Projectile projectile = Projectile.projectileFromName(projectileName, true);
+
+                if (projectile != null) {
+                    projectile.cast(player.getEyeLocation(), player, player.getEyeLocation().getDirection());
+                }
             }
+
 
 
         }
 
         if (itemMeta.getPersistentDataContainer().has(rightClick) && e.getAction().isRightClick()) {
 
-            String projectileName = itemMeta.getPersistentDataContainer().get(rightClick, PersistentDataType.STRING);
+            List<String> projectileList = itemMeta.getPersistentDataContainer().get(rightClick, DataType.asList(DataType.STRING));
 
-            Projectile projectile = Projectile.projectileFromName(projectileName, true);
+            if (projectileList == null) return;
 
-            if (projectile != null) {
-                projectile.cast(player.getEyeLocation(), player, player.getEyeLocation().getDirection());
+            for (String projectileName : projectileList) {
+                Projectile projectile = Projectile.projectileFromName(projectileName, true);
+
+                if (projectile != null) {
+                    projectile.cast(player.getEyeLocation(), player, player.getEyeLocation().getDirection());
+                }
             }
 
 

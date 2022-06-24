@@ -35,7 +35,7 @@ public class MainCommand implements CommandExecutor {
 
                             List<String> projectileList = FileManager.getProjectileList();
                             if (projectileList.contains(args[1].replace(" ", ""))) {
-                                ((Player) sender).getInventory().setItemInMainHand(NBT.putProjectile(((Player) sender).getInventory().getItemInMainHand(), args[2], args[1]));
+                                ((Player) sender).getInventory().setItemInMainHand(NBT.addProjectile(((Player) sender).getInventory().getItemInMainHand(), args[2], args[1]));
                             }
 
 
