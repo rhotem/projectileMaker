@@ -22,9 +22,10 @@ public final class ArcaneProjectiles extends JavaPlugin {
 
 
         registerHitEvents();
+        FileManager.adapter.registerSubtype(BackSender.class, "Back To The Sender!");
         FileManager.CreateAllFolders();
 
-        HitEvent.registerHitEvent(new BackSender(), "Shoots a projectile back to the caster!", Material.ALLIUM);
+        HitEvent.registerWithOutAdaption(new BackSender(), "Shoots a projectile back to the caster!", Material.ALLIUM);
 
         for (String projectile : FileManager.getProjectileList()) {
 

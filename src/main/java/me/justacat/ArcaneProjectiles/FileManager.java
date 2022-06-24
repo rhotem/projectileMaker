@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import me.justacat.ArcaneProjectiles.misc.RuntimeTypeAdapterFactory;
 import me.justacat.ArcaneProjectiles.projectiles.Projectile;
+import me.justacat.ArcaneProjectiles.projectiles.hitevents.Explosion;
 import me.justacat.ArcaneProjectiles.projectiles.hitevents.HitEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -27,9 +28,28 @@ public class FileManager {
         projectilesFolder = new File(dataFolder, "projectiles");
         if (!projectilesFolder.exists()) {
             projectilesFolder.mkdir();
-            Projectile firebolt = new Projectile("Firebolt");
-            firebolt.saveProjectile();
+            createDefaultProjectiles();
         }
+
+    }
+
+    public static void createDefaultProjectiles() {
+        new Projectile("Firebolt");
+        Projectile doom = new Projectile("DOOM");
+        doom.getParameterByName("type").chatEdit("Spiral");
+        doom.getParameterByName("branches").chatEdit("360");
+        doom.getParameterByName("range").chatEdit("150");
+        doom.getParameterByName("angle").chatEdit("-10");
+        doom.getParameterByName("radius").chatEdit("1.5");
+        doom.getParameterByName("Particle Amount").chatEdit("1");
+        doom.deleteHitEvent(0);
+        Explosion explosion = new Explosion();
+        explosion.getParameterByName("power").chatEdit("7");
+        explosion.getParameterByName("safe").chatEdit("false");
+        explosion.getParameterByName("fire").chatEdit("true");
+        doom.addHitEvent(explosion);
+
+        doom.saveProjectile();
 
     }
 

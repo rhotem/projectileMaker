@@ -33,7 +33,7 @@ public abstract class HitEvent {
 
         for (Parameter<?> parameter : getParameters()) {
 
-            if (parameter.getName().equals(name)) {
+            if (parameter.getName().equalsIgnoreCase(name)) {
 
                 return parameter;
             }
@@ -53,6 +53,13 @@ public abstract class HitEvent {
         nameToDescription.put(name, description);
         nameToMaterial.put(name, display);
         FileManager.adapter.registerSubtype(hitEvent.getClass(), name);
+    }
+
+    public static void registerWithOutAdaption(HitEvent hitEvent, String description, Material display) {
+        String name = hitEvent.getName();
+        hitEvents.put(name, hitEvent);
+        nameToDescription.put(name, description);
+        nameToMaterial.put(name, display);
     }
 
     public static List<HitEvent> getHitEvents() {
