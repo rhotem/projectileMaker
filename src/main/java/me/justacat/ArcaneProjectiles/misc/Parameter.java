@@ -111,8 +111,17 @@ public class Parameter<T> {
 
             } else if (value instanceof Particle) {
 
-                value = (T) Particle.valueOf(chatValue.replace(" ", "_").toUpperCase());
+                Particle particle = Particle.valueOf(chatValue.replace(" ", "_").toUpperCase());
+
+
+                value = (T) particle;
                 return true;
+
+            } else if (value instanceof Material) {
+
+                value = (T) Material.matchMaterial(chatValue.replace(" ", "_").toUpperCase());
+                return true;
+
 
             } else {
                 return false;

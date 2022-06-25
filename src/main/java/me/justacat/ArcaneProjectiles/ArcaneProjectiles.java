@@ -15,11 +15,11 @@ import java.util.logging.Level;
 
 public final class ArcaneProjectiles extends JavaPlugin {
 
-
+    public static ArcaneProjectiles instance;
     @Override
     public void onEnable() {
 
-
+        instance = this;
 
         registerHitEvents();
         FileManager.adapter.registerSubtype(BackSender.class, "Back To The Sender!");

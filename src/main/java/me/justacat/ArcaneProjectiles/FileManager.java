@@ -4,7 +4,9 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import me.justacat.ArcaneProjectiles.misc.RuntimeTypeAdapterFactory;
 import me.justacat.ArcaneProjectiles.projectiles.Projectile;
+import me.justacat.ArcaneProjectiles.projectiles.hitevents.Drill;
 import me.justacat.ArcaneProjectiles.projectiles.hitevents.Explosion;
+import me.justacat.ArcaneProjectiles.projectiles.hitevents.ExplosiveDrill;
 import me.justacat.ArcaneProjectiles.projectiles.hitevents.HitEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -35,6 +37,7 @@ public class FileManager {
 
     public static void createDefaultProjectiles() {
         new Projectile("Firebolt");
+
         Projectile doom = new Projectile("DOOM");
         doom.getParameterByName("type").chatEdit("Spiral");
         doom.getParameterByName("branches").chatEdit("360");
@@ -42,15 +45,22 @@ public class FileManager {
         doom.getParameterByName("angle").chatEdit("-10");
         doom.getParameterByName("radius").chatEdit("1.5");
         doom.getParameterByName("Particle Amount").chatEdit("1");
+        doom.getParameterByName("Display").chatEdit("TNT");
         doom.deleteHitEvent(0);
         Explosion explosion = new Explosion();
         explosion.getParameterByName("power").chatEdit("7");
         explosion.getParameterByName("safe").chatEdit("false");
         explosion.getParameterByName("fire").chatEdit("true");
         doom.addHitEvent(explosion);
-
         doom.saveProjectile();
 
+        Projectile driller = new Projectile("Double_Driller");
+        driller.getParameterByName("Particle").chatEdit("CAMPFIRE_COSY_SMOKE");
+        driller.getParameterByName("Display").chatEdit("IRON_PICKAXE");
+        driller.deleteHitEvent(0);
+        driller.addHitEvent(new Drill());
+        driller.addHitEvent(new ExplosiveDrill());
+        driller.saveProjectile();
     }
 
     public static File CreateFile(File folder, String name) {

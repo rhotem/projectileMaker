@@ -44,32 +44,20 @@ public class ProjectileMenu {
         List<String> list = FileManager.getProjectileList();
 
 
-
-
-        List<ItemStack> projectiles = new ArrayList<>();
-        for (String string : list) {
-            ItemStack itemStack = new ItemStack(Material.BLAZE_ROD);
-            ItemMeta itemMeta = itemStack.getItemMeta();
-            itemMeta.setDisplayName(Chat.colorMessage("&7" + string));
-            itemMeta.setLocalizedName("Projectile");
-            itemStack.setItemMeta(itemMeta);
-            projectiles.add(itemStack);
-        }
-
-
-
         GuiBuilder builder = new GuiBuilder(player);
         //PagesGUI pagesGUI = new PagesGUI(45, projectiles);
 
         builder.setSize(54);
         builder.setTitle("&0Projectile Maker");
 
-        int slot;
-        for (slot = 0; slot < projectiles.size(); slot++) {
-
-            builder.setItem(slot, projectiles.get(slot));
-
+        int slot = 0;
+        for (String string : list) {
+            Material material = (Material) Projectile.projectileFromName(string, true).getParameterByName("Display").getValue();
+            builder.setItem(slot, material, 1, Chat.colorMessage("&7" + string), null, true, "Projectile");
+            slot++;
         }
+
+
 
         builder.setItem(
                 slot,
@@ -98,7 +86,7 @@ public class ProjectileMenu {
         guiBuilder.setTitle("Edit Projectile: " + name);
         List<String> lore = new ArrayList<>();
         lore.add("   ");
-        lore.add(Chat.colorMessage("&eClick here to edit this value"));
+        lore.add(Chat.colorMessage("&eClick here to edit this value!"));
 
         Projectile projectile = Projectile.projectileFromName(name, true);
 

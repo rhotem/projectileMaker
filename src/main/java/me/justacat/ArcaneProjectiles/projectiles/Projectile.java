@@ -32,7 +32,7 @@ public class Projectile {
     private String name;
     private Parameter<String> type = new Parameter<>("Type", "Beam", Material.PAPER);
 
-
+    private Parameter<Material> display = new Parameter<>("Display", Material.BLAZE_ROD, Material.ANVIL);
 
     private Parameter<Double> range = new Parameter<>("Range", 20.0, Material.BOW);
     private Parameter<Double> velocity = new Parameter<>("Velocity", 10.0, Material.SUGAR);
@@ -104,6 +104,7 @@ public class Projectile {
         List<Parameter<?>> parameters = new ArrayList<>();
 
         parameters.add(type);
+        parameters.add(display);
         parameters.add(range);
         parameters.add(velocity);
         parameters.add(delay);
@@ -200,7 +201,12 @@ public class Projectile {
 
                     }
 
-                    location.getWorld().spawnParticle(particle.getValue(), location, (int) particleAmount.getValue(), (double) particleOffset.getValue(), (double) particleOffsetY.getValue(), (double) particleOffset.getValue(),(double) particleSpeed.getValue());
+                    try {
+                        location.getWorld().spawnParticle(particle.getValue(), location, (int) particleAmount.getValue(), (double) particleOffset.getValue(), (double) particleOffsetY.getValue(), (double) particleOffset.getValue(),(double) particleSpeed.getValue());
+                    } catch (Exception e) {
+                        Bukkit.getLogger().warning("oops, seems like this particle is not supported by this version!");
+                    }
+
 
                     if (!cycles.containsKey(ID)) {
                         cycles.put(ID, 0);
@@ -298,7 +304,13 @@ public class Projectile {
 
                                 loc = location.clone();
                                 loc.add(perpendicular.clone().multiply((cycles * velocity.getValue() / 20) * Math.tan(Math.toRadians(angle.getValue())) + radius.getValue()));
-                                loc.getWorld().spawnParticle(particle.getValue(), loc,(int) particleAmount.getValue(),(double) particleOffset.getValue(),(double) particleOffsetY.getValue(),(double) particleOffset.getValue(),(double) particleSpeed.getValue());
+
+                                try {
+                                    loc.getWorld().spawnParticle(particle.getValue(), loc,(int) particleAmount.getValue(),(double) particleOffset.getValue(),(double) particleOffsetY.getValue(),(double) particleOffset.getValue(),(double) particleSpeed.getValue());
+                                } catch (Exception e) {
+                                    Bukkit.getLogger().warning("oops, seems like this particle is not supported by this version!");
+                                }
+
                                 Collection<Entity> hit = loc.getWorld().getNearbyEntities(loc, 1, 1, 1);
                                 hit.removeIf(entity -> !(entity instanceof LivingEntity));
                                 hit.remove(caster);
