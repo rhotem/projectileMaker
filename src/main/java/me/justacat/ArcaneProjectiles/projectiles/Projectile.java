@@ -4,6 +4,7 @@ import me.justacat.ArcaneProjectiles.ArcaneProjectiles;
 import me.justacat.ArcaneProjectiles.FileManager;
 import me.justacat.ArcaneProjectiles.gui.ProjectileMenu;
 import me.justacat.ArcaneProjectiles.misc.Chat;
+import me.justacat.ArcaneProjectiles.misc.CooldownManager;
 import me.justacat.ArcaneProjectiles.misc.Parameter;
 import me.justacat.ArcaneProjectiles.misc.VecMath;
 import me.justacat.ArcaneProjectiles.projectiles.hitevents.Delay;
@@ -54,6 +55,8 @@ public class Projectile {
 
     private Parameter<Double> homing = new Parameter<>("Homing Rate", 0.0, Material.BREWING_STAND);
 
+    private Parameter<Double> cooldown = new Parameter<>("Cooldown", 0.0, Material.CLOCK);
+
     //spiral
 
     private Parameter<Double> radius = new Parameter<>("Radius", 1.0, Material.MAP);
@@ -66,7 +69,6 @@ public class Projectile {
     private List<HitEvent> hitEventList = new ArrayList<>();
 
     public static HashMap<Integer, Integer> cycles = new HashMap<>();
-
 
     public static HashMap<String, Projectile> loadedProjectiles = new HashMap<>();
 
@@ -87,7 +89,7 @@ public class Projectile {
 
 
     public List<HitEvent> getHitEventList() {return hitEventList;}
-
+    public long getCooldown() {return cooldown.getValue().longValue();}
     public String getType() {return type.getValue();}
     public List<Parameter<?>> getParameters() {
 
@@ -117,6 +119,7 @@ public class Projectile {
         parameters.add(particleOffsetY);
         parameters.add(particleSpeed);
         parameters.add(homing);
+        parameters.add(cooldown);
 
         return parameters;
     }
@@ -152,12 +155,32 @@ public class Projectile {
     public void cast(Location location, LivingEntity caster, Vector direction) {
 
 
+        if (!CooldownManager.cooldownManagerMap.containsKey(name)) {
+            new CooldownManager(name);
+        }
+
+        if (CooldownManager.cooldownManagerMap.get(name).getProjectileCooldown() != cooldown.getValue()) {
+            new CooldownManager(name);
+        }
+
+        CooldownManager cooldownManager = CooldownManager.cooldownManagerMap.get(name);
+
+        if (caster instanceof Player) {
+
+            if (cooldownManager.isInCooldown((Player) caster)) {
+                caster.sendMessage(Chat.colorMessage("&cYou have to wait " + cooldownManager.getPlayerCooldown((Player) caster) + " more seconds before you can use that again!"));
+                return;
+            }
+
+            cooldownManager.putInCooldown((Player) caster);
+        }
 
         if (type.getValue().equals("Beam")) {
             castAsBeam(location, caster, direction);
         } else if (type.getValue().equals("Spiral")) {
             castAsSpiral(location, caster, direction);
         }
+
 
     }
 

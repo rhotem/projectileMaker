@@ -51,16 +51,19 @@ public class FileManager {
         explosion.getParameterByName("power").chatEdit("7");
         explosion.getParameterByName("safe").chatEdit("false");
         explosion.getParameterByName("fire").chatEdit("true");
+        doom.getParameterByName("Cooldown").chatEdit("30");
         doom.addHitEvent(explosion);
         doom.saveProjectile();
 
         Projectile driller = new Projectile("Double_Driller");
         driller.getParameterByName("Particle").chatEdit("CAMPFIRE_COSY_SMOKE");
         driller.getParameterByName("Display").chatEdit("IRON_PICKAXE");
+        driller.getParameterByName("Cooldown").chatEdit("3");
         driller.deleteHitEvent(0);
         driller.addHitEvent(new Drill());
         driller.addHitEvent(new ExplosiveDrill());
         driller.saveProjectile();
+
     }
 
     public static File CreateFile(File folder, String name) {
