@@ -8,3 +8,9 @@ Send-Cooldown-Message:
   # {ProjName}: gets the used projectile's name.
   # use & or § for colors (full list here: https://htmlcolorcodes.com/minecraft-color-codes/).
   Message: "&cYou have to wait {Time} more seconds before you can use that again!"
+
+Permissions:
+  #if this is enabled, every projectile will need a permission to use it
+  Enabled: false
+  Permission: "Projectile.{ProjName}"
+  Message: "&cYou don't have permission to use that!"

@@ -155,6 +155,23 @@ public class Projectile {
 
     public void cast(Location location, LivingEntity caster, Vector direction) {
 
+        FileConfiguration config = ArcaneProjectiles.instance.getConfig();
+
+
+        if (config.getBoolean("Permissions.Enabled")) {
+
+            if (config.get("Permissions.Permission") instanceof String) {
+                if (caster.hasPermission(config.getString("Permissions.Permission").replace("{ProjName}", name))) {
+
+                    caster.sendMessage(Chat.colorMessage(config.getString("Permissions.Message")));
+                    return;
+
+                }
+            }
+
+
+
+        }
 
         if (!CooldownManager.cooldownManagerMap.containsKey(name)) {
             new CooldownManager(name);
@@ -171,7 +188,7 @@ public class Projectile {
             Player player = (Player) caster;
 
             if (cooldownManager.isInCooldown(player)) {
-                FileConfiguration config = ArcaneProjectiles.instance.getConfig();
+
                 if (config.getBoolean("Send-Cooldown-Message.Enabled")) {
 
                     if (config.getString("Send-Cooldown-Message.Message") == null) return;
