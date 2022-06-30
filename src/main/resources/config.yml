@@ -1,0 +1,10 @@
+
+
+Send-Cooldown-Message:
+  Enabled: true
+  # placeholders:
+  # {Time}: gets the remaining time.
+  # {ItemName}: gets the name of the clicked item.
+  # {ProjName}: gets the used projectile's name.
+  # use & or § for colors (full list here: https://htmlcolorcodes.com/minecraft-color-codes/).
+  Message: "&cYou have to wait {Time} more seconds before you can use that again!"

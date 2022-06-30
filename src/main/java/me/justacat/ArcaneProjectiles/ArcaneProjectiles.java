@@ -11,6 +11,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.File;
 import java.util.logging.Level;
 
 public final class ArcaneProjectiles extends JavaPlugin {
@@ -41,6 +42,9 @@ public final class ArcaneProjectiles extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new ClickEvent(), this);
 
         Bukkit.getLogger().info("Done!");
+
+        getConfig().options().copyDefaults();
+        saveDefaultConfig();
     }
 
     @Override
@@ -69,6 +73,9 @@ public final class ArcaneProjectiles extends JavaPlugin {
 
 
         try {
+
+            instance.getConfig().load(new File(instance.getDataFolder().getPath() + "\\config.yml"));
+
             Projectile.loadedProjectiles.clear();
             for (String projectile : FileManager.getProjectileList()) {
                 Projectile.loadedProjectiles.put(projectile, Projectile.projectileFromName(projectile, false));

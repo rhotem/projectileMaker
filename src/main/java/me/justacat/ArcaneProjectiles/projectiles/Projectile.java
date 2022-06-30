@@ -15,6 +15,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.block.Block;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -167,8 +168,22 @@ public class Projectile {
 
         if (caster instanceof Player) {
 
-            if (cooldownManager.isInCooldown((Player) caster)) {
-                caster.sendMessage(Chat.colorMessage("&cYou have to wait " + cooldownManager.getPlayerCooldown((Player) caster) + " more seconds before you can use that again!"));
+            Player player = (Player) caster;
+
+            if (cooldownManager.isInCooldown(player)) {
+                FileConfiguration config = ArcaneProjectiles.instance.getConfig();
+                if (config.getBoolean("Send-Cooldown-Message.Enabled")) {
+
+                    if (config.getString("Send-Cooldown-Message.Message") == null) return;
+
+                    String itemName = player.getInventory().getItemInMainHand().getItemMeta().getDisplayName();
+                    String itemType = player.getInventory().getItemInMainHand().getType().name().replace("_", " ").toLowerCase();
+
+                    String message = config.getString("Send-Cooldown-Message.Message").replace("{Time}", String.valueOf(cooldownManager.getPlayerCooldown(player))).replace("{ItemName}", itemName.isEmpty() ? itemType : itemName).replace("{ProjName}", name);
+
+                    caster.sendMessage(Chat.colorMessage(message));
+
+                }
                 return;
             }
 
