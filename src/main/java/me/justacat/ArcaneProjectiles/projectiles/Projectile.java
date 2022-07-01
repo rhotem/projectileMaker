@@ -17,8 +17,10 @@ import org.bukkit.Particle;
 import org.bukkit.block.Block;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
@@ -64,6 +66,11 @@ public class Projectile {
     private Parameter<Integer> branches = new Parameter<>("Branches", 5, Material.STICK);
     private Parameter<Double> angle = new Parameter<>("Angle", 10.0, Material.IRON_INGOT);
 
+
+    //physical
+
+    private Parameter<EntityType> entityType = new Parameter<>("Type", EntityType.ARROW, Material.SHEEP_SPAWN_EGG);
+
     //misc
 
 
@@ -94,10 +101,13 @@ public class Projectile {
     public String getType() {return type.getValue();}
     public List<Parameter<?>> getParameters() {
 
-        if (type.getValue().equals("Beam")) {
-            return getBeamParameters();
-        } else if (type.getValue().equals("Spiral")) {
-            return getSpiralParameters();
+        switch (type.getValue()) {
+            case "Beam":
+                return getBeamParameters();
+            case "Spiral":
+                return getSpiralParameters();
+            case "Physical":
+                return getPhysicalParameters();
         }
 
         return new ArrayList<>();
@@ -135,6 +145,18 @@ public class Projectile {
         parameters.remove(homing);
 
         return parameters;
+    }
+
+    private List<Parameter<?>> getPhysicalParameters() {
+
+        List<Parameter<?>> parameters = getBeamParameters();
+
+        parameters.add(entityType);
+
+        parameters.remove(range);
+
+        return parameters;
+
     }
     public Parameter<?> getParameterByName(String name) {
 
@@ -207,10 +229,16 @@ public class Projectile {
             cooldownManager.putInCooldown((Player) caster);
         }
 
-        if (type.getValue().equals("Beam")) {
-            castAsBeam(location, caster, direction);
-        } else if (type.getValue().equals("Spiral")) {
-            castAsSpiral(location, caster, direction);
+        switch (type.getValue()) {
+            case "Beam":
+                castAsBeam(location, caster, direction);
+                break;
+            case "Spiral":
+                castAsSpiral(location, caster, direction);
+                break;
+            case "Physical":
+                castAsPhysical(location, caster, direction);
+                break;
         }
 
 
@@ -218,7 +246,47 @@ public class Projectile {
 
 
 
+    public void castAsPhysical(Location location, LivingEntity caster, Vector direction) {
 
+
+        final Entity entity = location.getWorld().spawnEntity(location, entityType.getValue());
+
+
+
+        if (entity instanceof org.bukkit.entity.Projectile) {
+
+            ((org.bukkit.entity.Projectile) entity).setShooter(caster);
+            entity.setMetadata("ProjectileName." + name, new FixedMetadataValue(ArcaneProjectiles.instance, "true"));
+        }
+
+        new BukkitRunnable() {
+
+            @Override
+            public void run() {
+
+                if (entity.isDead() || entity.isEmpty() || entity.isOnGround()) this.cancel();
+
+                Vector vector = new Vector();
+                if (homing.getValue() != 0) {
+                    LivingEntity nearest = nearestEntity(entity.getLocation(), new Entity[]{caster, entity}, 15);
+                    if (nearest != null) {
+
+                        vector = new Vector(nearest.getLocation().getX() - entity.getLocation().getX(), nearest.getLocation().getY() - entity.getLocation().getY(), nearest.getLocation().getZ() - entity.getLocation().getZ());
+
+                    }
+                }
+
+                entity.setVelocity(direction.normalize().multiply(velocity.getValue() / 10).add(vector.multiply(homing.getValue())));
+
+
+            }
+        }.runTaskTimer(ArcaneProjectiles.instance, castDelay.getValue(), delay.getValue());
+
+
+
+
+
+    }
 
     public void castAsBeam(Location location, LivingEntity caster, Vector direction) {
 
@@ -237,22 +305,10 @@ public class Projectile {
 
                     //homing
                     if (homing.getValue() != 0) {
-                        Collection<LivingEntity> livingEntities = location.getNearbyLivingEntities(10);
-                        livingEntities.remove(caster);
-                        if (!livingEntities.isEmpty()) {
-                            Entity nearest = null;
-                            double distance = 1000;
-                            for (LivingEntity near : livingEntities) {
+                        Entity nearest = nearestEntity(location,new LivingEntity[]{caster}, 15);
+                        Location nearestLocation = nearest.getLocation();
+                        location.add(new Vector(nearestLocation.getX() - location.getX(), nearestLocation.getY() - location.getY(), nearestLocation.getZ() - location.getZ()).normalize().multiply(homing.getValue()));
 
-                                if (nearest == null | distance > location.distance(near.getLocation())) {
-                                    nearest = near;
-                                    distance = location.distance(near.getLocation());
-                                }
-
-                            }
-                            Location nearestLocation = nearest.getLocation();
-                            location.add(new Vector(nearestLocation.getX() - location.getX(), nearestLocation.getY() - location.getY(), nearestLocation.getZ() - location.getZ()).normalize().multiply(homing.getValue()));
-                        }
 
                     }
 
@@ -416,7 +472,7 @@ public class Projectile {
 
     public static Projectile projectileFromName(String name, boolean loaded) {
         if (loaded) {
-            return loadedProjectiles.get(name);
+            return loadedProjectiles.getOrDefault(name, null);
         } else {
             return FileManager.jsonToProjectile(FileManager.CreateFile(FileManager.projectilesFolder, name + ".json"));
         }
@@ -466,4 +522,33 @@ public class Projectile {
 
     }
 
+
+    private LivingEntity nearestEntity(Location location, Entity[] doNotInclude, int radius) {
+
+        Collection<LivingEntity> livingEntities = location.getNearbyLivingEntities(radius);
+
+        for (Entity entity : doNotInclude) {
+
+            if (entity instanceof LivingEntity) {
+                livingEntities.remove(entity);
+            }
+
+        }
+
+        if (!livingEntities.isEmpty()) {
+            LivingEntity nearest = null;
+            double distance = 1000;
+            for (LivingEntity near : livingEntities) {
+
+                if (nearest == null | distance > location.distance(near.getLocation())) {
+                    nearest = near;
+                    distance = location.distance(near.getLocation());
+                }
+
+            }
+            return nearest;
+        }
+        return null;
+
+    }
 }

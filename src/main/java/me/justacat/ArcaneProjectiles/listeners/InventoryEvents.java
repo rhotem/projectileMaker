@@ -73,6 +73,8 @@ public class InventoryEvents implements Listener {
                     if (setting.equals("Type")) {
                         if (projectile.getType().equals("Beam")) {
                             projectile.getParameterByName("Type").chatEdit("Spiral");
+                        } else if (projectile.getType().equals("Spiral")) {
+                            projectile.getParameterByName("Type").chatEdit("Physical");
                         } else {
                             projectile.getParameterByName("Type").chatEdit("Beam");
                         }
