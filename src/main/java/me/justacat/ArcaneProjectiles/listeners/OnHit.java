@@ -32,7 +32,14 @@ public class OnHit implements Listener {
         Projectile projectile = Projectile.projectileFromName(meta, true);
 
 
-        if (projectile == null || e.getHitEntity() == null) return;
+
+        if (projectile == null) return;
+
+        if (e.getHitEntity() == null) {
+//            projectile.hit(e.getHitBlock().getLocation(), (LivingEntity) e.getEntity().getShooter());
+            return;
+        }
+
 
         if (e.getHitEntity() instanceof  LivingEntity) {
             LivingEntity entity = (LivingEntity) e.getHitEntity();
@@ -41,7 +48,6 @@ public class OnHit implements Listener {
             e.setCancelled(true);
             entity.damage((double) projectile.getParameterByName("Damage").getValue(), (Entity) e.getEntity().getShooter());
             entity.setVelocity(entity.getVelocity().add(e.getEntity().getVelocity().normalize().multiply((double) projectile.getParameterByName("knockBack").getValue())));
-            projectile.hit(e.getHitEntity().getLocation(), (LivingEntity) e.getEntity().getShooter());
             e.getEntity().remove();
         }
 

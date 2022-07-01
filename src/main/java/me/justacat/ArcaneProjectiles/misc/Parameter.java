@@ -106,7 +106,7 @@ public class Parameter<T> {
                 value = (T) Integer.valueOf(chatValue);
                 return true;
             } else if (value instanceof EntityType) {
-                value = (T) EntityType.valueOf(chatValue);
+                value = (T) EntityType.valueOf(chatValue.toUpperCase().replace(" ", "_"));
                 return true;
 
             } else if (value instanceof Particle) {
@@ -119,7 +119,7 @@ public class Parameter<T> {
 
             } else if (value instanceof Material) {
 
-                value = (T) Material.matchMaterial(chatValue.replace(" ", "_").toUpperCase());
+                value = (T) Material.valueOf(chatValue.replace(" ", "_").toUpperCase());
                 return true;
 
 

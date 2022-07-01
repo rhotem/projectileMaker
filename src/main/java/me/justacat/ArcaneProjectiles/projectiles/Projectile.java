@@ -69,8 +69,9 @@ public class Projectile {
 
     //physical
 
-    private Parameter<EntityType> entityType = new Parameter<>("Type", EntityType.ARROW, Material.SHEEP_SPAWN_EGG);
+    private Parameter<EntityType> entityType = new Parameter<>("Entity Type", EntityType.ARROW, Material.SHEEP_SPAWN_EGG);
 
+    private Parameter<Boolean> gravity = new Parameter<>("Gravity", true, Material.IRON_BOOTS);
     //misc
 
 
@@ -152,6 +153,7 @@ public class Projectile {
         List<Parameter<?>> parameters = getBeamParameters();
 
         parameters.add(entityType);
+        parameters.add(gravity);
 
         parameters.remove(range);
 
@@ -251,7 +253,7 @@ public class Projectile {
 
         final Entity entity = location.getWorld().spawnEntity(location, entityType.getValue());
 
-
+        entity.setGravity(gravity.getValue());
 
         if (entity instanceof org.bukkit.entity.Projectile) {
 
@@ -261,22 +263,36 @@ public class Projectile {
 
         new BukkitRunnable() {
 
+            Location loc = entity.getLocation();
+            final long time = System.currentTimeMillis();
             @Override
             public void run() {
 
-                if (entity.isDead() || entity.isEmpty() || entity.isOnGround()) this.cancel();
 
-                Vector vector = new Vector();
+
+                if (entity.isDead() || entity.isOnGround() || System.currentTimeMillis() - time > 15000) {
+                    this.cancel();
+                    hit(loc, caster);
+                }
+
+
                 if (homing.getValue() != 0) {
                     LivingEntity nearest = nearestEntity(entity.getLocation(), new Entity[]{caster, entity}, 15);
                     if (nearest != null) {
 
-                        vector = new Vector(nearest.getLocation().getX() - entity.getLocation().getX(), nearest.getLocation().getY() - entity.getLocation().getY(), nearest.getLocation().getZ() - entity.getLocation().getZ());
+                        Vector vector = new Vector(nearest.getLocation().getX() - entity.getLocation().getX(), nearest.getLocation().getY() - entity.getLocation().getY(), nearest.getLocation().getZ() - entity.getLocation().getZ());
+                        entity.setVelocity(entity.getVelocity().add(direction.normalize().multiply(velocity.getValue() / 10).add(vector.normalize().multiply(homing.getValue()))));
+
+                    } else {
+                        entity.setVelocity(entity.getVelocity().add(direction.normalize().multiply(velocity.getValue() / 10)));
 
                     }
+                } else {
+                    entity.setVelocity(entity.getVelocity().add(direction.normalize().multiply(velocity.getValue() / 10)));
                 }
 
-                entity.setVelocity(direction.normalize().multiply(velocity.getValue() / 10).add(vector.multiply(homing.getValue())));
+                entity.getWorld().spawnParticle(particle.getValue(), entity.getLocation(), (int) particleAmount.getValue(), (double) particleOffset.getValue(), (double) particleOffsetY.getValue(), (double) particleOffset.getValue(),(double) particleSpeed.getValue());
+                loc = entity.getLocation();
 
 
             }
