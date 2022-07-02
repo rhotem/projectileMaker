@@ -198,6 +198,7 @@ public class InventoryEvents implements Listener {
             if (item.getType().equals(Material.ORANGE_STAINED_GLASS_PANE)) {
                 if (e.getCursor() != null && e.getCursor().getType() != Material.AIR) {
                     ProjectileMenu.openItemMenu(player, e.getCursor());
+                    player.playSound(player, Sound.BLOCK_ENCHANTMENT_TABLE_USE, 0.5F, 0.5F);
                 }
 
             } else if (e.getRawSlot() == 22) {
@@ -207,6 +208,8 @@ public class InventoryEvents implements Listener {
                 ProjectileMenu.openEmptyItemMenu(player);
 
             } else if (item.getType().equals(Material.BLAZE_POWDER)) {
+
+                player.playSound(player, Sound.BLOCK_LEVER_CLICK, 0.3F, 0.3F);
 
                 int[] right = new int[]{5, 6, 7, 8, 14, 15, 16, 17, 23, 24, 25, 26, 32, 33, 34, 35, 41, 42, 43, 44};
                 int[] left = new int[]{0, 1, 2, 3, 9, 10, 11, 12, 18, 19, 20, 21, 27, 28, 29, 30, 36, 37, 28 ,39};
@@ -236,6 +239,8 @@ public class InventoryEvents implements Listener {
 
             } else if (item.getType().equals(Material.BOOK)) {
 
+                player.playSound(player, Sound.BLOCK_LEVER_CLICK, 0.3F, 0.3F);
+
                 if (item.getItemMeta().getDisplayName().contains("Left")) {
                     clickTypeEdit.put(player.getUniqueId(), "leftClick");
                 } else {
@@ -244,6 +249,8 @@ public class InventoryEvents implements Listener {
 
                 chooseProjectile(player);
             } else if (item.getType() == Material.ARROW) {
+
+                player.playSound(player, Sound.BLOCK_LEVER_CLICK, 0.3F, 0.3F);
 
                 ItemStack editItem = player.getOpenInventory().getItem(22);
 
@@ -262,8 +269,10 @@ public class InventoryEvents implements Listener {
 
             if (item.getItemMeta().getDisplayName().equals(Chat.colorMessage("&bProjectile Maker"))) {
                 ProjectileMenu.openProjectileMenu(player);
+                player.playSound(player, Sound.BLOCK_LEVER_CLICK, 0.3F, 0.3F);
             } else if (item.getItemMeta().getDisplayName().equals(Chat.colorMessage("&bItem Binder"))) {
                 ProjectileMenu.openLastItemMenu(player);
+                player.playSound(player, Sound.BLOCK_LEVER_CLICK, 0.3F, 0.3F);
             }
 
 
@@ -280,6 +289,7 @@ public class InventoryEvents implements Listener {
             if (clickTypeEdit.get(player.getUniqueId()) == null) return;
 
             ProjectileMenu.openItemMenu(player, NBT.addProjectile(editItem, clickTypeEdit.get(player.getUniqueId()), projectile));
+            player.playSound(player, Sound.BLOCK_LEVER_CLICK, 0.3F, 0.3F);
 
 
 
