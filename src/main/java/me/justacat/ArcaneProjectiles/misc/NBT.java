@@ -25,6 +25,17 @@ public class NBT {
 
     }
 
+    public static ItemStack removeNbt(ItemStack item, String key) {
+
+        ItemMeta itemMeta = item.getItemMeta();
+
+        itemMeta.getPersistentDataContainer().remove(new NamespacedKey(ArcaneProjectiles.instance, key));
+
+        item.setItemMeta(itemMeta);
+
+        return item;
+    }
+
     public static ItemStack addProjectile(ItemStack item, String clickType, String projectile) {
 
         NamespacedKey namespacedKey = new NamespacedKey(JavaPlugin.getPlugin(ArcaneProjectiles.class), clickType);

@@ -291,7 +291,18 @@ public class ProjectileMenu {
 
         }
 
-        guiBuilder.setItem(right[rightSlot], Material.BOOK, 1, "&7Add &bRight-click&7 Projectile!", Arrays.asList("&0", "&aClick here to add a projectile!", "&0"), true);
+        if (item.getType() == Material.BOW | item.getType() == Material.CROSSBOW) {
+            guiBuilder.setItem(right[rightSlot], Material.BOOK, 1, "&7Add &bOn-shot&7 Projectile!", Arrays.asList("&0", "&aClick here to add a projectile!", "&0"), true);
+
+            NamespacedKey cancel = new NamespacedKey(JavaPlugin.getPlugin(ArcaneProjectiles.class), "Cancel");
+            boolean value = itemMeta.getPersistentDataContainer().has(cancel);
+
+            guiBuilder.setItem(13, Material.ARROW, 1, "&8Cancel Shot", Arrays.asList("&0", "&7Cancels the shot if enabled", "&0", "&eValue: " + value), true);
+        } else {
+            guiBuilder.setItem(right[rightSlot], Material.BOOK, 1, "&7Add &bRight-click&7 Projectile!", Arrays.asList("&0", "&aClick here to add a projectile!", "&0"), true);
+
+        }
+
         guiBuilder.setItem(left[leftSlot], Material.BOOK, 1, "&7Add &bLeft-click&7 Projectile!", Arrays.asList("&0", "&aClick here to add a projectile!", "&0"), true);
 
         player.openInventory(guiBuilder.toInventory());
@@ -299,11 +310,13 @@ public class ProjectileMenu {
 
     public static void openLastItemMenu(Player player) {
 
-        if (editedItem.containsKey(player.getUniqueId())) {
+        if (editedItem.containsKey(player.getUniqueId()) && editedItem.get(player.getUniqueId()) != null) {
             openItemMenu(player, editedItem.get(player.getUniqueId()));
         } else {
             openEmptyItemMenu(player);
         }
 
     }
+
+
 }

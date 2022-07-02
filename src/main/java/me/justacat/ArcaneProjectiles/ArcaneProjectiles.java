@@ -2,10 +2,7 @@ package me.justacat.ArcaneProjectiles;
 
 import me.justacat.ArcaneProjectiles.commands.MainCommand;
 import me.justacat.ArcaneProjectiles.commands.TabComplete;
-import me.justacat.ArcaneProjectiles.listeners.ChatEvent;
-import me.justacat.ArcaneProjectiles.listeners.ClickEvent;
-import me.justacat.ArcaneProjectiles.listeners.InventoryEvents;
-import me.justacat.ArcaneProjectiles.listeners.OnHit;
+import me.justacat.ArcaneProjectiles.listeners.*;
 import me.justacat.ArcaneProjectiles.projectiles.Projectile;
 import me.justacat.ArcaneProjectiles.projectiles.hitevents.*;
 import org.bukkit.Bukkit;
@@ -42,7 +39,7 @@ public final class ArcaneProjectiles extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new ChatEvent(), this);
         Bukkit.getPluginManager().registerEvents(new ClickEvent(), this);
         Bukkit.getPluginManager().registerEvents(new OnHit(), this);
-
+        Bukkit.getPluginManager().registerEvents(new ShotEvent(), this);
 
         Bukkit.getLogger().info("Done!");
 

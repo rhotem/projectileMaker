@@ -3,6 +3,7 @@ package me.justacat.ArcaneProjectiles.listeners;
 import com.jeff_media.morepersistentdatatypes.DataType;
 import me.justacat.ArcaneProjectiles.ArcaneProjectiles;
 import me.justacat.ArcaneProjectiles.projectiles.Projectile;
+import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -52,6 +53,8 @@ public class ClickEvent implements Listener {
         }
 
         if (itemMeta.getPersistentDataContainer().has(rightClick) && e.getAction().isRightClick()) {
+
+            if (item.getType() == Material.BOW | item.getType() == Material.CROSSBOW) return;
 
             List<String> projectileList = itemMeta.getPersistentDataContainer().get(rightClick, DataType.asList(DataType.STRING));
 

@@ -1,5 +1,6 @@
 package me.justacat.ArcaneProjectiles.listeners;
 
+import com.jeff_media.morepersistentdatatypes.DataType;
 import me.justacat.ArcaneProjectiles.FileManager;
 import me.justacat.ArcaneProjectiles.gui.GuiBuilder;
 import me.justacat.ArcaneProjectiles.gui.ProjectileMenu;
@@ -31,6 +32,9 @@ public class InventoryEvents implements Listener {
     public void OnInventoryClick(InventoryClickEvent e) {
 
         Player player = (Player) e.getWhoClicked();
+
+        if (e.getRawSlot() < 0) return;
+
         if (e.getRawSlot() >= e.getInventory().getSize()) {return;}
 
         if (e.getInventory().getItem(e.getRawSlot()) == null) {return;}
@@ -239,6 +243,16 @@ public class InventoryEvents implements Listener {
                 }
 
                 chooseProjectile(player);
+            } else if (item.getType() == Material.ARROW) {
+
+                ItemStack editItem = player.getOpenInventory().getItem(22);
+
+                if (item.getItemMeta().getLore().get(3).toUpperCase().contains("FALSE")) {
+                    ProjectileMenu.openItemMenu(player, NBT.addNbt(editItem, "Cancel", DataType.STRING, "yea"));
+                } else {
+                    ProjectileMenu.openItemMenu(player, NBT.removeNbt(editItem, "Cancel"));
+                }
+
             }
 
 
@@ -266,6 +280,8 @@ public class InventoryEvents implements Listener {
             if (clickTypeEdit.get(player.getUniqueId()) == null) return;
 
             ProjectileMenu.openItemMenu(player, NBT.addProjectile(editItem, clickTypeEdit.get(player.getUniqueId()), projectile));
+
+
 
         }
 
@@ -306,7 +322,13 @@ public class InventoryEvents implements Listener {
 
         if (e.getView().getTitle().equals("Edit Item's Projectiles")) {
 
-            ProjectileMenu.editedItem.put(e.getPlayer().getUniqueId(), e.getInventory().getItem(22));
+            if (e.getInventory().getSize() == 27) {
+                ProjectileMenu.editedItem.remove(e.getPlayer().getUniqueId());
+            } else {
+                ProjectileMenu.editedItem.put(e.getPlayer().getUniqueId(), e.getInventory().getItem(22));
+
+            }
+
 
         }
 
