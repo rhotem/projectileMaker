@@ -111,8 +111,7 @@ public class Parameter<T> {
 
             } else if (value instanceof Particle) {
 
-                Particle particle = Particle.valueOf(chatValue.replace(" ", "_").toUpperCase());
-
+                Particle particle = Particle.valueOf(chatValue.replace(" ", "_").toUpperCase().replace("MINECRAFT:", ""));
 
                 value = (T) particle;
                 return true;

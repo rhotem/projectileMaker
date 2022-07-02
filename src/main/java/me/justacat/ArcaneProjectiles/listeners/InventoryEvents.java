@@ -84,6 +84,17 @@ public class InventoryEvents implements Listener {
                         }
                         player.playSound(player, Sound.BLOCK_LEVER_CLICK, 0.5F, 0.5F);
                         ProjectileMenu.editProjectile(ProjectileMenu.projectileEditMap.get(player.getUniqueId()), player);
+                    } else if (projectile.getParameterByName(setting).getValue() instanceof Boolean) {
+
+                        if ((Boolean) projectile.getParameterByName(setting).getValue()) {
+                            projectile.getParameterByName(setting).chatEdit("false");
+                        } else {
+                            projectile.getParameterByName(setting).chatEdit("true");
+                        }
+                        ProjectileMenu.editProjectile(ProjectileMenu.projectileEditMap.get(player.getUniqueId()) ,player);
+                        player.playSound(player, Sound.BLOCK_LEVER_CLICK, 0.5F, 0.5F);
+
+
                     } else {
                         Chat.sendPlayerChatRequest(player, "EDIT:" + setting);
                     }

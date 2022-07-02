@@ -24,6 +24,7 @@ public class TabComplete implements TabCompleter {
             list.add("Help");
             list.add("BindItem");
             list.add("Reload");
+            list.add("Repair");
 
 
             return StringUtil.copyPartialMatches(args[0], list, new ArrayList<>());

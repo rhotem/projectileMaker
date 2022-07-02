@@ -1,16 +1,16 @@
 package me.justacat.ArcaneProjectiles;
 
+import com.google.common.io.ByteStreams;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import me.justacat.ArcaneProjectiles.misc.RuntimeTypeAdapterFactory;
 import me.justacat.ArcaneProjectiles.projectiles.Projectile;
-import me.justacat.ArcaneProjectiles.projectiles.hitevents.Drill;
-import me.justacat.ArcaneProjectiles.projectiles.hitevents.Explosion;
-import me.justacat.ArcaneProjectiles.projectiles.hitevents.ExplosiveDrill;
 import me.justacat.ArcaneProjectiles.projectiles.hitevents.HitEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.*;
+import java.net.URL;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,33 +36,33 @@ public class FileManager {
     }
 
     public static void createDefaultProjectiles() {
-        new Projectile("Firebolt");
 
-        Projectile doom = new Projectile("DOOM");
-        doom.getParameterByName("type").chatEdit("Spiral");
-        doom.getParameterByName("branches").chatEdit("360");
-        doom.getParameterByName("range").chatEdit("150");
-        doom.getParameterByName("angle").chatEdit("-10");
-        doom.getParameterByName("radius").chatEdit("1.5");
-        doom.getParameterByName("Particle Amount").chatEdit("1");
-        doom.getParameterByName("Display").chatEdit("TNT");
-        doom.deleteHitEvent(0);
-        Explosion explosion = new Explosion();
-        explosion.getParameterByName("power").chatEdit("7");
-        explosion.getParameterByName("safe").chatEdit("false");
-        explosion.getParameterByName("fire").chatEdit("true");
-        doom.getParameterByName("Cooldown").chatEdit("30");
-        doom.addHitEvent(explosion);
-        doom.saveProjectile();
 
-        Projectile driller = new Projectile("Double_Driller");
-        driller.getParameterByName("Particle").chatEdit("CAMPFIRE_COSY_SMOKE");
-        driller.getParameterByName("Display").chatEdit("IRON_PICKAXE");
-        driller.getParameterByName("Cooldown").chatEdit("3");
-        driller.deleteHitEvent(0);
-        driller.addHitEvent(new Drill());
-        driller.addHitEvent(new ExplosiveDrill());
-        driller.saveProjectile();
+        String[] defaultProjectiles = new String[] {
+               "DOOM",
+               "Double_Driller",
+                "Firebolt",
+                "Beezooka",
+                "ExplosivePig",
+                "Moomerang",
+        };
+
+        try {
+            for (String name : defaultProjectiles) {
+
+                URL url = FileManager.class.getClassLoader().getResource("default projectiles/" + name + ".json");
+                InputStream inputStream = url.openStream();
+                File file = new File(projectilesFolder.getPath() + "/" + name + ".json");
+                OutputStream outputStream = Files.newOutputStream(file.toPath());
+                ByteStreams.copy(inputStream, outputStream);
+                inputStream.close();
+                outputStream.close();
+                outputStream.flush();
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
 
     }
 
@@ -163,6 +163,8 @@ public class FileManager {
         return list;
 
     }
+
+
 
 
 }

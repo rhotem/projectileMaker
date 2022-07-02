@@ -6,7 +6,7 @@
 
     <groupId>me.justacat</groupId>
     <artifactId>ArcaneProjectiles</artifactId>
-    <version>1.2.1 BETA</version>
+    <version>1.2.2 BETA</version>
     <packaging>jar</packaging>
 
     <name>ArcaneProjectiles</name>
@@ -81,6 +81,10 @@
             <version>2.3.1</version>
             <scope>compile</scope>
         </dependency>
-
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>31.1-jre</version>
+        </dependency>
     </dependencies>
 </project>

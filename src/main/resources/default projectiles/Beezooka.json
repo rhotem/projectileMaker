@@ -1,0 +1,154 @@
+{
+  "name": "Beezooka",
+  "type": {
+    "value": "Physical",
+    "name": "Type",
+    "display": "PAPER"
+  },
+  "display": {
+    "value": "BEE_SPAWN_EGG",
+    "name": "Display",
+    "display": "ANVIL"
+  },
+  "range": {
+    "value": 20.0,
+    "name": "Range",
+    "display": "BOW"
+  },
+  "velocity": {
+    "value": 10.0,
+    "name": "Velocity",
+    "display": "SUGAR"
+  },
+  "particle": {
+    "value": "FLAME",
+    "name": "Particle",
+    "display": "REDSTONE"
+  },
+  "delay": {
+    "value": 1,
+    "name": "Tick Delay",
+    "display": "CLOCK"
+  },
+  "castDelay": {
+    "value": 1,
+    "name": "Cast Delay",
+    "display": "CLOCK"
+  },
+  "damage": {
+    "value": 5.0,
+    "name": "Damage",
+    "display": "IRON_SWORD"
+  },
+  "knockback": {
+    "value": 0.2,
+    "name": "Knockback",
+    "display": "SLIME_BALL"
+  },
+  "particleOffset": {
+    "value": 0.2,
+    "name": "Particle Offset",
+    "display": "YELLOW_DYE"
+  },
+  "particleOffsetY": {
+    "value": 0.2,
+    "name": "Particle Offset Y",
+    "display": "GREEN_DYE"
+  },
+  "particleAmount": {
+    "value": 10,
+    "name": "Particle Amount",
+    "display": "REDSTONE_LAMP"
+  },
+  "particleSpeed": {
+    "value": 0.05,
+    "name": "Particle Speed",
+    "display": "FEATHER"
+  },
+  "homing": {
+    "value": 0.0,
+    "name": "Homing Rate",
+    "display": "BREWING_STAND"
+  },
+  "cooldown": {
+    "value": 0.0,
+    "name": "Cooldown",
+    "display": "CLOCK"
+  },
+  "radius": {
+    "value": 1.0,
+    "name": "Radius",
+    "display": "MAP"
+  },
+  "branches": {
+    "value": 5,
+    "name": "Branches",
+    "display": "STICK"
+  },
+  "angle": {
+    "value": 10.0,
+    "name": "Angle",
+    "display": "IRON_INGOT"
+  },
+  "entityType": {
+    "value": "BEE",
+    "name": "Entity Type",
+    "display": "SHEEP_SPAWN_EGG"
+  },
+  "gravity": {
+    "value": false,
+    "name": "Gravity",
+    "display": "IRON_BOOTS"
+  },
+  "killOnHit": {
+    "value": true,
+    "name": "Kill On Hit",
+    "display": "DIAMOND_SWORD"
+  },
+  "hitEventList": [
+    {
+      "type": "Explosion",
+      "power": {
+        "value": 1.0,
+        "name": "Power"
+      },
+      "fire": {
+        "value": false,
+        "name": "Fire"
+      },
+      "safe": {
+        "value": true,
+        "name": "Safe"
+      },
+      "name": "Explosion"
+    },
+    {
+      "type": "Potion Effect",
+      "effect": {
+        "value": "POISON",
+        "name": "Potion Effect"
+      },
+      "radius": {
+        "value": 5.0,
+        "name": "Radius"
+      },
+      "duration": {
+        "value": 30,
+        "name": "Duration"
+      },
+      "level": {
+        "value": 2,
+        "name": "Level"
+      },
+      "particles": {
+        "value": false,
+        "name": "Show Particles"
+      },
+      "showIcon": {
+        "value": false,
+        "name": "Show Icon"
+      },
+      "name": "Potion Effect"
+    }
+  ]
+}

@@ -72,6 +72,9 @@ public class Projectile {
     private Parameter<EntityType> entityType = new Parameter<>("Entity Type", EntityType.ARROW, Material.SHEEP_SPAWN_EGG);
 
     private Parameter<Boolean> gravity = new Parameter<>("Gravity", true, Material.IRON_BOOTS);
+
+    private Parameter<Boolean> killOnHit = new Parameter<>("Kill On Hit", true, Material.DIAMOND_SWORD);
+
     //misc
 
 
@@ -154,6 +157,7 @@ public class Projectile {
 
         parameters.add(entityType);
         parameters.add(gravity);
+        parameters.add(killOnHit);
 
         parameters.remove(range);
 
@@ -271,6 +275,9 @@ public class Projectile {
 
 
                 if (entity.isDead() || entity.isOnGround() || System.currentTimeMillis() - time > 15000) {
+
+                    if (killOnHit.getValue()) entity.remove();
+
                     this.cancel();
                     hit(loc, caster);
                 }
@@ -532,6 +539,9 @@ public class Projectile {
 
         Projectile projectile = new Projectile(name);
         projectile.saveProjectile();
+
+        loadedProjectiles.put(name, projectileFromName(name, false)); //reloads it to prevent hit effects running on the same instance
+
         ProjectileMenu.openProjectileMenu(player);
 
 

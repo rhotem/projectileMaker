@@ -1,0 +1,126 @@
+{
+  "name": "ExplosivePig",
+  "type": {
+    "value": "Physical",
+    "name": "Type",
+    "display": "PAPER"
+  },
+  "display": {
+    "value": "PORKCHOP",
+    "name": "Display",
+    "display": "ANVIL"
+  },
+  "range": {
+    "value": 20.0,
+    "name": "Range",
+    "display": "BOW"
+  },
+  "velocity": {
+    "value": 5.0,
+    "name": "Velocity",
+    "display": "SUGAR"
+  },
+  "particle": {
+    "value": "FLAME",
+    "name": "Particle",
+    "display": "REDSTONE"
+  },
+  "delay": {
+    "value": 1,
+    "name": "Tick Delay",
+    "display": "CLOCK"
+  },
+  "castDelay": {
+    "value": 1,
+    "name": "Cast Delay",
+    "display": "CLOCK"
+  },
+  "damage": {
+    "value": 5.0,
+    "name": "Damage",
+    "display": "IRON_SWORD"
+  },
+  "knockback": {
+    "value": 0.2,
+    "name": "Knockback",
+    "display": "SLIME_BALL"
+  },
+  "particleOffset": {
+    "value": 0.0,
+    "name": "Particle Offset",
+    "display": "YELLOW_DYE"
+  },
+  "particleOffsetY": {
+    "value": 0.0,
+    "name": "Particle Offset Y",
+    "display": "GREEN_DYE"
+  },
+  "particleAmount": {
+    "value": -1,
+    "name": "Particle Amount",
+    "display": "REDSTONE_LAMP"
+  },
+  "particleSpeed": {
+    "value": 0.0,
+    "name": "Particle Speed",
+    "display": "FEATHER"
+  },
+  "homing": {
+    "value": 0.01,
+    "name": "Homing Rate",
+    "display": "BREWING_STAND"
+  },
+  "cooldown": {
+    "value": 0.0,
+    "name": "Cooldown",
+    "display": "CLOCK"
+  },
+  "radius": {
+    "value": 1.0,
+    "name": "Radius",
+    "display": "MAP"
+  },
+  "branches": {
+    "value": 5,
+    "name": "Branches",
+    "display": "STICK"
+  },
+  "angle": {
+    "value": 10.0,
+    "name": "Angle",
+    "display": "IRON_INGOT"
+  },
+  "entityType": {
+    "value": "PIG",
+    "name": "Entity Type",
+    "display": "SHEEP_SPAWN_EGG"
+  },
+  "gravity": {
+    "value": false,
+    "name": "Gravity",
+    "display": "IRON_BOOTS"
+  },
+  "killOnHit": {
+    "value": true,
+    "name": "Kill On Hit",
+    "display": "DIAMOND_SWORD"
+  },
+  "hitEventList": [
+    {
+      "type": "Explosion",
+      "power": {
+        "value": 5.0,
+        "name": "Power"
+      },
+      "fire": {
+        "value": false,
+        "name": "Fire"
+      },
+      "safe": {
+        "value": true,
+        "name": "Safe"
+      },
+      "name": "Explosion"
+    }
+  ]
+}
