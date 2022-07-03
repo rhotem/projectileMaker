@@ -3,6 +3,7 @@ package me.justacat.ArcaneProjectiles.projectiles;
 import me.justacat.ArcaneProjectiles.ArcaneProjectiles;
 import me.justacat.ArcaneProjectiles.FileManager;
 import me.justacat.ArcaneProjectiles.gui.ProjectileMenu;
+import me.justacat.ArcaneProjectiles.listeners.Mana;
 import me.justacat.ArcaneProjectiles.misc.Chat;
 import me.justacat.ArcaneProjectiles.misc.CooldownManager;
 import me.justacat.ArcaneProjectiles.misc.Parameter;
@@ -25,10 +26,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public class Projectile {
 
@@ -59,6 +57,8 @@ public class Projectile {
     private Parameter<Double> homing = new Parameter<>("Homing Rate", 0.0, Material.BREWING_STAND);
 
     private Parameter<Double> cooldown = new Parameter<>("Cooldown", 0.0, Material.CLOCK);
+
+    private Parameter<Double> manaCost = new Parameter<>("Mana Cost", 0.0, Material.WATER_BUCKET);
 
     //spiral
 
@@ -117,6 +117,42 @@ public class Projectile {
         return new ArrayList<>();
     }
 
+    public List<Parameter<?>> getAllParameters() {
+
+        List<Parameter<?>> parameters = new ArrayList<>(getBeamParameters());
+        parameters.addAll(getSpiralParameters());
+        parameters.addAll(getPhysicalParameters());
+
+        List<Parameter<?>> parameterList = new ArrayList<>();
+
+        for (Parameter<?> parameter : parameters) {
+
+            if (!parameterList.contains(parameter)) {
+                parameterList.add(parameter);
+            }
+
+        }
+
+        return parameterList;
+
+    }
+
+    public Parameter<?> getParameterByNameFromAllParameters(String name) {
+        List<Parameter<?>> parameters = getAllParameters();
+
+        parameters.removeIf(Objects::isNull);
+
+        for (Parameter<?> parameter : parameters) {
+
+            if (parameter.getName().equalsIgnoreCase(name)) {
+
+                return parameter;
+            }
+
+        }
+        return null;
+    }
+
     private List<Parameter<?>> getBeamParameters() {
         List<Parameter<?>> parameters = new ArrayList<>();
 
@@ -135,6 +171,7 @@ public class Projectile {
         parameters.add(particleSpeed);
         parameters.add(homing);
         parameters.add(cooldown);
+        parameters.add(manaCost);
 
         return parameters;
     }
@@ -166,7 +203,11 @@ public class Projectile {
     }
     public Parameter<?> getParameterByName(String name) {
 
-        for (Parameter<?> parameter : getParameters()) {
+        List<Parameter<?>> parameters = getParameters();
+
+        parameters.removeIf(Objects::isNull);
+
+        for (Parameter<?> parameter : parameters) {
 
             if (parameter.getName().equalsIgnoreCase(name)) {
 
@@ -232,8 +273,24 @@ public class Projectile {
                 return;
             }
 
-            cooldownManager.putInCooldown((Player) caster);
+            cooldownManager.putInCooldown(player);
+
+            if (config.getBoolean("Mana.Enabled")) {
+
+                if (Mana.getMana(player) > manaCost.getValue()) {
+
+                    Mana.addMana(player, -manaCost.getValue());
+
+                } else {
+                    player.sendMessage(Chat.colorMessage(config.getString("Mana.NotEnoughManaMessage")));
+                    return;
+                }
+
+            }
         }
+
+
+
 
         switch (type.getValue()) {
             case "Beam":

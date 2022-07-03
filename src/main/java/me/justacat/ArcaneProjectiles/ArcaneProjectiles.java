@@ -3,6 +3,7 @@ package me.justacat.ArcaneProjectiles;
 import me.justacat.ArcaneProjectiles.commands.MainCommand;
 import me.justacat.ArcaneProjectiles.commands.TabComplete;
 import me.justacat.ArcaneProjectiles.listeners.*;
+import me.justacat.ArcaneProjectiles.misc.Parameter;
 import me.justacat.ArcaneProjectiles.projectiles.Projectile;
 import me.justacat.ArcaneProjectiles.projectiles.hitevents.*;
 import org.bukkit.Bukkit;
@@ -10,6 +11,8 @@ import org.bukkit.Material;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
+import java.util.List;
+import java.util.Objects;
 import java.util.logging.Level;
 
 public final class ArcaneProjectiles extends JavaPlugin {
@@ -40,6 +43,8 @@ public final class ArcaneProjectiles extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new ClickEvent(), this);
         Bukkit.getPluginManager().registerEvents(new OnHit(), this);
         Bukkit.getPluginManager().registerEvents(new ShotEvent(), this);
+        Bukkit.getPluginManager().registerEvents(new Mana(), this);
+
 
         Bukkit.getLogger().info("Done!");
 
@@ -98,5 +103,74 @@ public final class ArcaneProjectiles extends JavaPlugin {
 
     public static boolean reload() {
         return reload(true);
+    }
+
+
+    public static void repair() {
+        int fixed = 0;
+
+        Bukkit.getLogger().info("Repairing plugin...");
+
+        for (String name : FileManager.getProjectileList()) {
+
+            Bukkit.getLogger().info("Repairing projectile: " + name);
+
+            Projectile projectile = Projectile.projectileFromName(name, true);
+
+
+
+
+
+            boolean needFix = false;
+            for (Parameter<?> parameter : projectile.getParameters()) {
+
+
+                if (parameter == null || parameter.getValue() == null) {
+
+                    needFix = true;
+                    fixed++;
+                    Bukkit.getLogger().info("Fixed!");
+
+                }
+
+
+
+            }
+
+            if (needFix) {
+
+                List<Parameter<?>> parameters = projectile.getAllParameters();
+
+                parameters.removeIf(Objects::isNull);
+                parameters.removeIf(parameter -> parameter.getValue() == null);
+
+                Projectile.loadedProjectiles.remove(name);
+
+                new Projectile(name);
+
+                projectile = Projectile.projectileFromName(name, true);
+
+                for (Parameter<?> parameter : parameters) {
+
+
+                    projectile.getParameterByNameFromAllParameters(parameter.getName()).chatEdit(parameter.getValue().toString());
+
+
+
+
+                }
+                projectile.saveProjectile();
+
+
+            }
+
+
+
+        }
+
+        ArcaneProjectiles.reload();
+        Bukkit.getLogger().info("Finished with total of " + fixed + " fixes.");
+
+
     }
 }

@@ -14,3 +14,15 @@ Permissions:
   Enabled: false
   Permission: "Projectile.{ProjName}"
   Message: "&cYou don't have permission to use that!"
+
+
+#mana system for this plugin. displays on the action bar.
+# {ManaLeft} - the player's mana
+# {MaxMana} - the player's max mana
+Mana:
+  Enabled: true
+  ActionBar: true
+  Display: "&b             ✎ {ManaLeft}/{MaxMana}             "
+  MaxMana: 100.0
+  ManaRegen: 5.0  #the amount of mana regen per second
+  NotEnoughManaMessage: "&cYou don't have enough mana to use this!"
