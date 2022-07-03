@@ -75,6 +75,11 @@
     "name": "Cooldown",
     "display": "CLOCK"
   },
+  "manaCost": {
+    "value": 0.0,
+    "name": "Mana Cost",
+    "display": "WATER_BUCKET"
+  },
   "radius": {
     "value": 1.0,
     "name": "Radius",
@@ -109,34 +114,18 @@
     {
       "type": "Explosion",
       "power": {
-        "value": 1.0,
+        "value": 3.0,
         "name": "Power"
       },
       "fire": {
-        "value": true,
+        "value": false,
         "name": "Fire"
       },
       "safe": {
-        "value": false,
+        "value": true,
         "name": "Safe"
       },
       "name": "Explosion"
-    },
-    {
-      "type": "Delay",
-      "time": {
-        "value": 10.0,
-        "name": "Time"
-      },
-      "name": "Delay"
-    },
-    {
-      "type": "Back To The Sender!",
-      "projectileType": {
-        "value": "Moomerang",
-        "name": "Projectile Type"
-      },
-      "name": "Back To The Sender!"
     }
   ]
 }

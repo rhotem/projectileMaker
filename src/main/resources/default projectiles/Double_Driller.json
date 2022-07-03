@@ -75,6 +75,11 @@
     "name": "Cooldown",
     "display": "CLOCK"
   },
+  "manaCost": {
+    "value": 0.0,
+    "name": "Mana Cost",
+    "display": "WATER_BUCKET"
+  },
   "radius": {
     "value": 1.0,
     "name": "Radius",
@@ -100,42 +105,27 @@
     "name": "Gravity",
     "display": "IRON_BOOTS"
   },
+  "killOnHit": {
+    "value": true,
+    "name": "Kill On Hit",
+    "display": "DIAMOND_SWORD"
+  },
   "hitEventList": [
     {
-      "type": "Drill",
-      "length": {
-        "value": 30,
-        "name": "Length"
-      },
-      "drops": {
-        "value": true,
-        "name": "Drops"
-      },
-      "radius": {
-        "value": 3,
-        "name": "Radius"
-      },
-      "delay": {
-        "value": 1,
-        "name": "Delay"
-      },
-      "name": "Drill"
-    },
-    {
-      "type": "Explosive Drill",
-      "length": {
-        "value": 30,
-        "name": "Length"
-      },
+      "type": "Explosion",
       "power": {
-        "value": 10,
+        "value": 3.0,
         "name": "Power"
       },
-      "delay": {
-        "value": 1,
-        "name": "Delay"
+      "fire": {
+        "value": false,
+        "name": "Fire"
       },
-      "name": "Explosive Drill"
+      "safe": {
+        "value": true,
+        "name": "Safe"
+      },
+      "name": "Explosion"
     }
   ]
 }

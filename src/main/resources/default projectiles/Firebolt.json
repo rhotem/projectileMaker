@@ -75,6 +75,11 @@
     "name": "Cooldown",
     "display": "CLOCK"
   },
+  "manaCost": {
+    "value": 0.0,
+    "name": "Mana Cost",
+    "display": "WATER_BUCKET"
+  },
   "radius": {
     "value": 1.0,
     "name": "Radius",
@@ -100,5 +105,27 @@
     "name": "Gravity",
     "display": "IRON_BOOTS"
   },
-  "hitEventList": []
+  "killOnHit": {
+    "value": true,
+    "name": "Kill On Hit",
+    "display": "DIAMOND_SWORD"
+  },
+  "hitEventList": [
+    {
+      "type": "Explosion",
+      "power": {
+        "value": 3.0,
+        "name": "Power"
+      },
+      "fire": {
+        "value": false,
+        "name": "Fire"
+      },
+      "safe": {
+        "value": true,
+        "name": "Safe"
+      },
+      "name": "Explosion"
+    }
+  ]
 }

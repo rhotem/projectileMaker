@@ -1,5 +1,7 @@
 
 
+Auto-repair-on-start: true
+
 Send-Cooldown-Message:
   Enabled: true
   # placeholders:
@@ -26,3 +28,7 @@ Mana:
   MaxMana: 100.0
   ManaRegen: 5.0  #the amount of mana regen per second
   NotEnoughManaMessage: "&cYou don't have enough mana to use this!"
+
+#Enjoy the plugin? feel free to leave a 5 stars review on spigot <3
+#https://www.spigotmc.org/resources/arcaneprojectiles-simple-gui-shoot-any-entity.103005/reviews
+# DM @just a cat#7594 on discord for support!

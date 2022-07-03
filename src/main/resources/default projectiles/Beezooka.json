@@ -75,6 +75,11 @@
     "name": "Cooldown",
     "display": "CLOCK"
   },
+  "manaCost": {
+    "value": 10.0,
+    "name": "Mana Cost",
+    "display": "WATER_BUCKET"
+  },
   "radius": {
     "value": 1.0,
     "name": "Radius",
@@ -109,7 +114,7 @@
     {
       "type": "Explosion",
       "power": {
-        "value": 1.0,
+        "value": 3.0,
         "name": "Power"
       },
       "fire": {
@@ -121,34 +126,6 @@
         "name": "Safe"
       },
       "name": "Explosion"
-    },
-    {
-      "type": "Potion Effect",
-      "effect": {
-        "value": "POISON",
-        "name": "Potion Effect"
-      },
-      "radius": {
-        "value": 5.0,
-        "name": "Radius"
-      },
-      "duration": {
-        "value": 30,
-        "name": "Duration"
-      },
-      "level": {
-        "value": 2,
-        "name": "Level"
-      },
-      "particles": {
-        "value": false,
-        "name": "Show Particles"
-      },
-      "showIcon": {
-        "value": false,
-        "name": "Show Icon"
-      },
-      "name": "Potion Effect"
     }
   ]
 }

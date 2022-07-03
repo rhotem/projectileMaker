@@ -50,6 +50,11 @@ public final class ArcaneProjectiles extends JavaPlugin {
 
         getConfig().options().copyDefaults();
         saveDefaultConfig();
+
+        if (getConfig().getBoolean("Auto-repair-on-start")) {
+            repair();
+        }
+
     }
 
     @Override
