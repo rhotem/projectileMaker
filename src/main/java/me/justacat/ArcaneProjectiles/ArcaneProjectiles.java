@@ -1,9 +1,11 @@
 package me.justacat.ArcaneProjectiles;
 
+import com.sk89q.worldguard.WorldGuard;
 import me.justacat.ArcaneProjectiles.commands.MainCommand;
 import me.justacat.ArcaneProjectiles.commands.TabComplete;
 import me.justacat.ArcaneProjectiles.listeners.*;
 import me.justacat.ArcaneProjectiles.misc.Parameter;
+import me.justacat.ArcaneProjectiles.misc.WorldGuardManager;
 import me.justacat.ArcaneProjectiles.projectiles.Projectile;
 import me.justacat.ArcaneProjectiles.projectiles.hitevents.*;
 import org.bukkit.Bukkit;
@@ -18,6 +20,10 @@ import java.util.logging.Level;
 public final class ArcaneProjectiles extends JavaPlugin {
 
     public static ArcaneProjectiles instance;
+
+    public static boolean worldGuardEnabled;
+    public static WorldGuardManager worldGuardManager;
+
     @Override
     public void onEnable() {
 
@@ -54,6 +60,7 @@ public final class ArcaneProjectiles extends JavaPlugin {
         if (getConfig().getBoolean("Auto-repair-on-start")) {
             repair();
         }
+
 
     }
 
@@ -114,11 +121,12 @@ public final class ArcaneProjectiles extends JavaPlugin {
     public static void repair() {
         int fixed = 0;
 
-        Bukkit.getLogger().info("Repairing plugin...");
+        Bukkit.getLogger().info("Checking if the plugin needs to be repaired...");
+
+
 
         for (String name : FileManager.getProjectileList()) {
 
-            Bukkit.getLogger().info("Repairing projectile: " + name);
 
             Projectile projectile = Projectile.projectileFromName(name, true);
 
@@ -143,6 +151,8 @@ public final class ArcaneProjectiles extends JavaPlugin {
             }
 
             if (needFix) {
+
+                Bukkit.getLogger().info("Repairing projectile: " + name);
 
                 List<Parameter<?>> parameters = projectile.getAllParameters();
 
@@ -178,4 +188,25 @@ public final class ArcaneProjectiles extends JavaPlugin {
 
 
     }
+
+    @Override
+    public void onLoad() {
+
+        try {
+            WorldGuard worldGuard = WorldGuard.getInstance();
+            worldGuardEnabled = true;
+            worldGuardManager = new WorldGuardManager();
+            worldGuardManager.registerFlags();
+        } catch (NoClassDefFoundError e) {
+            worldGuardEnabled = false;
+        }
+
+        System.out.println(worldGuardEnabled);
+
+
+
+
+    }
+
+
 }

@@ -224,6 +224,17 @@ public class Projectile {
 
     public void cast(Location location, LivingEntity caster, Vector direction) {
 
+
+        if (ArcaneProjectiles.worldGuardEnabled) {
+
+            if (!ArcaneProjectiles.worldGuardManager.checkFlag(location)) {
+                caster.sendMessage(Chat.colorMessage("&cSeems like you can't use this here!"));
+                return;
+            }
+
+        }
+
+
         FileConfiguration config = ArcaneProjectiles.instance.getConfig();
 
 

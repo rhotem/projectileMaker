@@ -2,6 +2,8 @@ name: ArcaneProjectiles
 version: '${project.version}'
 main: me.justacat.ArcaneProjectiles.ArcaneProjectiles
 api-version: 1.18
+softdepend:
+  - WorldGuard
 commands:
   ArcaneProjectiles:
     permission: op
