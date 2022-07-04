@@ -12,6 +12,7 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.*;
@@ -293,10 +294,8 @@ public class ProjectileMenu {
 
         if (item.getType() == Material.BOW | item.getType() == Material.CROSSBOW) {
             guiBuilder.setItem(right[rightSlot], Material.BOOK, 1, "&7Add &bOn-shot&7 Projectile!", Arrays.asList("&0", "&aClick here to add a projectile!", "&0"), true);
-
             NamespacedKey cancel = new NamespacedKey(JavaPlugin.getPlugin(ArcaneProjectiles.class), "Cancel");
-            boolean value = itemMeta.getPersistentDataContainer().has(cancel);
-
+            boolean value = itemMeta.getPersistentDataContainer().has(cancel, PersistentDataType.STRING);
             guiBuilder.setItem(13, Material.ARROW, 1, "&8Cancel Shot", Arrays.asList("&0", "&7Cancels the shot if enabled", "&0", "&eValue: " + value), true);
         } else {
             guiBuilder.setItem(right[rightSlot], Material.BOOK, 1, "&7Add &bRight-click&7 Projectile!", Arrays.asList("&0", "&aClick here to add a projectile!", "&0"), true);

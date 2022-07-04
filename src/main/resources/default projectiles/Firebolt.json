@@ -110,22 +110,5 @@
     "name": "Kill On Hit",
     "display": "DIAMOND_SWORD"
   },
-  "hitEventList": [
-    {
-      "type": "Explosion",
-      "power": {
-        "value": 3.0,
-        "name": "Power"
-      },
-      "fire": {
-        "value": false,
-        "name": "Fire"
-      },
-      "safe": {
-        "value": true,
-        "name": "Safe"
-      },
-      "name": "Explosion"
-    }
-  ]
+  "hitEventList": []
 }

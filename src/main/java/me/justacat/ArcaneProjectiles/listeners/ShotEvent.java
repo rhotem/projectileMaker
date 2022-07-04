@@ -27,10 +27,10 @@ public class ShotEvent implements Listener {
         ItemMeta itemMeta = item.getItemMeta();
 
 
-        if (itemMeta.getPersistentDataContainer().has(rightClick)) {
+        if (itemMeta.getPersistentDataContainer().has(rightClick, DataType.asList(DataType.STRING))) {
 
 
-            if (itemMeta.getPersistentDataContainer().has(new NamespacedKey(ArcaneProjectiles.instance, "cancel"))) {e.setCancelled(true);}
+            if (itemMeta.getPersistentDataContainer().has(new NamespacedKey(ArcaneProjectiles.instance, "cancel"), DataType.STRING)) {e.setCancelled(true);}
 
             List<String> projectileList = itemMeta.getPersistentDataContainer().get(rightClick, DataType.asList(DataType.STRING));
 

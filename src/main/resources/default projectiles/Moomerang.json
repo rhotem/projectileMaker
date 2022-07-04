@@ -114,18 +114,34 @@
     {
       "type": "Explosion",
       "power": {
-        "value": 3.0,
+        "value": 1.0,
         "name": "Power"
       },
       "fire": {
-        "value": false,
+        "value": true,
         "name": "Fire"
       },
       "safe": {
-        "value": true,
+        "value": false,
         "name": "Safe"
       },
       "name": "Explosion"
+    },
+    {
+      "type": "Delay",
+      "time": {
+        "value": 20.0,
+        "name": "Time"
+      },
+      "name": "Delay"
+    },
+    {
+      "type": "Back To The Sender!",
+      "projectileType": {
+        "value": "Moomerang",
+        "name": "Projectile Type"
+      },
+      "name": "Back To The Sender!"
     }
   ]
 }

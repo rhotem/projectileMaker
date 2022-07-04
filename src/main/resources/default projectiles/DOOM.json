@@ -118,11 +118,11 @@
         "name": "Power"
       },
       "fire": {
-        "value": false,
+        "value": true,
         "name": "Fire"
       },
       "safe": {
-        "value": true,
+        "value": false,
         "name": "Safe"
       },
       "name": "Explosion"

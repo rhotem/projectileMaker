@@ -114,7 +114,7 @@
     {
       "type": "Explosion",
       "power": {
-        "value": 3.0,
+        "value": 1.0,
         "name": "Power"
       },
       "fire": {
@@ -122,10 +122,38 @@
         "name": "Fire"
       },
       "safe": {
-        "value": true,
+        "value": false,
         "name": "Safe"
       },
       "name": "Explosion"
+    },
+    {
+      "type": "Potion Effect",
+      "effect": {
+        "value": "POISON",
+        "name": "Potion Effect"
+      },
+      "radius": {
+        "value": 5.0,
+        "name": "Radius"
+      },
+      "duration": {
+        "value": 30,
+        "name": "Duration"
+      },
+      "level": {
+        "value": 2,
+        "name": "Level"
+      },
+      "particles": {
+        "value": true,
+        "name": "Show Particles"
+      },
+      "showIcon": {
+        "value": true,
+        "name": "Show Icon"
+      },
+      "name": "Potion Effect"
     }
   ]
 }

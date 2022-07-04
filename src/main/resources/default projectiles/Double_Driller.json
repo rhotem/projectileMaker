@@ -112,20 +112,40 @@
   },
   "hitEventList": [
     {
-      "type": "Explosion",
+      "type": "Explosive Drill",
+      "length": {
+        "value": 30,
+        "name": "Length"
+      },
       "power": {
-        "value": 3.0,
+        "value": 10,
         "name": "Power"
       },
-      "fire": {
-        "value": false,
-        "name": "Fire"
+      "delay": {
+        "value": 1,
+        "name": "Delay"
       },
-      "safe": {
+      "name": "Explosive Drill"
+    },
+    {
+      "type": "Drill",
+      "length": {
+        "value": 30,
+        "name": "Length"
+      },
+      "drops": {
         "value": true,
-        "name": "Safe"
+        "name": "Drops"
       },
-      "name": "Explosion"
+      "radius": {
+        "value": 3,
+        "name": "Radius"
+      },
+      "delay": {
+        "value": 1,
+        "name": "Delay"
+      },
+      "name": "Drill"
     }
   ]
 }

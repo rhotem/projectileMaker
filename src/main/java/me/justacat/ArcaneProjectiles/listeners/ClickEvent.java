@@ -33,7 +33,7 @@ public class ClickEvent implements Listener {
         ItemMeta itemMeta = item.getItemMeta();
 
 
-        if (itemMeta.getPersistentDataContainer().has(leftClick) && e.getAction().isLeftClick()) {
+        if (itemMeta.getPersistentDataContainer().has(leftClick, DataType.asList(DataType.STRING)) && e.getAction().isLeftClick()) {
 
             List<String> projectileList = itemMeta.getPersistentDataContainer().get(leftClick, DataType.asList(DataType.STRING));
 
@@ -52,7 +52,7 @@ public class ClickEvent implements Listener {
 
         }
 
-        if (itemMeta.getPersistentDataContainer().has(rightClick) && e.getAction().isRightClick()) {
+        if (itemMeta.getPersistentDataContainer().has(rightClick, DataType.asList(DataType.STRING)) && e.getAction().isRightClick()) {
 
             if (item.getType() == Material.BOW | item.getType() == Material.CROSSBOW) return;
 
