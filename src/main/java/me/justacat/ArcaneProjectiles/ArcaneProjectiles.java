@@ -78,7 +78,7 @@ public final class ArcaneProjectiles extends JavaPlugin {
         HitEvent.registerHitEvent(new Potion(), "Gives nearby entities potion effect!", Material.SPLASH_POTION);
         HitEvent.registerHitEvent(new SpawnEntity(), "Spawns entities!", Material.CREEPER_SPAWN_EGG);
         HitEvent.registerHitEvent(new Teleport(), "Teleports the caster to the hit location", Material.ENDER_PEARL);
-
+        HitEvent.registerHitEvent(new PlayParticle(), "Spawns particles!", Material.REDSTONE);
 
     }
 
