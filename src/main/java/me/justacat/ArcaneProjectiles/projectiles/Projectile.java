@@ -224,18 +224,19 @@ public class Projectile {
 
     public void cast(Location location, LivingEntity caster, Vector direction) {
 
+        FileConfiguration config = ArcaneProjectiles.instance.getConfig();
+
 
         if (ArcaneProjectiles.worldGuardEnabled) {
 
             if (!ArcaneProjectiles.worldGuardManager.checkFlag(location)) {
-                caster.sendMessage(Chat.colorMessage("&cSeems like you can't use this here!"));
+                caster.sendMessage(Chat.colorMessage(config.getString("World-guard.Message")));
                 return;
             }
 
         }
 
 
-        FileConfiguration config = ArcaneProjectiles.instance.getConfig();
 
 
         if (config.getBoolean("Permissions.Enabled")) {

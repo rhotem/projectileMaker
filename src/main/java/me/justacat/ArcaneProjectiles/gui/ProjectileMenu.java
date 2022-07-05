@@ -245,7 +245,7 @@ public class ProjectileMenu {
         player.openInventory(guiBuilder.toInventory());
     }
 
-    public static void openItemMenu(Player player, ItemStack item) {
+    public static void openItemMenu(Player player, ItemStack item)  {
 
         editedItem.put(player.getUniqueId(), item);
 

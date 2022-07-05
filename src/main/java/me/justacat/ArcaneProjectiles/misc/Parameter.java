@@ -8,12 +8,10 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.potion.PotionEffectType;
 
 public class Parameter<T> {
-
-
     private T value;
     private final String name;
 
-    private Material display = null;
+    private Material display = Material.YELLOW_DYE;
 
     public Parameter(String name, T value) {
         this.name = name;

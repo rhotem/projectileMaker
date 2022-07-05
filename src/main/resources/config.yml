@@ -29,6 +29,12 @@ Mana:
   ManaRegen: 5.0  #the amount of mana regen per second
   NotEnoughManaMessage: "&cYou don't have enough mana to use this!"
 
+
+#only works when world guard enabled
+World-guard:
+  Message: "&cSeems like you can't use this here!" #triggers when someone tries to use a projectiles in a region he isn't allowed to
+
+
 #Enjoy the plugin? feel free to leave a 5 stars review on spigot <3
 #https://www.spigotmc.org/resources/arcaneprojectiles-simple-gui-shoot-any-entity.103005/reviews
 # DM @just a cat#7594 on discord for support!
