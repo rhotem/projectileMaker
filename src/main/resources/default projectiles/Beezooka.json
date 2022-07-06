@@ -1,7 +1,7 @@
 {
   "name": "Beezooka",
   "type": {
-    "value": "Physical",
+    "value": "Entity",
     "name": "Type",
     "display": "PAPER"
   },

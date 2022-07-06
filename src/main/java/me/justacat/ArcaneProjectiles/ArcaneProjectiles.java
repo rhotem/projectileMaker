@@ -52,15 +52,12 @@ public final class ArcaneProjectiles extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new Mana(), this);
 
 
-        Bukkit.getLogger().info("Done!");
-
         getConfig().options().copyDefaults();
         saveDefaultConfig();
 
         if (getConfig().getBoolean("Auto-repair-on-start")) {
             repair();
         }
-
 
     }
 
@@ -79,6 +76,7 @@ public final class ArcaneProjectiles extends JavaPlugin {
         HitEvent.registerHitEvent(new SpawnEntity(), "Spawns entities!", Material.CREEPER_SPAWN_EGG);
         HitEvent.registerHitEvent(new Teleport(), "Teleports the caster to the hit location", Material.ENDER_PEARL);
         HitEvent.registerHitEvent(new PlayParticle(), "Spawns particles!", Material.REDSTONE);
+        HitEvent.registerHitEvent(new PlaySound(), "Plays a sound!", Material.JUKEBOX);
 
     }
 
@@ -135,7 +133,8 @@ public final class ArcaneProjectiles extends JavaPlugin {
 
 
             boolean needFix = false;
-            for (Parameter<?> parameter : projectile.getParameters()) {
+            for (Parameter<?> parameter : projectile.getAllParameters()) {
+
 
 
                 if (parameter == null || parameter.getValue() == null) {
@@ -144,6 +143,11 @@ public final class ArcaneProjectiles extends JavaPlugin {
                     fixed++;
                     Bukkit.getLogger().info("Fixed!");
 
+                } else if (parameter.getName().equals("Type") && parameter.getValue().equals("Physical")){
+                    parameter.chatEdit("Entity");
+                    fixed++;
+                    Bukkit.getLogger().info("Fixed!");
+                    projectile.saveProjectile();
                 }
 
 

@@ -1,7 +1,7 @@
 {
   "name": "ExplosivePig",
   "type": {
-    "value": "Physical",
+    "value": "Entity",
     "name": "Type",
     "display": "PAPER"
   },

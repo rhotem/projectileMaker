@@ -4,6 +4,7 @@ import me.justacat.ArcaneProjectiles.FileManager;
 import me.justacat.ArcaneProjectiles.projectiles.Projectile;
 import org.bukkit.Material;
 import org.bukkit.Particle;
+import org.bukkit.Sound;
 import org.bukkit.entity.EntityType;
 import org.bukkit.potion.PotionEffectType;
 
@@ -119,6 +120,33 @@ public class Parameter<T> {
                 value = (T) Material.valueOf(chatValue.replace(" ", "_").toUpperCase());
                 return true;
 
+
+            } else if (value instanceof Sound) {
+
+                String valueToCheck = chatValue.replace(" ", "_").toUpperCase();
+
+                Sound[] sounds = Sound.values();
+
+                for (Sound sound : sounds) {
+                    if (valueToCheck.equals(sound.name())) {
+                        value = (T) sound;
+                        return true;
+                    }
+                }
+                for (Sound sound : sounds) {
+                    if (valueToCheck.contains(sound.name())) {
+                        value = (T) sound;
+                        return true;
+                    }
+                }
+                for (Sound sound : sounds) {
+                    if (sound.name().contains(valueToCheck)) {
+                        value = (T) sound;
+                        return true;
+                    }
+                }
+
+                return false;
 
             } else {
                 return false;

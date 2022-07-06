@@ -78,9 +78,12 @@ public class InventoryEvents implements Listener {
                         if (projectile.getType().equals("Beam")) {
                             projectile.getParameterByName("Type").chatEdit("Spiral");
                         } else if (projectile.getType().equals("Spiral")) {
-                            projectile.getParameterByName("Type").chatEdit("Physical");
+                            projectile.getParameterByName("Type").chatEdit("Entity");
+                        } else if (projectile.getType().equals("Entity")){
+                            projectile.getParameterByName("Type").chatEdit("Block");
                         } else {
                             projectile.getParameterByName("Type").chatEdit("Beam");
+
                         }
                         player.playSound(player.getLocation(), Sound.BLOCK_LEVER_CLICK, 0.5F, 0.5F);
                         ProjectileMenu.editProjectile(ProjectileMenu.projectileEditMap.get(player.getUniqueId()), player);

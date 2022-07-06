@@ -17,10 +17,8 @@ import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.block.Block;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
+import org.bukkit.material.MaterialData;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -67,7 +65,7 @@ public class Projectile {
     private Parameter<Double> angle = new Parameter<>("Angle", 10.0, Material.IRON_INGOT);
 
 
-    //physical
+    //entity
 
     private Parameter<EntityType> entityType = new Parameter<>("Entity Type", EntityType.ARROW, Material.SHEEP_SPAWN_EGG);
 
@@ -75,6 +73,9 @@ public class Projectile {
 
     private Parameter<Boolean> killOnHit = new Parameter<>("Kill On Hit", true, Material.DIAMOND_SWORD);
 
+    //block
+
+    private Parameter<Material> blockType = new Parameter<>("Block Type", Material.SANDSTONE, Material.SAND);
     //misc
 
 
@@ -110,8 +111,10 @@ public class Projectile {
                 return getBeamParameters();
             case "Spiral":
                 return getSpiralParameters();
-            case "Physical":
-                return getPhysicalParameters();
+            case "Entity":
+                return getEntityParameters();
+            case "Block":
+                return getBlockParameters();
         }
 
         return new ArrayList<>();
@@ -121,7 +124,8 @@ public class Projectile {
 
         List<Parameter<?>> parameters = new ArrayList<>(getBeamParameters());
         parameters.addAll(getSpiralParameters());
-        parameters.addAll(getPhysicalParameters());
+        parameters.addAll(getEntityParameters());
+        parameters.addAll(getBlockParameters());
 
         List<Parameter<?>> parameterList = new ArrayList<>();
 
@@ -188,7 +192,7 @@ public class Projectile {
         return parameters;
     }
 
-    private List<Parameter<?>> getPhysicalParameters() {
+    private List<Parameter<?>> getEntityParameters() {
 
         List<Parameter<?>> parameters = getBeamParameters();
 
@@ -197,6 +201,17 @@ public class Projectile {
         parameters.add(killOnHit);
 
         parameters.remove(range);
+
+        return parameters;
+
+    }
+
+    private List<Parameter<?>> getBlockParameters() {
+        List<Parameter<?>> parameters = getBeamParameters();
+
+        parameters.add(blockType);
+        parameters.add(gravity);
+        parameters.add(killOnHit);
 
         return parameters;
 
@@ -311,8 +326,11 @@ public class Projectile {
             case "Spiral":
                 castAsSpiral(location, caster, direction);
                 break;
-            case "Physical":
-                castAsPhysical(location, caster, direction);
+            case "Entity":
+                castAsEntity(location, caster, direction);
+                break;
+            case "Block":
+                castAsBlock(location, caster, direction);
                 break;
         }
 
@@ -321,7 +339,7 @@ public class Projectile {
 
 
 
-    public void castAsPhysical(Location location, LivingEntity caster, Vector direction) {
+    public void castAsEntity(Location location, LivingEntity caster, Vector direction) {
 
 
         final Entity entity = location.getWorld().spawnEntity(location, entityType.getValue());
@@ -540,7 +558,66 @@ public class Projectile {
             }.runTaskTimer(JavaPlugin.getPlugin(ArcaneProjectiles.class), 0, delay.getValue());
     }
 
+    public void castAsBlock(Location location, LivingEntity caster, Vector direction) {
 
+        MaterialData materialData = new MaterialData(blockType.getValue());
+        FallingBlock block;
+        try {
+            block = location.getWorld().spawnFallingBlock(location, materialData);
+        } catch (Exception e) {
+            materialData = new MaterialData(Material.GRAVEL);
+            block = location.getWorld().spawnFallingBlock(location, materialData);
+        }
+
+        block.setGravity(gravity.getValue());
+
+        final FallingBlock finalBlock = block;
+        new BukkitRunnable() {
+
+            Location loc = finalBlock.getLocation();
+            final long time = System.currentTimeMillis();
+            @Override
+            public void run() {
+
+
+
+                if (finalBlock.isDead() || finalBlock.isOnGround() || System.currentTimeMillis() - time > 15000) {
+
+                    if (killOnHit.getValue()) finalBlock.remove();
+
+                    this.cancel();
+                    hit(loc, caster);
+                }
+
+
+                if (homing.getValue() != 0) {
+                    LivingEntity nearest = nearestEntity(finalBlock.getLocation(), new Entity[]{caster, finalBlock}, 15);
+                    if (nearest != null) {
+
+                        Vector vector = new Vector(nearest.getLocation().getX() - finalBlock.getLocation().getX(), nearest.getLocation().getY() - finalBlock.getLocation().getY(), nearest.getLocation().getZ() - finalBlock.getLocation().getZ());
+                        finalBlock.setVelocity(finalBlock.getVelocity().add(direction.normalize().multiply(velocity.getValue() / 10).add(vector.normalize().multiply(homing.getValue()))));
+
+                    } else {
+                        finalBlock.setVelocity(finalBlock.getVelocity().add(direction.normalize().multiply(velocity.getValue() / 10)));
+
+                    }
+                } else {
+                    finalBlock.setVelocity(finalBlock.getVelocity().add(direction.normalize().multiply(velocity.getValue() / 10)));
+                }
+
+                finalBlock.getWorld().spawnParticle(particle.getValue(), finalBlock.getLocation(), (int) particleAmount.getValue(), (double) particleOffset.getValue(), (double) particleOffsetY.getValue(), (double) particleOffset.getValue(),(double) particleSpeed.getValue());
+                loc = finalBlock.getLocation();
+
+
+            }
+        }.runTaskTimer(ArcaneProjectiles.instance, castDelay.getValue(), delay.getValue());
+
+
+
+
+
+
+    }
 
     public void hit(Location location, LivingEntity caster) {
 
