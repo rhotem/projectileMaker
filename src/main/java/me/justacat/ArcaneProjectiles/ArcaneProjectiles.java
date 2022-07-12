@@ -55,9 +55,14 @@ public final class ArcaneProjectiles extends JavaPlugin {
         getConfig().options().copyDefaults();
         saveDefaultConfig();
 
-        if (getConfig().getBoolean("Auto-repair-on-start")) {
-            repair();
+        try {
+            if (getConfig().getBoolean("Auto-repair-on-start")) {
+                repair();
+            }
+        } catch (Exception ignored) {
+
         }
+
 
     }
 
@@ -89,14 +94,14 @@ public final class ArcaneProjectiles extends JavaPlugin {
 
         try {
 
-            instance.getConfig().load(new File(instance.getDataFolder().getPath() + "\\config.yml"));
+            instance.getConfig().load(new File(instance.getDataFolder().getPath() + "/config.yml"));
 
             Projectile.loadedProjectiles.clear();
             for (String projectile : FileManager.getProjectileList()) {
                 Projectile.loadedProjectiles.put(projectile, Projectile.projectileFromName(projectile, false));
             }
         } catch (Exception e) {
-            e.getCause().printStackTrace();
+            e.printStackTrace();
             if (log) {
                 Bukkit.getLogger().log(Level.WARNING, "Reload failed :(");
             }
@@ -216,8 +221,6 @@ public final class ArcaneProjectiles extends JavaPlugin {
         } catch (NoClassDefFoundError e) {
             worldGuardEnabled = false;
         }
-
-        System.out.println(worldGuardEnabled);
 
 
 
