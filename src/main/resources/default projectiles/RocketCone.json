@@ -1,0 +1,149 @@
+{
+  "name": "RocketCone",
+  "type": {
+    "value": "Spiral",
+    "name": "Type",
+    "display": "PAPER"
+  },
+  "display": {
+    "value": "OBSIDIAN",
+    "name": "Display",
+    "display": "ANVIL"
+  },
+  "range": {
+    "value": 20.0,
+    "name": "Range",
+    "display": "BOW"
+  },
+  "velocity": {
+    "value": 10.0,
+    "name": "Velocity",
+    "display": "SUGAR"
+  },
+  "particle": {
+    "value": "FLAME",
+    "name": "Particle",
+    "display": "REDSTONE"
+  },
+  "delay": {
+    "value": 1,
+    "name": "Tick Delay",
+    "display": "CLOCK"
+  },
+  "castDelay": {
+    "value": 1,
+    "name": "Cast Delay",
+    "display": "CLOCK"
+  },
+  "damage": {
+    "value": 5.0,
+    "name": "Damage",
+    "display": "IRON_SWORD"
+  },
+  "knockback": {
+    "value": 0.2,
+    "name": "Knockback",
+    "display": "SLIME_BALL"
+  },
+  "particleOffset": {
+    "value": 0.0,
+    "name": "Particle Offset",
+    "display": "YELLOW_DYE"
+  },
+  "particleOffsetY": {
+    "value": 0.0,
+    "name": "Particle Offset Y",
+    "display": "GREEN_DYE"
+  },
+  "particleAmount": {
+    "value": 10,
+    "name": "Particle Amount",
+    "display": "REDSTONE_LAMP"
+  },
+  "particleSpeed": {
+    "value": 0.0,
+    "name": "Particle Speed",
+    "display": "FEATHER"
+  },
+  "homing": {
+    "value": 0.0,
+    "name": "Homing Rate",
+    "display": "BREWING_STAND"
+  },
+  "cooldown": {
+    "value": 0.0,
+    "name": "Cooldown",
+    "display": "CLOCK"
+  },
+  "manaCost": {
+    "value": 0.0,
+    "name": "Mana Cost",
+    "display": "WATER_BUCKET"
+  },
+  "bridge": {
+    "value": true,
+    "name": "Bridge",
+    "display": "STONE"
+  },
+  "bridgeType": {
+    "value": "OBSIDIAN",
+    "name": "Bridge Type",
+    "display": "OBSIDIAN"
+  },
+  "radius": {
+    "value": 10.0,
+    "name": "Radius",
+    "display": "MAP"
+  },
+  "branches": {
+    "value": 10,
+    "name": "Branches",
+    "display": "STICK"
+  },
+  "angle": {
+    "value": -20.0,
+    "name": "Angle",
+    "display": "IRON_INGOT"
+  },
+  "entityType": {
+    "value": "ARROW",
+    "name": "Entity Type",
+    "display": "SHEEP_SPAWN_EGG"
+  },
+  "gravity": {
+    "value": true,
+    "name": "Gravity",
+    "display": "IRON_BOOTS"
+  },
+  "killOnHit": {
+    "value": true,
+    "name": "Kill On Hit",
+    "display": "DIAMOND_SWORD"
+  },
+  "blockType": {
+    "value": "SANDSTONE",
+    "name": "Block Type",
+    "display": "SAND"
+  },
+  "hitEventList": [
+    {
+      "type": "Explosive Drill",
+      "length": {
+        "value": 30,
+        "name": "Length",
+        "display": "YELLOW_DYE"
+      },
+      "power": {
+        "value": 10,
+        "name": "Power",
+        "display": "YELLOW_DYE"
+      },
+      "delay": {
+        "value": 1,
+        "name": "Delay",
+        "display": "YELLOW_DYE"
+      },
+      "name": "Explosive Drill"
+    }
+  ]
+}

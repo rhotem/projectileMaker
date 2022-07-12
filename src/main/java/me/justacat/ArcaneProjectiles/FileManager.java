@@ -45,6 +45,7 @@ public class FileManager {
                 "Beezooka",
                 "ExplosivePig",
                 "Moomerang",
+                "RocketCone",
         };
 
         try {

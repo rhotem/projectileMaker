@@ -58,6 +58,10 @@ public class Projectile {
 
     private Parameter<Double> manaCost = new Parameter<>("Mana Cost", 0.0, Material.WATER_BUCKET);
 
+    private Parameter<Boolean> bridge = new Parameter<>("Bridge", false, Material.STONE);
+    private Parameter<Material> bridgeType = new Parameter<>("Bridge Type", Material.STONE, Material.OBSIDIAN);
+
+
     //spiral
 
     private Parameter<Double> radius = new Parameter<>("Radius", 1.0, Material.MAP);
@@ -126,6 +130,7 @@ public class Projectile {
         parameters.addAll(getSpiralParameters());
         parameters.addAll(getEntityParameters());
         parameters.addAll(getBlockParameters());
+        parameters.add(bridgeType);
 
         List<Parameter<?>> parameterList = new ArrayList<>();
 
@@ -176,6 +181,11 @@ public class Projectile {
         parameters.add(homing);
         parameters.add(cooldown);
         parameters.add(manaCost);
+        parameters.add(bridge);
+
+        if (bridge != null && bridge.getValue()) {
+            parameters.add(bridgeType);
+        }
 
         return parameters;
     }
@@ -386,6 +396,11 @@ public class Projectile {
                 }
 
                 entity.getWorld().spawnParticle(particle.getValue(), entity.getLocation(), (int) particleAmount.getValue(), (double) particleOffset.getValue(), (double) particleOffsetY.getValue(), (double) particleOffset.getValue(),(double) particleSpeed.getValue());
+
+                if (bridge.getValue()) {
+                    placeBlock(loc.clone(), delay.getValue());
+                }
+
                 loc = entity.getLocation();
 
 
@@ -472,6 +487,9 @@ public class Projectile {
 
                     }
 
+                    if (bridge.getValue()) {
+                        placeBlock(location.clone(), delay.getValue());                    }
+
                 }
             }.runTaskTimer(JavaPlugin.getPlugin(ArcaneProjectiles.class), castDelay.getValue(), delay.getValue());
     }
@@ -554,6 +572,24 @@ public class Projectile {
                         }
                         perpendicular.rotateAroundAxis(direction, Math.toRadians(angle.getValue()));
                     }
+
+                    if (bridge.getValue()) {
+
+                        for (int b = 0; b < branches; b++) {
+
+                            if (!hits[b]) {
+
+                                loc = location.clone();
+                                loc.add(perpendicular.clone().multiply((cycles * velocity.getValue() / 20) * Math.tan(Math.toRadians(angle.getValue())) + radius.getValue()));
+
+                                placeBlock(loc.clone(), delay.getValue());
+                            }
+                            perpendicular.rotateAroundAxis(direction, Math.toRadians(360.0 / branches));
+
+                        }
+
+                    }
+
                 }
             }.runTaskTimer(JavaPlugin.getPlugin(ArcaneProjectiles.class), 0, delay.getValue());
     }
@@ -606,7 +642,13 @@ public class Projectile {
                 }
 
                 finalBlock.getWorld().spawnParticle(particle.getValue(), finalBlock.getLocation(), (int) particleAmount.getValue(), (double) particleOffset.getValue(), (double) particleOffsetY.getValue(), (double) particleOffset.getValue(),(double) particleSpeed.getValue());
+
+                if (bridge.getValue()) {
+                    placeBlock(loc.clone(), delay.getValue());
+                }
+
                 loc = finalBlock.getLocation();
+
 
 
             }
@@ -722,5 +764,21 @@ public class Projectile {
         }
         return null;
 
-    } 
+    }
+
+    private void placeBlock(Location location, long delay) {
+
+
+        Runnable runnable = () -> {
+            try {
+                location.getBlock().setType(bridgeType.getValue());
+            } catch (Exception e) {
+                location.getBlock().setType(Material.STONE);
+            }
+        };
+
+        Bukkit.getScheduler().runTaskLater(ArcaneProjectiles.instance, runnable, delay + 1);
+
+
+    }
 }

@@ -163,6 +163,10 @@ public final class ArcaneProjectiles extends JavaPlugin {
                 parameters.removeIf(Objects::isNull);
                 parameters.removeIf(parameter -> parameter.getValue() == null);
 
+                List<HitEvent> hitEvents = projectile.getHitEventList();
+
+                hitEvents.removeIf(Objects::isNull);
+
                 Projectile.loadedProjectiles.remove(name);
 
                 new Projectile(name);
@@ -178,6 +182,14 @@ public final class ArcaneProjectiles extends JavaPlugin {
 
 
                 }
+                projectile.deleteHitEvent(0);
+
+                for (HitEvent hitEvent : hitEvents) {
+                    projectile.addHitEvent(hitEvent);
+                }
+
+
+
                 projectile.saveProjectile();
 
 
